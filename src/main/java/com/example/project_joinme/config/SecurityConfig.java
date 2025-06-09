@@ -1,6 +1,8 @@
 package com.example.project_joinme.config;
 
 
+import com.example.project_joinme.component.CustomAccessDeniedHandler;
+import com.example.project_joinme.component.CustomerUser;
 import com.example.project_joinme.jwt.JwtFilter;
 import com.example.project_joinme.jwt.JwtLoginFilter;
 import com.example.project_joinme.jwt.JwtUtil;
@@ -24,7 +26,8 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final PasswordEncoder passwordEncoder;
+    private final CustomerUser customerUser;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
 
@@ -64,8 +67,8 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
 //                .exceptionHandling(exception -> {
-//                    exception.accessDeniedHandler();
-//                    exception.authenticationEntryPoint();
+//                    exception.accessDeniedHandler(this.customerUser);
+//                    exception.authenticationEntryPoint(this.customAccessDeniedHandler);
 //                })
         ;
 
