@@ -1,6 +1,33 @@
-import React from "react";
+import React, {useEffect} from "react";
+import apiClient from "../api/apiClient";
+import {loginUser} from "../mainSlice";
+import { useDispatch } from "react-redux";
 
 export default function Intro() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function fetchTempToken() {
+            try {
+                // 백엔드에서 임시 토큰 발급 API 호출 (예: /api/temp-token)
+                const response = await apiClient.post("/api/temp-token");
+
+                // 응답에서 토큰 꺼내기 (예: response.data.token)
+                const token = response.data.token;
+
+                // Redux에 저장 (액션 이름과 구조는 상황에 맞게 변경)
+                dispatch(loginUser({ token }));
+
+                // localStorage 저장도 원한다면
+                localStorage.setItem("tempToken", token);
+            } catch (err) {
+                console.error("임시 토큰 발급 실패", err);
+            }
+        }
+
+        fetchTempToken();
+    }, [dispatch]);
+
     return (
         <div style={styles.wrapper}>
             <div style={styles.overlay}>
