@@ -29,7 +29,7 @@ public class CourseDAO {
     }
     public CourseTbl addCourse(String course_name, String address,String body) {
         CourseTbl course = CourseTbl.builder()
-                .courseName(course_name)
+                .coursename(course_name)
                 .body(body)
                 .address(address)
                 .updateTime(Instant.now())

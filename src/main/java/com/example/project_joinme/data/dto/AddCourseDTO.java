@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddCourseDTO {
-    private String courseName;
+    private String coursename;
     private String body;
     private String image;
     private String address;

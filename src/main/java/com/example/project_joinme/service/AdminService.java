@@ -4,6 +4,7 @@ import com.example.project_joinme.data.dao.AdminDAO;
 import com.example.project_joinme.data.dao.CourseDAO;
 import com.example.project_joinme.data.dto.AddCourseDTO;
 import com.example.project_joinme.data.dto.AdminMatchDTO;
+import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.MatchDTO;
 import com.example.project_joinme.data.entity.CourseTbl;
 import com.example.project_joinme.data.entity.MatchTbl;
@@ -38,15 +39,19 @@ public class AdminService {
     }
     public AddCourseDTO addCourse(AddCourseDTO addCourseDTO) {
         CourseTbl courseTbl  = this.courseDAO.addCourse(
-                addCourseDTO.getCourseName(),
+                addCourseDTO.getCoursename(),
                 addCourseDTO.getAddress(),
                 addCourseDTO.getBody());
         return AddCourseDTO.builder()
-                .courseName(courseTbl.getCourseName())
+                .coursename(courseTbl.getCoursename())
                 .address(addCourseDTO.getAddress())
                 .body(addCourseDTO.getBody())
                 .updateDate(Instant.now())
                 .build();
+    }
+    public List<HateDTO> findAllHates() {
+        List<HateDTO> hates = this.adminDAO.findByReportFive();
+        return hates;
     }
 
 }
