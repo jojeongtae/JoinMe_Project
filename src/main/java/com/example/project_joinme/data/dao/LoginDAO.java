@@ -24,7 +24,7 @@ public class LoginDAO {
         return this.loginRepository.save(saveLogin);
     }
 
-    public LoginTbl getUserByUsername(String username) {
+    public LoginTbl findByUsername(String username) {
         return this.loginRepository.findById(username).orElse(null);
     }
 
