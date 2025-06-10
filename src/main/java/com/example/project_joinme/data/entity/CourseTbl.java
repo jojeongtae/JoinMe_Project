@@ -1,24 +1,27 @@
 package com.example.project_joinme.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "cource_tbl")
-public class CourceTbl {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "course_tbl")
+public class CourseTbl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num", nullable = false)
     private Integer id;
 
-    @Column(name = "cource_name", nullable = false, length = 45)
-    private String courceName;
+    @Column(name = "course_name", nullable = false, length = 45)
+    private String courseName;
 
     @Column(name = "address", nullable = false, length = 45)
     private String address;

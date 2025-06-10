@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
                     auth.requestMatchers("/").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 })
@@ -56,7 +56,7 @@ public class SecurityConfig {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedMethods(Arrays.asList("PUT", "GET", "POST", "DELETE", "OPTIONS"));
                     config.addAllowedHeader("*");
-                    config.addAllowedOrigin("https://localhost:3000");
+                    config.addAllowedOrigin("http://localhost:3000");
                     config.setExposedHeaders(Arrays.asList("Authorization"));
                     config.setAllowCredentials(true);
                     return config;
