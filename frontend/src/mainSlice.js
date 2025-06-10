@@ -4,6 +4,7 @@ const mainSlice = createSlice({
     name:"slice",
     initialState:{
         currentUser:null,
+        matchingInfo: [],
         users: [
            {
                 id: "aaa",
@@ -185,11 +186,38 @@ const mainSlice = createSlice({
             if (targetUser) {
                 targetUser.hidden = !targetUser.hidden;
             }
-        }
+        },
+        matchingInfo: (state) => {
+            const matchedPairs = new Set();
+            const matches = [];
+
+            state.users.forEach(user => {
+                user.userMatched?.forEach(match => {
+                    const pairKey = [user.id, match.id].sort().join('-');
+                    if (!matchedPairs.has(pairKey)) {
+                        matchedPairs.add(pairKey);
+
+                        const male = user;
+                        const female = state.users.find(u => u.id === match.id);
+
+                        if (female) {
+                            matches.push({
+                                num: matches.length + 1,
+                                male: {id: male.id, name: male.name},
+                                female: {id: female.id, name: female.name},
+                                matchTime: '2025-06-10'
+                            });
+                        }
+                    }
+                });
+            });
+
+            state.matchingInfo = matches;
+        },
 
     }
 })
-export const {unlike,giveLike,loginUser, togglePostHidden} = mainSlice.actions;
+export const {unlike,giveLike,loginUser, togglePostHidden, matchingInfo} = mainSlice.actions;
 const store = configureStore(
     {
         reducer:{
