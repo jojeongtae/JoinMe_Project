@@ -7,6 +7,7 @@ const mainSlice = createSlice({
         token: null,
         matchingInfo: [],
         courses: [],
+        hates: [],
         users: [
             {
                 id: "aaa",
