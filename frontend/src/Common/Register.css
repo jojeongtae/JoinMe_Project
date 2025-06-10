@@ -1,0 +1,87 @@
+.register-container {
+    background-image: url('/backgroundintro.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.45);
+    padding: 60px 40px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    max-width: 400px;
+    width: 100%;
+}
+
+.welcome-text {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.register-box {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 12px;
+    color: #333;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.register-box h2 {
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 28px;
+}
+
+.register-box input {
+    width: 100%;
+    padding: 12px 14px;
+    margin: 10px 0;
+    border: 1.8px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.register-box input:focus {
+    border-color: #4a65ff;
+    outline: none;
+}
+
+.btn-submit,
+.btn-login {
+    width: 100%;
+    padding: 14px 0;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit {
+    background-color: #4a65ff;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #354ecf;
+}
+
+.btn-login {
+    background-color: #ddd;
+    color: #555;
+}
+
+.btn-login:hover {
+    background-color: #bbb;
+}

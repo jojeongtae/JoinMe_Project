@@ -21,7 +21,7 @@ public class CourseTbl {
     private Integer id;
 
     @Column(name = "course_name", nullable = false, length = 45)
-    private String courseName;
+    private String coursename;
 
     @Column(name = "address", nullable = false, length = 45)
     private String address;

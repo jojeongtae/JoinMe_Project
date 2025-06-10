@@ -28,7 +28,7 @@ CREATE TABLE `course_tbl` (
   `num` int NOT NULL AUTO_INCREMENT,
   `course_name` varchar(45) NOT NULL,
   `address` varchar(45) NOT NULL,
-  `body` text NOT NULL,
+  `body` tinytext NOT NULL,
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -124,6 +124,7 @@ CREATE TABLE `login_tbl` (
 
 LOCK TABLES `login_tbl` WRITE;
 /*!40000 ALTER TABLE `login_tbl` DISABLE KEYS */;
+INSERT INTO `login_tbl` VALUES ('add','$2a$10$o0GLofNsv/nvq6hs9sTYoOKHe0SvnyRMVGa9irRfeVZpTN/qG199S','ddd','ROLE_USER','0102321321'),('vvvv','$2a$10$e2zrKVY1ah6gM7TYg/ToS.kOGWp2/Ydh29SY/bY23J7nWXkgKahtK','dfff','ROLE_USER','0102321321'),('zxc','$2a$10$PBO.c57d4ihQZcHJE3cD6.Fa6w64hu.6HRxlNKaC7uvGP9DlBF1RC','ddd','ROLE_USER','0102321321');
 /*!40000 ALTER TABLE `login_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +172,7 @@ CREATE TABLE `user_tbl` (
   `weight` int NOT NULL,
   `interest` varchar(200) DEFAULT NULL,
   `address` varchar(45) NOT NULL,
-  `introduction` text,
+  `introduction` tinytext,
   `mbti` varchar(10) DEFAULT NULL,
   `profileimg` varchar(200) DEFAULT NULL,
   `liked` int DEFAULT '0',
@@ -198,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-10 15:53:37
+-- Dump completed on 2025-06-10 17:31:28

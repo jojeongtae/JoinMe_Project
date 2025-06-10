@@ -49,7 +49,10 @@ public class SecurityConfig {
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/").hasAnyRole("ADMIN", "USER");
+
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
+
                     auth.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(request -> {
