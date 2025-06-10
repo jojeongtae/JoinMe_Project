@@ -20,7 +20,7 @@ public class LoginService {
         LoginTbl loginTbl = LoginTbl.builder()
                 .username(addUserDTO.getUsername())
                 .password(addUserDTO.getPassword())
-                .usernickname(addUserDTO.getUsername())
+                .usernickname(addUserDTO.getUsernickname())
                 .role("ROLE_USER")
                 .phone(addUserDTO.getPhone())
                 .build();
@@ -28,7 +28,7 @@ public class LoginService {
 
         return AddUserDTO.builder()
                 .username(addUserDTO.getUsername())
-                .usernickname(addUserDTO.getUsername())
+                .usernickname(addUserDTO.getUsernickname())
                 .phone(addUserDTO.getPhone())
                 .build();
     }
