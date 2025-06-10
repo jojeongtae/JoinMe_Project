@@ -6,6 +6,7 @@ const mainSlice = createSlice({
         currentUser: null,
         matchingInfo: [],
         courses: [],
+        hates: [],
         users: [
             {
                 id: "aaa",

@@ -16,6 +16,7 @@ import Admin_PostHiding from "./Admin/Admin_PostHiding";
 import Admin_MatchingList from "./Admin/Admin_MatchingList";
 import Admin_AddCourse from "./Admin/Admin_AddCourse";
 import Course from "./User/Course";
+import Admin_BlackList from "./Admin/Admin_BlackList";
 
 
 function App() {
@@ -35,9 +36,10 @@ function App() {
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Intro />} />
-                <Route path="post-hiding" element={<Admin_PostHiding />} />
+                <Route path={"post-hiding"} element={<Admin_PostHiding />} />
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
-                <Route path={"add-cource"} element={<Admin_AddCourse/>}/>
+                <Route path={"add-cource"} element={<Admin_AddCourse/>} />
+                <Route path={"blacklist"} element={<Admin_BlackList/>} />
             </Route>
         </Routes>
     );
