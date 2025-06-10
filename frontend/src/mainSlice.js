@@ -1,9 +1,10 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit";
 
 const mainSlice = createSlice({
-    name: "slice",
+    name: "main",
     initialState: {
         currentUser: null,
+        token: null,
         matchingInfo: [],
         courses: [],
         hates: [],
@@ -125,6 +126,15 @@ const mainSlice = createSlice({
 
     },
     reducers: {
+        setToken: (state, action) => {
+            state.token = action.payload;
+        },
+        clearToken: (state) => {
+            state.token = null;
+        },
+        loginUser: (state, action) => {
+            state.currentUser = action.payload;
+        },
         giveLike: (state, action) => {
             const giver = state.currentUser;
             const receiver = state.users.find(e => e.id === action.payload);
@@ -170,9 +180,6 @@ const mainSlice = createSlice({
                     receiver.userMatched.push({id: giver.id});
                 }
             }
-        },
-        loginUser: (state, action) => {
-            state.currentUser = action.payload;
         },
         unlike: (state, action) => {
             const giver = state.currentUser;
@@ -229,7 +236,10 @@ const mainSlice = createSlice({
 
     }
 })
-export const {unlike, giveLike, loginUser, togglePostHidden, matchingInfo, addCourse} = mainSlice.actions;
+export const {
+    giveLike, loginUser, unlike, togglePostHidden,
+    matchingInfo, addCourse, setToken, clearToken
+} = mainSlice.actions;
 const store = configureStore(
     {
         reducer: {

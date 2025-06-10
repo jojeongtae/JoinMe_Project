@@ -49,7 +49,9 @@ public class SecurityConfig {
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/").hasAnyRole("ADMIN", "USER");
+
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(request -> {
@@ -66,10 +68,10 @@ public class SecurityConfig {
                 .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
-//                .exceptionHandling(exception -> {
-//                    exception.accessDeniedHandler(this.customerUser);
-//                    exception.authenticationEntryPoint(this.customAccessDeniedHandler);
-//                })
+                .exceptionHandling(exception -> {
+                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
+                    exception.authenticationEntryPoint(this.customerUser);
+                })
         ;
 
         return http.build();

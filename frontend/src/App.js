@@ -17,6 +17,8 @@ import Admin_MatchingList from "./Admin/Admin_MatchingList";
 import Admin_AddCourse from "./Admin/Admin_AddCourse";
 import Course from "./User/Course";
 import Admin_BlackList from "./Admin/Admin_BlackList";
+import Register from "./Common/Register";
+
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
         <Routes>
             <Route path={"/"} element={<Logo/>}></Route>
             <Route path={"/login"} element={<Login/>}></Route>
+            <Route path={"/register"} element={<Register/>}></Route>
+
             <Route path={"/main"} element={<MainLayout/>}>
                 <Route index element={<Intro/>}></Route>
                 <Route path={"users"} element={<Users/>}></Route>
