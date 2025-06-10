@@ -4,47 +4,56 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import apiClient from "../api/apiClient";
 import axios from "axios";
-
+import {useState} from "react";
 
 function Login() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginResult, setLoginResult] = useState(null);
+    const navigate = useNavigate()
     const handleLogin = async (e) => {
         e.preventDefault();
-        const username = e.target.id.value;
-        const password = e.target.pw.value;
-
         try {
+            const formData = new URLSearchParams();
+            formData.append("username", username);
+            formData.append("password", password);
+
             const response = await axios.post(
                 "http://localhost:8080/login",
-                { username, password },
+                formData,
                 {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true, // 백엔드가 쿠키 기반 인증이면 필요
+                    withCredentials: true,
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 }
             );
 
-            // 로그인 성공 시 백엔드에서 토큰과 사용자 정보 받는다고 가정
-            const { token, user } = response.data;
+            // response.data : { role, result: "로그인 성공" } 형태 예상
+            setLoginResult(response.data.result);
 
-            // 토큰 저장 (localStorage or redux 등)
-            localStorage.setItem("jwtToken", token);
 
-            // 리덕스에 로그인 상태 저장
-            dispatch(loginUser(user));
-
-            alert(`${user.usernickname}님 로그인 성공!`);
-            navigate("/main");
+            // access token은 Authorization 헤더에 "Bearer {token}" 형태로 옴
+            const accessToken = response.headers["authorization"];
+            if (accessToken) {
+                const token = accessToken.replace("Bearer ", "");
+                dispatch(setToken(token));
+                // 토큰 저장 예: localStorage.setItem("accessToken", token);
+                console.log("access token:", token);
+            }
+            dispatch(loginUser(response.data))
+            navigate("/main")
         } catch (error) {
-            console.error("로그인 에러", error);
-            alert("로그인 실패! 아이디 또는 비밀번호를 확인하세요.");
+            // 로그인 실패 시 에러 메시지 표시
+            setLoginResult(
+                error.response?.data?.result || "로그인 실패 - 서버와 연결 실패"
+            );
         }
     };
 
     const goToRegister = () => {
         navigate("/register");
     };
+
     return (
         <div
             className="login-container"
@@ -62,14 +71,29 @@ function Login() {
                 <h1 className="welcome-text">당신의 인연, 오늘 여기에서 시작됩니다.</h1>
                 <form className="login-box" onSubmit={handleLogin}>
                     <h2>로그인</h2>
-                    <input name="id" type="text" placeholder="아이디" required />
-                    <input name="pw" type="password" placeholder="비밀번호" required />
+                    <input
+                        name="id"
+                        type="text"
+                        placeholder="아이디"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <input
+                        name="pw"
+                        type="password"
+                        placeholder="비밀번호"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <button type="submit">로그인</button>
                     <button type="button" onClick={goToRegister} className="signup-btn">
                         회원가입
                     </button>
                 </form>
             </div>
+            <p>{loginResult}</p>
         </div>
     );
 }
