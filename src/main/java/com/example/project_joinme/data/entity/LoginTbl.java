@@ -19,7 +19,7 @@ public class LoginTbl {
     @Column(name = "username", nullable = false, length = 20)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
     @Column(name = "usernickname", nullable = false, length = 45)
