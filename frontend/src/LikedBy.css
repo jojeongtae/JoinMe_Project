@@ -1,0 +1,68 @@
+.likedby-wrapper {
+    padding: 30px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+}
+
+.likedby-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.likedby-empty {
+    text-align: center;
+    color: #888;
+}
+
+.likedby-card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin-inline: auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.likedby-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.likedby-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+.likedby-info h3 {
+    margin: 0 0 5px;
+    font-size: 22px;
+    color: #333;
+}
+
+.likedby-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.likedby-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.likedby-button:hover {
+    background-color: #3e9842;
+}
