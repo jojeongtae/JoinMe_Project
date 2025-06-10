@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {giveLike} from "./mainSlice";
+import {giveLike} from "../mainSlice";
 
 export default function Users() {
 
