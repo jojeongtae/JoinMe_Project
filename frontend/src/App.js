@@ -22,14 +22,14 @@ function App() {
        <Routes>
            <Route path={"/"} element={<Logo/>}></Route>
            <Route path={"/login"} element={<Login/>}></Route>
-           {/*<Route path={"/main"} element={<MainLayout/>}>*/}
-           {/*    <Route index element={<Intro/>}></Route>*/}
-           {/*    <Route path={"users"} element={<Users/>}></Route>*/}
-           {/*    <Route path={"i-liked"} element={<ILike/>}></Route>*/}
-           {/*    <Route path={"liked-by"} element={<LikedBy/>}></Route>*/}
-           {/*    <Route path={"/main/mypage"} element={<MyPage/>}></Route>*/}
-           {/*</Route>*/}
-           <Route path="/main" element={<Admin_Main />}>
+           <Route path={"/main"} element={<MainLayout/>}>
+               <Route index element={<Intro/>}></Route>
+               <Route path={"users"} element={<Users/>}></Route>
+               <Route path={"i-liked"} element={<ILike/>}></Route>
+               <Route path={"liked-by"} element={<LikedBy/>}></Route>
+           <Route path={"/main/mypage"} element={<MyPage/>}></Route>
+           </Route>
+           <Route path="/admin-main" element={<Admin_Main />}>
                <Route index element={<Intro />} />
                <Route path="post-hiding" element={<Admin_PostHiding />} />
            </Route>
