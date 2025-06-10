@@ -179,11 +179,17 @@ const mainSlice = createSlice({
 
             giver.userLiked = giver.userLiked.filter(e => e.id !== receiver.id);
             receiver.userLikedReceived = receiver.userLikedReceived.filter(e => e.id !== giver.id);
+        },
+        togglePostHidden: (state, action) => {
+            const targetUser = state.users.find(user => user.id === action.payload);
+            if (targetUser) {
+                targetUser.hidden = !targetUser.hidden;
+            }
         }
 
     }
 })
-export const {unlike,giveLike,loginUser} = mainSlice.actions;
+export const {unlike,giveLike,loginUser, togglePostHidden} = mainSlice.actions;
 const store = configureStore(
     {
         reducer:{
