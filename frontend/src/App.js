@@ -3,14 +3,14 @@ import './App.css';
 import { useDispatch, useSelector } from "react-redux";
 import {loginUser} from "./mainSlice";
 import {Route, Routes} from "react-router-dom";
-import Login from "./Login";
-import MainLayout from "./Main";
-import Users from "./Users";
-import Logo from "./Logo";
-import Intro from "./Intro";
-import LikedBy from "./LikedBy";
-import ILike from "./ILike";
-import MyPage from "./MyPage";
+import Login from "./Common/Login";
+import MainLayout from "./User/Main";
+import Users from "./User/Users";
+import Logo from "./Common/Logo";
+import Intro from "./Common/Intro";
+import LikedBy from "./User/LikedBy";
+import ILike from "./User/ILike";
+import MyPage from "./User/MyPage";
 
 
 function App() {
