@@ -233,12 +233,40 @@ const mainSlice = createSlice({
 
             state.courses.push(newCourse);
         },
+        addHate: (state, action) => {
+            const {hater, hated} = action.payload;
 
+            const alreadyExists = state.hates.find(h =>
+                h.hater === hater && hated === hated
+            );
+
+            if (alreadyExists) {
+                return;
+            }
+
+            const newHate = {
+                num: state.hates.length + 1,
+                hater,
+                hated,
+                hateTime: new Date().toISOString()
+            };
+            state.hates.push(newHate);
+        },
+        removeHate: (state, action) => {
+            const {hater, hated} = action.payload;
+            state.hates = state.hates.filter(h =>
+                !(h.hater === hater && h.hated === hated)
+            );
+        },
+        fetchHates: (state, action) => {
+            state.hates = action.payload;
+        },
     }
 })
 export const {
     giveLike, loginUser, unlike, togglePostHidden,
-    matchingInfo, addCourse, setToken, clearToken
+    matchingInfo, addCourse, setToken, clearToken,
+    addHate, removeHate, fetchHates
 } = mainSlice.actions;
 const store = configureStore(
     {
