@@ -11,5 +11,4 @@ import java.util.List;
 public interface MatchRepository extends CrudRepository<MatchTbl, Integer> {
     @Query(value = "SELECT * FROM match_tbl", nativeQuery = true)
     List<MatchTbl> findAllMatches();
-
 }
