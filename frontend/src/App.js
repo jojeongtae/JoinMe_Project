@@ -14,6 +14,8 @@ import MyPage from "./User/MyPage";
 import Admin_Main from "./Admin/Admin_Main";
 import Admin_PostHiding from "./Admin/Admin_PostHiding";
 import Admin_MatchingList from "./Admin/Admin_MatchingList";
+import Admin_AddCourse from "./Admin/Admin_AddCourse";
+import Course from "./User/Course";
 
 
 function App() {
@@ -29,11 +31,13 @@ function App() {
                 <Route path={"i-liked"} element={<ILike/>}></Route>
                 <Route path={"liked-by"} element={<LikedBy/>}></Route>
                 <Route path={"/main/mypage"} element={<MyPage/>}></Route>
+                <Route path={"course"} element={<Course/>} />
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Intro />} />
                 <Route path="post-hiding" element={<Admin_PostHiding />} />
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
+                <Route path={"add-cource"} element={<Admin_AddCourse/>}/>
             </Route>
         </Routes>
     );

@@ -1,51 +1,52 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit";
 
 const mainSlice = createSlice({
-    name:"slice",
-    initialState:{
-        currentUser:null,
+    name: "slice",
+    initialState: {
+        currentUser: null,
         matchingInfo: [],
+        courses: [],
         users: [
-           {
+            {
                 id: "aaa",
                 pw: 111,
                 name: "김일번",
                 imgPath: "/man1.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
-                userLikedReceived: [{id:"ddd"},{id:"fff"},{id:"ggg"}],
-                userLiked: [{id:"eee"}],
-                userMatched:[]
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
+                userLikedReceived: [{id: "ddd"}, {id: "fff"}, {id: "ggg"}],
+                userLiked: [{id: "eee"}],
+                userMatched: []
             },
-           {
+            {
                 id: "bbb",
                 pw: 111,
                 name: "김이번",
                 imgPath: "/man2.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
                 userLiked: []
             },
-           {
+            {
                 id: "ccc",
                 pw: 111,
                 name: "김삼번",
                 imgPath: "/man3.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
                 userLiked: []
             },
@@ -54,27 +55,27 @@ const mainSlice = createSlice({
                 pw: 111,
                 name: "김사번",
                 imgPath: "/women1.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
-                userLiked: [{id:"aaa"}]
+                userLiked: [{id: "aaa"}]
             },
             {
                 id: "eee",
                 pw: 111,
                 name: "김오번",
                 imgPath: "/women2.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
-                userLikedReceived: [{id:"aaa"}],
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
+                userLikedReceived: [{id: "aaa"}],
                 userLiked: []
             },
             {
@@ -82,26 +83,26 @@ const mainSlice = createSlice({
                 pw: 111,
                 name: "김육번",
                 imgPath: "/women3.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
-                userLiked: [{id:"aaa"}]
+                userLiked: [{id: "aaa"}]
             },
             {
                 id: "ggg",
                 pw: 111,
                 name: "김칠번",
                 imgPath: "/man4.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
                 userLiked: []
             },
@@ -110,19 +111,19 @@ const mainSlice = createSlice({
                 pw: 111,
                 name: "김팔번",
                 imgPath: "/women4.png",
-                height:"180",
-                weight:"80",
-                interest:"등산",
-                addr:"서울",
-                intro:"안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti:"estj",
+                height: "180",
+                weight: "80",
+                interest: "등산",
+                addr: "서울",
+                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
+                mbti: "estj",
                 userLikedReceived: [],
-                userLiked: [{id:"aaa"}]
+                userLiked: [{id: "aaa"}]
             },
         ],
 
     },
-    reducers:{
+    reducers: {
         giveLike: (state, action) => {
             const giver = state.currentUser;
             const receiver = state.users.find(e => e.id === action.payload);
@@ -147,10 +148,10 @@ const mainSlice = createSlice({
             const alreadyLikedGiven = giver.userLiked.find(e => e && e.id === receiver.id);
 
             if (!alreadyLikedReceived) {
-                receiver.userLikedReceived.push({ id: giver.id });
+                receiver.userLikedReceived.push({id: giver.id});
             }
             if (!alreadyLikedGiven) {
-                giver.userLiked.push({ id: receiver.id });
+                giver.userLiked.push({id: receiver.id});
             }
 
             // 서로 좋아요가 있으면 userMatched 배열에 추가 (중복 방지)
@@ -162,10 +163,10 @@ const mainSlice = createSlice({
 
             if (giverLikesReceiver && receiverLikesGiver) {
                 if (!giverMatched) {
-                    giver.userMatched.push({ id: receiver.id });
+                    giver.userMatched.push({id: receiver.id});
                 }
                 if (!receiverMatched) {
-                    receiver.userMatched.push({ id: giver.id });
+                    receiver.userMatched.push({id: giver.id});
                 }
             }
         },
@@ -214,14 +215,24 @@ const mainSlice = createSlice({
 
             state.matchingInfo = matches;
         },
+        addCourse: (state, action) => {
+            const newCourse = {
+                num: state.courses.length + 1,
+                courseName: action.payload.courseName,
+                address: action.payload.address,
+                body: action.payload.body,
+            };
+
+            state.courses.push(newCourse);
+        },
 
     }
 })
-export const {unlike,giveLike,loginUser, togglePostHidden, matchingInfo} = mainSlice.actions;
+export const {unlike, giveLike, loginUser, togglePostHidden, matchingInfo, addCourse} = mainSlice.actions;
 const store = configureStore(
     {
-        reducer:{
-            main:mainSlice.reducer
+        reducer: {
+            main: mainSlice.reducer
         }
     }
 )
