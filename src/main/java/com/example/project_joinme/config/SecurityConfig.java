@@ -47,11 +47,11 @@ public class SecurityConfig {
                 .logout(logout -> logout.disable())
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/").hasAnyRole("ADMIN", "USER");
-                    auth.anyRequest().authenticated();
-                })
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+//                    auth.requestMatchers("/").hasAnyRole("ADMIN", "USER");
+//                    auth.anyRequest().authenticated();
+//                })
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedMethods(Arrays.asList("PUT", "GET", "POST", "DELETE", "OPTIONS"));
