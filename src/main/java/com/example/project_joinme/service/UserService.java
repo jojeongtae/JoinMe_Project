@@ -35,7 +35,7 @@ public class UserService {
                 .profileimg(userInfoDTO.getProfileimg())
                 .build();
 
-        userDAO.addUserInfo(userTbl);
+        this.userDAO.addUserInfo(userTbl);
 
         return UserInfoDTO.builder()
                 .username(userInfoDTO.getUsername())
@@ -51,6 +51,40 @@ public class UserService {
                 .build();
     }
 
+
+    // 회원정보 수정
+    public UserInfoDTO updateUserInfo(UserInfoDTO userInfoDTO){
+        LoginTbl loginTbl = this.loginDAO.findByUsername(userInfoDTO.getUsername());
+
+        UserTbl userTbl = UserTbl.builder()
+                .username(loginTbl.getUsername())
+                .sexuality(userInfoDTO.getSexuality())
+                .age(userInfoDTO.getAge())
+                .height(userInfoDTO.getHeight())
+                .weight(userInfoDTO.getWeight())
+                .interest(userInfoDTO.getInterest())
+                .address(userInfoDTO.getAddress())
+                .introduction(userInfoDTO.getIntroduction())
+                .mbti(userInfoDTO.getMbti())
+                .profileimg(userInfoDTO.getProfileimg())
+                .build();
+        this.userDAO.updateUserInfo(userTbl);
+        userDAO.addUserInfo(userTbl);
+
+        return UserInfoDTO.builder()
+                .username(userInfoDTO.getUsername())
+                .sexuality(userInfoDTO.getSexuality())
+                .age(userInfoDTO.getAge())
+                .height(userInfoDTO.getHeight())
+                .weight(userInfoDTO.getWeight())
+                .interest(userInfoDTO.getInterest())
+                .address(userInfoDTO.getAddress())
+                .introduction(userInfoDTO.getIntroduction())
+                .mbti(userInfoDTO.getMbti())
+                .profileimg(userInfoDTO.getProfileimg())
+                .build();
+
+    }
 
 
 }

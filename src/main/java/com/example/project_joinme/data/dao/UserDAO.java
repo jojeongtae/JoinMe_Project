@@ -17,8 +17,14 @@ public class UserDAO {
     public UserTbl addUserInfo(UserTbl user) {
         return userRepository.save(user);
     }
+
+    // 회원정보 수정
+    public UserTbl updateUserInfo(UserTbl user) {
+
+        return userRepository.save(user);
     public UserTbl findByUsernameWithLogin(String username) {
         return userRepository.findByUsernameWithLogin(username);
     }
+
 
 }

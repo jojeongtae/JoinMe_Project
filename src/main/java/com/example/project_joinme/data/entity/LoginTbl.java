@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 public class LoginTbl {
     @Id
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username", nullable = false, length = 40)
     private String username;
 
     @Column(name = "password", nullable = false, length = 100)
