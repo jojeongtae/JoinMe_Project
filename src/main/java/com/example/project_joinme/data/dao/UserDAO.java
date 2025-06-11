@@ -22,6 +22,7 @@ public class UserDAO {
     public UserTbl updateUserInfo(UserTbl user) {
         return userRepository.save(user);
     }
+
     public UserTbl findByUsernameWithLogin(String username) {
         return userRepository.findByUsernameWithLogin(username);
     }
