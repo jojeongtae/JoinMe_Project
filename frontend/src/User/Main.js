@@ -27,7 +27,7 @@ export default function MainLayout() {
                 {/* 유저 정보 */}
                 {currentUser && (
                     <div style={styles.userInfo}>
-                        <span style={styles.userName}>{currentUser.name} 님</span>
+                        <span style={styles.userName}>{currentUser.usernickname} 님</span>
                         <button onClick={()=>{
                             navigate("/")
                         }}>로그아웃</button>

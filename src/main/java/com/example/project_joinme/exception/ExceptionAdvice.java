@@ -36,4 +36,11 @@ public class ExceptionAdvice {
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("DB 검색 오류 : "+ex.getMessage());
     }
+    
+    // 사용자정의 예외
+    @ExceptionHandler(value = DuplicateIdException.class)
+    public ResponseEntity<String> handleDuplicateIdException(DuplicateIdException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디 중복 : "+ex.getMessage());
+    }
+    
 }

@@ -1,14 +1,16 @@
 package com.example.project_joinme.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "user_tbl")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserTbl {
     @Id
     @Column(name = "username", nullable = false, length = 40)
@@ -46,9 +48,5 @@ public class UserTbl {
 
     @Column(name = "profileimg", length = 200)
     private String profileimg;
-
-    @ColumnDefault("0")
-    @Column(name = "liked")
-    private Integer liked;
 
 }

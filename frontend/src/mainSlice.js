@@ -9,123 +9,6 @@ const mainSlice = createSlice({
         matchingInfo: [],
         courses: [],
         hates: [],
-        users: [
-            {
-                id: "aaa",
-                pw: 111,
-                name: "김일번",
-                imgPath: "/man1.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [{id: "ddd"}, {id: "fff"}, {id: "ggg"}],
-                userLiked: [{id: "eee"}],
-                userMatched: [{id: "ddd"}]
-            },
-            {
-                id: "bbb",
-                pw: 111,
-                name: "김이번",
-                imgPath: "/man2.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: []
-            },
-            {
-                id: "ccc",
-                pw: 111,
-                name: "김삼번",
-                imgPath: "/man3.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: []
-            },
-            {
-                id: "ddd",
-                pw: 111,
-                name: "김사번",
-                imgPath: "/women1.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: [{id: "aaa"}],
-                userMatched: [{id: "aaa"}]
-
-            },
-            {
-                id: "eee",
-                pw: 111,
-                name: "김오번",
-                imgPath: "/women2.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [{id: "aaa"}],
-                userLiked: []
-            },
-            {
-                id: "fff",
-                pw: 111,
-                name: "김육번",
-                imgPath: "/women3.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: [{id: "aaa"}]
-            },
-            {
-                id: "ggg",
-                pw: 111,
-                name: "김칠번",
-                imgPath: "/man4.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: []
-            },
-            {
-                id: "hhh",
-                pw: 111,
-                name: "김팔번",
-                imgPath: "/women4.png",
-                height: "180",
-                weight: "80",
-                interest: "등산",
-                addr: "서울",
-                intro: "안녕하세요 김일번입니다 잘부탁드립니다",
-                mbti: "estj",
-                userLikedReceived: [],
-                userLiked: [{id: "aaa"}]
-            },
-        ],
 
     },
     reducers: {
@@ -137,6 +20,10 @@ const mainSlice = createSlice({
         },
         loginUser: (state, action) => {
             state.currentUser = action.payload;
+        },
+        logoutUser: (state) => {
+            state.currentUser = null;
+            state.token = null;
         },
         giveLike: (state, action) => {
             const giver = state.currentUser;
@@ -276,9 +163,11 @@ const mainSlice = createSlice({
     }
 })
 export const {
+
     giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
     addHate, removeHate, fetchHates
+
 } = mainSlice.actions;
 const store = configureStore(
     {

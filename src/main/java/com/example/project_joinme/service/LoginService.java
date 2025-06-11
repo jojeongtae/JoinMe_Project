@@ -3,6 +3,7 @@ package com.example.project_joinme.service;
 import com.example.project_joinme.data.dao.LoginDAO;
 import com.example.project_joinme.data.dto.AddUserDTO;
 import com.example.project_joinme.data.entity.LoginTbl;
+import com.example.project_joinme.exception.DuplicateIdException;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginService implements UserDetailsService {
     private final LoginDAO loginDAO;
-
     // 로그인
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,7 +37,7 @@ public class LoginService implements UserDetailsService {
     // 회원가입
     public AddUserDTO addUser(AddUserDTO addUserDTO) {
         if(this.loginDAO.existsByUsername(addUserDTO.getUsername())) {
-            throw new DuplicateRequestException("동일 ID(username) 존재");
+            throw new DuplicateIdException("동일 ID(username) 존재");
         }
         LoginTbl loginTbl = LoginTbl.builder()
                 .username(addUserDTO.getUsername())
