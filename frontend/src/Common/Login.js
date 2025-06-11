@@ -40,14 +40,20 @@ function Login() {
                 // 토큰 저장 예: localStorage.setItem("accessToken", token);
                 console.log("access token:", token);
             }
-            dispatch(loginUser(response.data))
+            dispatch(loginUser(response.data.username))
             console.log(response.data)
-            navigate("/main")
+            if(response.data.role==="ROLE_USER"){
+                navigate("/main")
+            }
+            else{
+                navigate("/admin-main")
+            }
         } catch (error) {
             // 로그인 실패 시 에러 메시지 표시
             setLoginResult(
                 error.response?.data?.result || "로그인 실패 - 서버와 연결 실패"
             );
+            alert(error.response.data.result)
         }
     };
 
