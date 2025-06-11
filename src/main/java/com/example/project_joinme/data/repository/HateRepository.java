@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface HateRepository extends JpaRepository<HateTbl,Integer> {
+
     @Query(value = "SELECT h.hater, h.hated, h.hate_time, NULL AS report_count FROM hate_tbl h\n" +
             "    WHERE h.hated = :target", nativeQuery = true)
     List<Object[]> findAllHateLogs(@Param("target") String target);
@@ -19,4 +20,5 @@ public interface HateRepository extends JpaRepository<HateTbl,Integer> {
     @Query(value = "SELECT h.hated, COUNT(*) as report_count FROM hate_tbl h GROUP BY h.hated\n" +
             "    HAVING COUNT(*) >= 5",nativeQuery = true)
     List<Object[]> findByHatedFive();
+
 }
