@@ -111,7 +111,6 @@ DROP TABLE IF EXISTS `login_tbl`;
 CREATE TABLE `login_tbl` (
   `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `usernickname` varchar(45) NOT NULL,
   `role` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
   PRIMARY KEY (`username`)
@@ -166,6 +165,7 @@ DROP TABLE IF EXISTS `user_tbl`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_tbl` (
   `username` varchar(40) NOT NULL,
+   `usernickname` varchar(45) NOT NULL,
   `sexuality` varchar(10) NOT NULL,
   `age` int NOT NULL,
   `height` int NOT NULL,
