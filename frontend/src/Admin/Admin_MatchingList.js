@@ -18,8 +18,8 @@ export default function Admin_MatchingList() {
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>이름</th>
-                    <th>관리</th>
+                    <th>매칭</th>
+                    <th>시간</th>
                     <th>상세</th>
                 </tr>
                 </thead>
@@ -28,7 +28,7 @@ export default function Admin_MatchingList() {
                     <tr key={m.num}>
                         <td>{m.num}</td>
                         <td>{m.male.name} ({m.male.id}) <br/>↔ {m.female.name} ({m.female.id})</td>
-                        <td>{m.status}</td>
+                        <td>{m.matchTime}</td>
                         <td>
                             <button>상세보기</button>
                         </td>
