@@ -1,4 +1,5 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit";
+import {mbtiCompatibility} from "./User/mbtiCompatibility";
 
 const mainSlice = createSlice({
     name: "main",
@@ -8,6 +9,7 @@ const mainSlice = createSlice({
         matchingInfo: [],
         courses: [],
         hates: [],
+
     },
     reducers: {
         setToken: (state, action) => {
@@ -88,6 +90,13 @@ const mainSlice = createSlice({
             const matchedPairs = new Set();
             const matches = [];
 
+            const getMbtiCompatibility = (mbti1, mbti2) => {
+                const key1 = `${mbti1.toUpperCase()}-${mbti2.toUpperCase()}`;
+                const key2 = `${mbti2.toUpperCase()}-${mbti1.toUpperCase()}`;
+
+                return mbtiCompatibility[key1] || mbtiCompatibility[key2] || "🤝 서로의 개성이 잘 맞는 좋은 조합입니다!";
+            };
+
             state.users.forEach(user => {
                 user.userMatched?.forEach(match => {
                     const pairKey = [user.id, match.id].sort().join('-');
@@ -98,11 +107,13 @@ const mainSlice = createSlice({
                         const female = state.users.find(u => u.id === match.id);
 
                         if (female) {
+                            const mbtiResult = getMbtiCompatibility(male.mbti, female.mbti);
                             matches.push({
                                 num: matches.length + 1,
-                                male: {id: male.id, name: male.name},
-                                female: {id: female.id, name: female.name},
-                                matchTime: '2025-06-10'
+                                male: {id: male.id, name: male.name, mbti: male.mbti.toUpperCase()},
+                                female: {id: female.id, name: female.name, mbti: female.mbti.toUpperCase()},
+                                matchTime: '2025-06-10',
+                                mbtiResult
                             });
                         }
                     }
@@ -121,12 +132,42 @@ const mainSlice = createSlice({
 
             state.courses.push(newCourse);
         },
+        addHate: (state, action) => {
+            const {hater, hated} = action.payload;
 
+            const alreadyExists = state.hates.find(h =>
+                h.hater === hater && hated === hated
+            );
+
+            if (alreadyExists) {
+                return;
+            }
+
+            const newHate = {
+                num: state.hates.length + 1,
+                hater,
+                hated,
+                hateTime: new Date().toISOString()
+            };
+            state.hates.push(newHate);
+        },
+        removeHate: (state, action) => {
+            const {hater, hated} = action.payload;
+            state.hates = state.hates.filter(h =>
+                !(h.hater === hater && h.hated === hated)
+            );
+        },
+        fetchHates: (state, action) => {
+            state.hates = action.payload;
+        },
     }
 })
 export const {
-    logoutUser,giveLike, loginUser, unlike, togglePostHidden,
-    matchingInfo, addCourse, setToken, clearToken
+
+    giveLike, loginUser, unlike, togglePostHidden,
+    matchingInfo, addCourse, setToken, clearToken,
+    addHate, removeHate, fetchHates
+
 } = mainSlice.actions;
 const store = configureStore(
     {

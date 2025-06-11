@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +21,17 @@ public class UserController {
         UserInfoDTO saveUserinfoDTO = userService.addUserInfo(userInfoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveUserinfoDTO);
     }
+    @GetMapping("/userinfo/{username}")
+    public ResponseEntity<UserInfoDTO> getUserInfo(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserInfo(username));
+    }
+
+    // 회원정보수정
+    @PutMapping(value = "/update-info")
+    public  ResponseEntity<UserInfoDTO> updateUserInfo(@RequestBody UserInfoDTO userInfoDTO) {
+        UserInfoDTO saveUserinfoDTO = userService.updateUserInfo(userInfoDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(saveUserinfoDTO);
+    }
+
 
 }

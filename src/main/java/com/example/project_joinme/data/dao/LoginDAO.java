@@ -17,7 +17,6 @@ public class LoginDAO {
         LoginTbl saveLogin = LoginTbl.builder()
                 .username(loginTbl.getUsername())
                 .password(passwordEncoder.encode(loginTbl.getPassword()))
-                .usernickname(loginTbl.getUsernickname())
                 .role(loginTbl.getRole())
                 .phone(loginTbl.getPhone())
                 .build();
@@ -31,5 +30,7 @@ public class LoginDAO {
     public Boolean existsByUsername(String username) {
         return this.loginRepository.existsById(username);
     }
+
+    public void deleteByUsername(String username) {loginRepository.deleteById(username);}
 
 }

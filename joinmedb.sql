@@ -58,8 +58,8 @@ CREATE TABLE `hate_tbl` (
   PRIMARY KEY (`num`),
   KEY `hater_user_idx` (`hater`),
   KEY `hated_user_idx` (`hated`),
-  CONSTRAINT `hated_user` FOREIGN KEY (`hated`) REFERENCES `login_tbl` (`username`),
-  CONSTRAINT `hater_user` FOREIGN KEY (`hater`) REFERENCES `login_tbl` (`username`)
+  CONSTRAINT `hated_user` FOREIGN KEY (`hated`) REFERENCES `user_tbl` (`username`),
+  CONSTRAINT `hater_user` FOREIGN KEY (`hater`) REFERENCES `user_tbl` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -87,8 +87,8 @@ CREATE TABLE `like_tbl` (
   PRIMARY KEY (`num`),
   KEY `username_idx` (`liker`),
   KEY `liked_user_idx` (`liked`),
-  CONSTRAINT `liked_user` FOREIGN KEY (`liked`) REFERENCES `login_tbl` (`username`),
-  CONSTRAINT `liker_user` FOREIGN KEY (`liker`) REFERENCES `login_tbl` (`username`)
+  CONSTRAINT `liked_user` FOREIGN KEY (`liked`) REFERENCES `user_tbl` (`username`),
+  CONSTRAINT `liker_user` FOREIGN KEY (`liker`) REFERENCES `user_tbl` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,8 +143,8 @@ CREATE TABLE `match_tbl` (
   PRIMARY KEY (`num`),
   KEY `male_idx` (`match_male`),
   KEY `match_female_foreignkey_idx` (`match_female`),
-  CONSTRAINT `match_female_foreignkey` FOREIGN KEY (`match_female`) REFERENCES `login_tbl` (`username`),
-  CONSTRAINT `match_male_foreignkey` FOREIGN KEY (`match_male`) REFERENCES `login_tbl` (`username`)
+  CONSTRAINT `match_female_foreignkey` FOREIGN KEY (`match_female`) REFERENCES `user_tbl` (`username`),
+  CONSTRAINT `match_male_foreignkey` FOREIGN KEY (`match_male`) REFERENCES `user_tbl` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-10 17:31:28
+-- Dump completed on 2025-06-11 14:07:13

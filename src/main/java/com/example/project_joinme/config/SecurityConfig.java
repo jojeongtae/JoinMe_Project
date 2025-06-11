@@ -3,6 +3,7 @@ package com.example.project_joinme.config;
 
 import com.example.project_joinme.component.CustomAccessDeniedHandler;
 import com.example.project_joinme.component.CustomerUser;
+import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.jwt.JwtFilter;
 import com.example.project_joinme.jwt.JwtLoginFilter;
 import com.example.project_joinme.jwt.JwtUtil;
@@ -29,6 +30,7 @@ import java.util.List;
 public class SecurityConfig {
     private final CustomerUser customerUser;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final UserDAO userDAO;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
 
@@ -49,9 +51,9 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/userinfo").permitAll();  // 개발 중 임시
-                    auth.requestMatchers("/userinfo").hasRole("USER");
+                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*").permitAll();
+                    auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
@@ -68,7 +70,7 @@ public class SecurityConfig {
                 }))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil),
+                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil,userDAO),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
 //                .exceptionHandling(exception -> {

@@ -3,7 +3,6 @@ package com.example.project_joinme.controller;
 import com.example.project_joinme.data.dto.AddCourseDTO;
 import com.example.project_joinme.data.dto.AdminMatchDTO;
 import com.example.project_joinme.data.dto.HateDTO;
-import com.example.project_joinme.data.entity.MatchTbl;
 import com.example.project_joinme.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,9 @@ public class AdminController {
     public ResponseEntity<AddCourseDTO> addCourse(@RequestBody AddCourseDTO addCourseDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(adminService.addCourse(addCourseDTO));
     }
-    @GetMapping("/five-hatelist")
-    public ResponseEntity<List<HateDTO>> getAllHates() {
-        return ResponseEntity.status(HttpStatus.OK).body(adminService.findAllHates());
-    }
+//    @GetMapping("/five-hatelist")
+//    public ResponseEntity<List<HateDTO>> getAllHates() {
+//        return ResponseEntity.status(HttpStatus.OK).body(adminService.findAllHates());
+//    }
 
 }
