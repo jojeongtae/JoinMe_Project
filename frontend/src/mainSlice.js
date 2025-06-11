@@ -128,7 +128,7 @@ const mainSlice = createSlice({
         addCourse: (state, action) => {
             const newCourse = {
                 num: state.courses.length + 1,
-                courseName: action.payload.courseName,
+                coursename: action.payload.coursename,
                 address: action.payload.address,
                 body: action.payload.body,
             };
