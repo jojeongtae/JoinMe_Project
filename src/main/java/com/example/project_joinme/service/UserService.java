@@ -5,6 +5,7 @@ import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.data.dto.UserInfoDTO;
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
+import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,12 @@ public class UserService {
 
     // 회원정보추가
     public UserInfoDTO addUserInfo(UserInfoDTO userInfoDTO) {
-        LoginTbl loginTbl = this.loginDAO.findByUsername(userInfoDTO.getUsername());
 
+        LoginTbl loginTbl = this.loginDAO.findByUsername(userInfoDTO.getUsername());
+        if (loginTbl == null) {
+            throw new MyException("로그인 정보가 존재하지 않습니다");
+        }
         UserTbl userTbl = UserTbl.builder()
-                .username(userInfoDTO.getUsername())
                 .loginTbl(loginTbl)
                 .sexuality(userInfoDTO.getSexuality())
                 .age(userInfoDTO.getAge())

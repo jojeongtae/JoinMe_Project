@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @EnableWebSecurity
 @Configuration
@@ -48,8 +49,9 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-
+                    auth.requestMatchers("/", "/login", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/userinfo").permitAll();  // 개발 중 임시
+                    auth.requestMatchers("/userinfo").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
@@ -57,10 +59,10 @@ public class SecurityConfig {
                 })
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedMethods(Arrays.asList("PUT", "GET", "POST", "DELETE", "OPTIONS"));
-                    config.addAllowedHeader("*");
-                    config.addAllowedOrigin("http://localhost:3000");
-                    config.setExposedHeaders(Arrays.asList("Authorization"));
+                    config.setAllowedMethods(List.of("PUT", "GET", "POST", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(List.of("*"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000"));
+                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
                     return config;
                 }))
@@ -69,10 +71,10 @@ public class SecurityConfig {
                 .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
-                .exceptionHandling(exception -> {
-                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
-                    exception.authenticationEntryPoint(this.customerUser);
-                })
+//                .exceptionHandling(exception -> {
+//                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
+//                    exception.authenticationEntryPoint(this.customerUser);
+//                })
         ;
 
         return http.build();

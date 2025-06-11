@@ -23,35 +23,51 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = request.getHeader("Authorization");
-        if (token == null || !token.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        token = token.split(" ")[1];
-        try {
-            this.jwtUtil.isExpired(token);
-        } catch (ExpiredJwtException e) {
-            response.getWriter().write("token expired");
-            response.setStatus(456);
-            return;
-        }
-        String category = jwtUtil.getCategory(token);
-        if (!category.equals("access")) {
-            response.getWriter().write("token invalid");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setCharacterEncoding("UTF-8");
-            return;
-        }
-        String username = jwtUtil.getUsername(token);
-        String role = jwtUtil.getRole(token);
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-        User user = new User(username, null, authorities);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        filterChain.doFilter(request, response);
+    public void doFilterInternal(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 FilterChain filterChain) throws ServletException, IOException {
 
+        String header = request.getHeader("Authorization");
+
+        /* 1️⃣ 헤더 존재 + Bearer 여부 확인 */
+        if (header == null || !header.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);   // 인증 없이 다음 필터
+            return;
+        }
+
+        /* 2️⃣ "Bearer " 이후 토큰 추출 */
+        String token = header.substring(7);            // split() 대신 substring()이 조금 더 안전
+
+        /* 3️⃣ JWT 기본 형식 점( . ) 2개 여부 확인 */
+        if (token.chars().filter(ch -> ch == '.').count() != 2) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Malformed JWT");
+            return;
+        }
+
+        try {
+            jwtUtil.isExpired(token);
+        } catch (ExpiredJwtException e) {
+            response.sendError(456, "Token expired");
+            return;
+        } catch (io.jsonwebtoken.MalformedJwtException e) {       // ⬅️ 직접 캐치
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Malformed JWT");
+            return;
+        }
+
+        /* 4️⃣ access 토큰인지 확인 */
+        if (!"access".equals(jwtUtil.getCategory(token))) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token invalid");
+            return;
+        }
+
+        /* 5️⃣ SecurityContext에 인증 객체 주입 */
+        String username = jwtUtil.getUsername(token);
+        String role     = jwtUtil.getRole(token);
+        List<GrantedAuthority> auths = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(new User(username, "", auths), null, auths);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        filterChain.doFilter(request, response);
     }
 }
