@@ -1,11 +1,6 @@
 package com.example.project_joinme.jwt;
 
-import com.example.project_joinme.data.dao.LoginDAO;
 import com.example.project_joinme.data.dao.UserDAO;
-import com.example.project_joinme.data.dto.UserInfoDTO;
-import com.example.project_joinme.data.entity.LoginTbl;
-import com.example.project_joinme.data.entity.UserTbl;
-import com.example.project_joinme.data.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

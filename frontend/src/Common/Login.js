@@ -12,8 +12,24 @@ function Login() {
     const [password, setPassword] = useState("");
     const [loginResult, setLoginResult] = useState(null);
     const navigate = useNavigate()
+    const fetchUserInfo = async (username, accessToken) => {
+        if (!accessToken) return null; // 토큰 없으면 호출하지 않음
+
+        try {
+            const response = await axios.get(`http://localhost:8080/userinfo/${username}`, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                withCredentials: true,
+            });
+            return response.data;
+        } catch (error) {
+            console.error("회원정보 불러오기 실패", error);
+            return null;
+        }
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
+
         try {
             const formData = new URLSearchParams();
             formData.append("username", username);
@@ -28,32 +44,38 @@ function Login() {
                 }
             );
 
-            // response.data : { role, result: "로그인 성공" } 형태 예상
             setLoginResult(response.data.result);
 
+            const accessTokenRaw = response.headers["authorization"];
+            if (!accessTokenRaw) {
+                setLoginResult("로그인 실패 - 토큰이 없습니다.");
+                return;
+            }
 
-            // access token은 Authorization 헤더에 "Bearer {token}" 형태로 옴
-            const accessToken = response.headers["authorization"];
-            if (accessToken) {
-                const token = accessToken.replace("Bearer ", "");
-                dispatch(setToken(token));
-                // 토큰 저장 예: localStorage.setItem("accessToken", token);
-                console.log("access token:", token);
-            }
-            dispatch(loginUser(response.data.username))
-            console.log(response.data)
-            if(response.data.role==="ROLE_USER"){
-                navigate("/main")
-            }
-            else{
-                navigate("/admin-main")
+            const accessToken = accessTokenRaw.replace("Bearer ", "");
+            dispatch(setToken(accessToken));
+            console.log("access token:", accessToken);
+
+            if (response.data.role === "ROLE_USER") {
+                const userInfo = await fetchUserInfo(username, accessToken);
+                if (userInfo) {
+                    dispatch(loginUser(userInfo));
+                    navigate("/main");
+                } else {
+                    setLoginResult("회원정보를 불러올 수 없습니다.");
+                }
+            } else if (response.data.role === "ROLE_ADMIN") {
+                dispatch(loginUser(response.data.username))
+                navigate("/admin-main");
+            } else {
+                setLoginResult("알 수 없는 사용자 권한입니다.");
             }
         } catch (error) {
-            // 로그인 실패 시 에러 메시지 표시
+            console.error(error);
             setLoginResult(
                 error.response?.data?.result || "로그인 실패 - 서버와 연결 실패"
             );
-            alert(error.response.data.result)
+            alert(error.response?.data?.result || "로그인 실패");
         }
     };
 

@@ -17,7 +17,6 @@ public class LoginDAO {
         LoginTbl saveLogin = LoginTbl.builder()
                 .username(loginTbl.getUsername())
                 .password(passwordEncoder.encode(loginTbl.getPassword()))
-                .usernickname(loginTbl.getUsernickname())
                 .role(loginTbl.getRole())
                 .phone(loginTbl.getPhone())
                 .build();
