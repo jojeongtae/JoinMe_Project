@@ -28,7 +28,8 @@ public class UserService {
     private final HateRepository hateRepository;
     private final UserRepository userRepository;
 
-    public List<UserInfoDTO> findAllUserInfo(){
+    //모든 유저 정보가져오기
+    public List<UserInfoDTO> findAllUserInfo() {
         List<UserInfoDTO> userInfoDTOs = new ArrayList<>();
         List<UserTbl> userTbls = this.userDAO.findAllUser();
         for (UserTbl userTbl : userTbls) {
@@ -50,11 +51,12 @@ public class UserService {
         return userInfoDTOs;
     }
 
+    //로그인 한 아이디 정보 주기
     public UserInfoDTO getUserInfo(String username) {
-       UserTbl user = userDAO.findByUsernameWithLogin(username);
-       if (user == null) {
-           throw new MyException("없는 아이디입니다");
-       }
+        UserTbl user = userDAO.findByUsernameWithLogin(username);
+        if (user == null) {
+            throw new MyException("없는 아이디입니다");
+        }
         return UserInfoDTO.builder()
                 .username(user.getUsername())
                 .sexuality(user.getSexuality())
@@ -70,6 +72,7 @@ public class UserService {
                 .build();
 
     }
+
     // 회원정보추가
     public UserInfoDTO addUserInfo(UserInfoDTO userInfoDTO) {
 
@@ -110,7 +113,7 @@ public class UserService {
 
 
     // 회원정보 수정
-    public UserInfoDTO updateUserInfo(UserInfoDTO userInfoDTO){
+    public UserInfoDTO updateUserInfo(UserInfoDTO userInfoDTO) {
         LoginTbl loginTbl = this.loginDAO.findByUsername(userInfoDTO.getUsername());
 
         UserTbl userTbl = UserTbl.builder()
@@ -144,7 +147,7 @@ public class UserService {
     }
 
     // 신고하기
-    public HateDTO selectHateByUsername(String haterUser , String hatedUser) {
+    public HateDTO selectHateByUsername(String haterUser, String hatedUser) {
         UserTbl hater = userRepository.findByUsernameWithLogin(haterUser);
         UserTbl hated = userRepository.findByUsernameWithLogin(hatedUser);
 
@@ -164,6 +167,21 @@ public class UserService {
                 .hated(saveHate.getHated().getUsername())
                 .hate_time(Instant.now())
                 .build();
+    }
+
+    //내가 신고한 목록 보기
+    public List<HateDTO> getMyHateLogs(String haterUsername) {
+        List<HateTbl> hates = hateRepository.findByHater_Username(haterUsername);
+        List<HateDTO> result = new ArrayList<>();
+        for (HateTbl h : hates) {
+            result.add(new HateDTO(
+                    h.getHater().getUsername(),
+                    h.getHated().getUsername(),
+                    h.getHatetime(),
+                    h.getId()
+                        ));
+        }
+        return result;
     }
 
 

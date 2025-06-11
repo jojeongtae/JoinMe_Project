@@ -26,7 +26,7 @@ public class HateTbl {
     @JoinColumn(name = "hated", nullable = false)
     private UserTbl hated;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
+//    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "hate_time")
     private Instant hatetime;
 

@@ -55,7 +55,7 @@ public class SecurityConfig {
 
                     auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/hate-user","/userinfo").permitAll();
 
-                    auth.requestMatchers("*").permitAll();
+                    auth.requestMatchers("/**").permitAll();
 
                     auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
