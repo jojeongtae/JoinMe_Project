@@ -1,8 +1,10 @@
 package com.example.project_joinme.service;
 
 import com.example.project_joinme.data.dao.LoginDAO;
+import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.data.dto.AddUserDTO;
 import com.example.project_joinme.data.entity.LoginTbl;
+import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.exception.DuplicateIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginService implements UserDetailsService {
     private final LoginDAO loginDAO;
+    private final UserDAO userDAO;
+
     // 로그인
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -48,6 +52,16 @@ public class LoginService implements UserDetailsService {
                 .username(addUserDTO.getUsername())
                 .phone(addUserDTO.getPhone())
                 .build();
+    }
+
+    //회원탈퇴
+    public void deleteUser(String username) {
+        UserTbl user = userDAO.findByUsername(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("해당 유저를 찾을수 없습니다"+ username);
+        }
+        userDAO.deleteUser(user);
+        loginDAO.deleteByUsername(username);
     }
 
 
