@@ -25,6 +25,7 @@ public class UserController {
         UserInfoDTO saveUserinfoDTO = userService.addUserInfo(userInfoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveUserinfoDTO);
     }
+    //한명의 정보 가져오기
     @GetMapping("/userinfo/{username}")
     public ResponseEntity<UserInfoDTO> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserInfo(username));
@@ -42,18 +43,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(this.userService.findAllUserInfo());
     }
 
-    // 신고하기
-    @PostMapping(value = "/hate-user")
-    public ResponseEntity<HateDTO> hateUserInfo(@RequestParam String hater ,@RequestParam String hated) {
-        HateDTO reportUser = this.userService.selectHateByUsername(hater,hated);
-        return ResponseEntity.status(HttpStatus.OK).body(reportUser);
-    }
-    //유저 개인 신고 목록 조회
-    @GetMapping(value = "/hate-list/{hater}")
-    public ResponseEntity<List<HateDTO>> findHateByUsername(@PathVariable String hater) {
-        List<HateDTO> reportList = this.userService.getMyHateLogs(hater);
-        return ResponseEntity.status(HttpStatus.OK).body(reportList);
-    }
+
 
 
 }
