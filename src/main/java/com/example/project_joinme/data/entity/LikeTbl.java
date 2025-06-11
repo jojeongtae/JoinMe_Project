@@ -11,15 +11,10 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "like_tbl", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"liker", "liked"}) // 중복좋아요 방지
-})
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Table(name = "like_tbl")
 public class LikeTbl {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num", nullable = false)
     private Integer id;
 

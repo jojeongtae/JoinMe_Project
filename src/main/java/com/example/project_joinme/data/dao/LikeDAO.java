@@ -1,26 +1,32 @@
 package com.example.project_joinme.data.dao;
 
 import com.example.project_joinme.data.entity.LikeTbl;
-import com.example.project_joinme.data.entity.LoginTbl;
+import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.data.repository.LikeRepository;
+import com.example.project_joinme.data.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class LikeDAO {
     private final LikeRepository likeRepository;
+    private final UserRepository userRepository;
 
     // 좋아요 추가
-    public Boolean addLike(LoginTbl liker, LoginTbl liked) {
+    @Transactional
+    public Boolean addLike(String liker, String liked) {
+        UserTbl likerUser = this.userRepository.findById(liker).orElseThrow(() -> new IllegalArgumentException("Liker not found" + liker));
+        UserTbl likedUser = this.userRepository.findById(liked).orElseThrow(() -> new IllegalArgumentException("Liked not found" + liked));
         LikeTbl like = LikeTbl.builder()
-                .liker(liker)
-                .liked(liked)
-                .likeTime(Instant.now())
+                .liker(likerUser)
+                .liked(likedUser)
+                .liketime(Instant.now())
                 .build();
         this.likeRepository.save(like);
         return true;
@@ -28,8 +34,8 @@ public class LikeDAO {
 
     // 좋아요 삭제
     @Transactional // 예외 발생 시 자동으로 롤백(rollback)
-    public Boolean deleteLike(LoginTbl liker, LoginTbl liked) {
-        Optional<LikeTbl> likeOpt = this.likeRepository.findByLikerAndLiked(liker, liked);
+    public Boolean deleteLike(String liker, String liked) {
+        Optional<LikeTbl> likeOpt = this.likeRepository.findByLiker_UsernameAndLiked_Username(liker, liked);
         if (likeOpt.isPresent()) {
             this.likeRepository.delete(likeOpt.get());
             return true;
@@ -37,9 +43,20 @@ public class LikeDAO {
         return false;
     }
 
-    public Optional<LikeTbl> findByLikerAndLiked(LoginTbl liker, LoginTbl liked){
-        return this.likeRepository.findByLikerAndLiked(liker, liked);
+    public Optional<LikeTbl> findByLikerAndLiked(String liker, String liked){
+        return this.likeRepository.findByLiker_UsernameAndLiked_Username(liker, liked);
     }
+
+    // 내가 좋아요한 유저 목록 조회
+    public List<UserTbl> getLikedUsersByLiker(String liker) {
+        return this.likeRepository.findLikedUsersByLiker(liker);
+    }
+
+    // 나를 조아요한 유저 목록 조회
+    public List<UserTbl> getLikerUsersByLiked(String liked) {
+        return this.likeRepository.findLikerUsersByLiked(liked);
+    }
+
 
 
 
