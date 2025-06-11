@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './UserInfoPost.css';
 import apiClient from "../api/apiClient";
+import {useNavigate} from "react-router-dom";
 
 export default function UserInfoPost() {
     const currentUser = useSelector(state => state.main.currentUser);
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         sexuality: '',
@@ -40,6 +41,7 @@ export default function UserInfoPost() {
             const response = await apiClient.post('/userinfo', formData);
             console.log('서버 응답:', response.data);
             alert('프로필 정보가 성공적으로 저장되었습니다.');
+            navigate("/main")
         } catch (error) {
             console.error('전송 중 오류:', error);
             alert('전송 중 오류가 발생했습니다.');

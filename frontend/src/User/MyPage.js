@@ -13,18 +13,18 @@ export default function MyPage() {
                 <div className="mypage-img-wrapper">
                     <img
                         src={currentUser.imgPath}
-                        alt={currentUser.name}
+                        alt={currentUser.usernickname}
                         className="mypage-img"
                     />
                 </div>
                 <div className="mypage-info">
-                    <h2 className="mypage-name">{currentUser.name}</h2>
+                    <h2 className="mypage-name">{currentUser.usernickname}</h2>
                     <p>키: {currentUser.height}cm</p>
                     <p>몸무게: {currentUser.weight}kg</p>
                     <p>관심사: {currentUser.interest}</p>
-                    <p>주소: {currentUser.addr}</p>
+                    <p>주소: {currentUser.address}</p>
                     <p>MBTI: {currentUser.mbti.toUpperCase()}</p>
-                    <p className="mypage-intro">{currentUser.intro}</p>
+                    <p className="mypage-intro">{currentUser.introduction}</p>
                 </div>
             </div>
 
