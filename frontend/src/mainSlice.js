@@ -1,4 +1,5 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit";
+import {mbtiCompatibility} from "./User/mbtiCompatibility";
 
 const mainSlice = createSlice({
     name: "main",
@@ -22,7 +23,7 @@ const mainSlice = createSlice({
                 mbti: "estj",
                 userLikedReceived: [{id: "ddd"}, {id: "fff"}, {id: "ggg"}],
                 userLiked: [{id: "eee"}],
-                userMatched: []
+                userMatched: [{id: "ddd"}]
             },
             {
                 id: "bbb",
@@ -64,7 +65,9 @@ const mainSlice = createSlice({
                 intro: "안녕하세요 김일번입니다 잘부탁드립니다",
                 mbti: "estj",
                 userLikedReceived: [],
-                userLiked: [{id: "aaa"}]
+                userLiked: [{id: "aaa"}],
+                userMatched: [{id: "aaa"}]
+
             },
             {
                 id: "eee",
@@ -200,6 +203,13 @@ const mainSlice = createSlice({
             const matchedPairs = new Set();
             const matches = [];
 
+            const getMbtiCompatibility = (mbti1, mbti2) => {
+                const key1 = `${mbti1.toUpperCase()}-${mbti2.toUpperCase()}`;
+                const key2 = `${mbti2.toUpperCase()}-${mbti1.toUpperCase()}`;
+
+                return mbtiCompatibility[key1] || mbtiCompatibility[key2] || "🤝 서로의 개성이 잘 맞는 좋은 조합입니다!";
+            };
+
             state.users.forEach(user => {
                 user.userMatched?.forEach(match => {
                     const pairKey = [user.id, match.id].sort().join('-');
@@ -210,11 +220,13 @@ const mainSlice = createSlice({
                         const female = state.users.find(u => u.id === match.id);
 
                         if (female) {
+                            const mbtiResult = getMbtiCompatibility(male.mbti, female.mbti);
                             matches.push({
                                 num: matches.length + 1,
-                                male: {id: male.id, name: male.name},
-                                female: {id: female.id, name: female.name},
-                                matchTime: '2025-06-10'
+                                male: {id: male.id, name: male.name, mbti: male.mbti.toUpperCase()},
+                                female: {id: female.id, name: female.name, mbti: female.mbti.toUpperCase()},
+                                matchTime: '2025-06-10',
+                                mbtiResult
                             });
                         }
                     }
