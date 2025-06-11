@@ -1,8 +1,7 @@
 package com.example.project_joinme.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -10,7 +9,13 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "like_tbl")
+@Table(name = "like_tbl", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"liker", "liked"}) // 중복좋아요 방지
+})
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class LikeTbl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
