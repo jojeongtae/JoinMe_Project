@@ -12,14 +12,9 @@ function Login() {
     const [password, setPassword] = useState("");
     const [loginResult, setLoginResult] = useState(null);
     const navigate = useNavigate()
-    const fetchUserInfo = async (username, accessToken) => {
-        if (!accessToken) return null; // 토큰 없으면 호출하지 않음
-
+    const fetchUserInfo = async (username) => {
         try {
-            const response = await axios.get(`http://localhost:8080/userinfo/${username}`, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-                withCredentials: true,
-            });
+            const response = await apiClient.get(`/userinfo/${username}`);
             return response.data;
         } catch (error) {
             console.error("회원정보 불러오기 실패", error);
@@ -63,6 +58,7 @@ function Login() {
                     navigate("/main");
                 } else {
                     setLoginResult("회원정보를 불러올 수 없습니다.");
+                    dispatch(loginUser(response.data.username))
                     navigate("/userinfo-post")
                 }
             } else if (response.data.role === "ROLE_ADMIN") {
