@@ -111,7 +111,6 @@ DROP TABLE IF EXISTS `login_tbl`;
 CREATE TABLE `login_tbl` (
   `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `usernickname` varchar(45) NOT NULL,
   `role` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
   PRIMARY KEY (`username`)
@@ -124,7 +123,7 @@ CREATE TABLE `login_tbl` (
 
 LOCK TABLES `login_tbl` WRITE;
 /*!40000 ALTER TABLE `login_tbl` DISABLE KEYS */;
-INSERT INTO `login_tbl` VALUES ('add','$2a$10$o0GLofNsv/nvq6hs9sTYoOKHe0SvnyRMVGa9irRfeVZpTN/qG199S','ddd','ROLE_USER','0102321321'),('vvvv','$2a$10$e2zrKVY1ah6gM7TYg/ToS.kOGWp2/Ydh29SY/bY23J7nWXkgKahtK','dfff','ROLE_USER','0102321321'),('zxc','$2a$10$PBO.c57d4ihQZcHJE3cD6.Fa6w64hu.6HRxlNKaC7uvGP9DlBF1RC','ddd','ROLE_USER','0102321321');
+INSERT INTO `login_tbl` VALUES ('add','$2a$10$o0GLofNsv/nvq6hs9sTYoOKHe0SvnyRMVGa9irRfeVZpTN/qG199S','ROLE_USER','0102321321'),('bbb','$2a$10$/XHTvC2ozHe0oaKpbKsLoOZ6NmZEgScUo8IfgD1upUrrJEHJ1duRC','ROLE_USER','01012345678'),('vvvv','$2a$10$e2zrKVY1ah6gM7TYg/ToS.kOGWp2/Ydh29SY/bY23J7nWXkgKahtK','ROLE_USER','0102321321'),('zxc','$2a$10$PBO.c57d4ihQZcHJE3cD6.Fa6w64hu.6HRxlNKaC7uvGP9DlBF1RC','ROLE_USER','0102321321');
 /*!40000 ALTER TABLE `login_tbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,6 +165,7 @@ DROP TABLE IF EXISTS `user_tbl`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_tbl` (
   `username` varchar(40) NOT NULL,
+  `usernickname` varchar(100) NOT NULL,
   `sexuality` varchar(10) NOT NULL,
   `age` int NOT NULL,
   `height` int NOT NULL,
@@ -199,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-11 14:07:13
+-- Dump completed on 2025-06-11 16:34:32

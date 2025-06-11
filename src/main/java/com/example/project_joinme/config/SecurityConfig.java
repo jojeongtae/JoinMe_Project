@@ -74,10 +74,10 @@ public class SecurityConfig {
                 .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil,userDAO),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
-//                .exceptionHandling(exception -> {
-//                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
-//                    exception.authenticationEntryPoint(this.customerUser);
-//                })
+                .exceptionHandling(exception -> {
+                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
+                    exception.authenticationEntryPoint(this.customerUser);
+                })
         ;
 
         return http.build();
