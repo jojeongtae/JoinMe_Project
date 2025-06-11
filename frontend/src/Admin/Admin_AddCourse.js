@@ -1,21 +1,50 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {addCourse} from "../mainSlice";
+import apiClient from "../api/apiClient";
 
 export default function Admin_AddCourse() {
     const dispatch = useDispatch();
-    const [courseName, setCourseName] = useState("");
+    const token = useSelector((state) => state.main.token);
+
+    const [coursename, setCoursename] = useState("");
     const [address, setAddress] = useState("");
     const [body, setBody] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addCourse({courseName, address, body}));
 
-        setCourseName("");
-        setAddress("");
-        setBody("");
-        alert("코스가 추가되었습니다.");
+        console.log("추가 요청할 코스:", coursename, address, body);
+        console.log("토큰 확인:", token);
+
+        const courseData = {
+            coursename,
+            address,
+            body,
+            image: "",
+            updateDate: new Date().toISOString(),
+        };
+
+        try {
+            const response = apiClient.post("/admin/add-course",
+                courseData,
+                {
+                    withCredentials: true,
+                    headers: {
+                        // "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+
+                }
+            );
+
+            dispatch(addCourse({ coursename, address, body }));
+            alert("코스가 추가되었습니다.");
+
+        } catch (err) {
+            console.error("코스 추가 실패:", err);
+            alert("코스 추가 실패: " + err.response?.status);
+        }
     }
 
     return (
@@ -25,7 +54,8 @@ export default function Admin_AddCourse() {
                 <ul>
                     <li>
                         <label>코스명</label>
-                        <input type={"text"} value={courseName} placeholder={"코스명을 작성해주세요."} onChange={(e) => setCourseName(e.target.value)} required/>
+                        <input type={"text"} value={coursename} placeholder={"코스명을 작성해주세요."}
+                               onChange={(e) => setCoursename(e.target.value)} required/>
                     </li>
                     <li>
                         <label>지역</label>
@@ -38,7 +68,8 @@ export default function Admin_AddCourse() {
                     </li>
                     <li>
                         <label>코스 설명</label>
-                        <textarea value={body} onChange={(e) => setBody(e.target.value)} placeholder={"코스 설명을 입력해주세요."}></textarea>
+                        <textarea value={body} onChange={(e) => setBody(e.target.value)}
+                                  placeholder={"코스 설명을 입력해주세요."}></textarea>
                     </li>
                 </ul>
 

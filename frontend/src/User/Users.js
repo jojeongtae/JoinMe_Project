@@ -1,12 +1,36 @@
 import { useSelector, useDispatch } from "react-redux";
-import {giveLike} from "../mainSlice";
+import {giveLike, setUsers} from "../mainSlice";
+import {useEffect} from "react";
+import apiClient from "../api/apiClient";
 
 export default function Users() {
-
-    const users = useSelector((state) => state.main.users.filter(e=>!(e.id===state.main.currentUser.id)));
-    const currentUser = useSelector(state => state.main.currentUser)
-    users.push(currentUser)
     const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.main.currentUser);
+    const users = useSelector((state) =>
+        state.main.users.filter((e) => e.username !== currentUser.username)
+    );
+    const fetchUserList = async () => {
+        try {
+            const response = await apiClient.get("/user-list");
+            return response.data;
+        } catch (error) {
+            console.error("유저 리스트를 가져오는 중 오류 발생:", error);
+            throw error;
+        }
+    };
+    useEffect(() => {
+        const loadUsers = async () => {
+            try {
+                const userList = await fetchUserList();
+                dispatch(setUsers(userList));
+                console.log(userList)
+            } catch (error) {
+                console.error("유저 리스트 로딩 실패:", error);
+            }
+        };
+
+        loadUsers();
+    }, [dispatch]);
 
     return (
         <div style={styles.container}>
@@ -21,7 +45,12 @@ export default function Users() {
                         <p>주소: {e.address}</p>
                         <p style={styles.intro}>{e.introduction}</p>
                         <div style={styles.buttons}>
-                            <button style={styles.like} onClick={()=>dispatch(giveLike(e.id))}>좋아요</button>
+                            <button
+                                style={styles.like}
+                                onClick={() => dispatch(giveLike(e.id))}
+                            >
+                                좋아요
+                            </button>
                             <button style={styles.block}>차단하기</button>
                         </div>
                     </div>
