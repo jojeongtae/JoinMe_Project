@@ -6,7 +6,6 @@ import com.example.project_joinme.data.dto.AddUserDTO;
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.exception.DuplicateIdException;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,14 +44,12 @@ public class LoginService implements UserDetailsService {
         LoginTbl loginTbl = LoginTbl.builder()
                 .username(addUserDTO.getUsername())
                 .password(addUserDTO.getPassword())
-                .usernickname(addUserDTO.getUsernickname())
                 .role("ROLE_USER")
                 .phone(addUserDTO.getPhone())
                 .build();
         this.loginDAO.addUser(loginTbl);
         return AddUserDTO.builder()
                 .username(addUserDTO.getUsername())
-                .usernickname(addUserDTO.getUsernickname())
                 .phone(addUserDTO.getPhone())
                 .build();
     }

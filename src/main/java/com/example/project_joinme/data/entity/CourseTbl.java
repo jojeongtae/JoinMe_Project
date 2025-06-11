@@ -5,18 +5,16 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "course_tbl")
 public class CourseTbl {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num", nullable = false)
     private Integer id;
 
@@ -32,6 +30,6 @@ public class CourseTbl {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "update_time")
-    private Instant updateTime;
+    private Instant updatetime;
 
 }

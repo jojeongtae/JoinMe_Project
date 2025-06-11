@@ -19,6 +19,7 @@ import Course from "./User/Course";
 import Admin_BlackList from "./Admin/Admin_BlackList";
 import Register from "./Common/Register";
 import MBTI from "./User/MBTI";
+import Admin_Intro from "./Admin/Admin_Intro";
 
 
 
@@ -30,7 +31,6 @@ function App() {
             <Route path={"/"} element={<Logo/>}></Route>
             <Route path={"/login"} element={<Login/>}></Route>
             <Route path={"/register"} element={<Register/>}></Route>
-
             <Route path={"/main"} element={<MainLayout/>}>
                 <Route index element={<Intro/>}></Route>
                 <Route path={"users"} element={<Users/>}></Route>
@@ -41,7 +41,7 @@ function App() {
                 <Route path={"mbti"} element={<MBTI/>} />
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
-                <Route index element={<Intro />} />
+                <Route index element={<Admin_Intro/>} />
                 <Route path={"post-hiding"} element={<Admin_PostHiding />} />
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
                 <Route path={"add-cource"} element={<Admin_AddCourse/>} />

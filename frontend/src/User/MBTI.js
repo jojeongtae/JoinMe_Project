@@ -10,10 +10,6 @@ export default function MBTI() {
         dispatch(matchingInfo());
     }, [dispatch]);
 
-    useEffect(() => {
-        console.log("MBTI 궁합 리스트:", mbtiList);
-    }, [mbtiList]);
-
     return (
         <>
             <section id={"mbti"}>
