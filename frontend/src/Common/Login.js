@@ -63,6 +63,7 @@ function Login() {
                     navigate("/main");
                 } else {
                     setLoginResult("회원정보를 불러올 수 없습니다.");
+                    navigate("/userinfo-post")
                 }
             } else if (response.data.role === "ROLE_ADMIN") {
                 dispatch(loginUser(response.data.username))

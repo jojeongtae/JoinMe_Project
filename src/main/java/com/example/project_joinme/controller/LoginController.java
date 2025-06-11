@@ -32,6 +32,7 @@ public class LoginController {
         cookie.setSecure(true);
         response.addCookie(cookie);
         return ResponseEntity.ok("로그아웃 완료");
+    }
     // 회원탈퇴
     @DeleteMapping(value = "/user-delete/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable String username) {
