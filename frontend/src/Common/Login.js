@@ -41,6 +41,7 @@ function Login() {
                 console.log("access token:", token);
             }
             dispatch(loginUser(response.data))
+            console.log(response.data)
             navigate("/main")
         } catch (error) {
             // 로그인 실패 시 에러 메시지 표시
