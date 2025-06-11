@@ -1,4 +1,15 @@
+import {useDispatch, useSelector} from "react-redux";
+import {removeHate} from "../mainSlice";
+
 export default function Admin_BlackList() {
+    const dispatch = useDispatch();
+    const hates = useSelector(state => state.main.hates);
+    const users = useSelector(state => state.main.users);
+
+    const handleRemove = (hater, hated) => {
+        dispatch(removeHate({ hater, hated }));
+    };
+
     return (
         <>
         <section id={"black-list"}>
@@ -11,25 +22,33 @@ export default function Admin_BlackList() {
             <table>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>이름</th>
+                    <th>차단 유저</th>
                     <th>누적 신고수</th>
+                    <th>신고자</th>
                     <th>상태</th>
                     <th>차단된 시간</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>아이디</td>
-                        <td>이름</td>
-                        <td>누적 신고수</td>
-                        <td>계정 정지</td>
-                        <td>시간~~</td>
-                        <td>
-                            <button>차단 해제</button>
-                        </td>
-                    </tr>
+                {hates.map(hate => {
+                    const hater = users.find(u => u.id === hate.hater);
+                    const hated = users.find(u => u.id === hate.hated);
+                    return (
+                        <tr key={hate.num}>
+                            <td>{hater?.name} ({hater?.id})</td>
+                            <td>누적 신고수</td>
+                            <td>{hated?.name} ({hated?.id})</td>
+                            <td>계정 정지</td>
+                            <td>{hate.hateTime}</td>
+                            <td>
+                                <button onClick={() => handleRemove(hater.id, hated.id)}>
+                                    삭제
+                                </button>
+                            </td>
+                        </tr>
+                    );
+                })}
                 </tbody>
             </table>
         </section>
