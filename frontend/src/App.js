@@ -18,6 +18,7 @@ import Admin_AddCourse from "./Admin/Admin_AddCourse";
 import Course from "./User/Course";
 import Admin_BlackList from "./Admin/Admin_BlackList";
 import Register from "./Common/Register";
+import MBTI from "./User/MBTI";
 
 
 
@@ -37,6 +38,7 @@ function App() {
                 <Route path={"liked-by"} element={<LikedBy/>}></Route>
                 <Route path={"/main/mypage"} element={<MyPage/>}></Route>
                 <Route path={"course"} element={<Course/>} />
+                <Route path={"mbti"} element={<MBTI/>} />
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Intro />} />
