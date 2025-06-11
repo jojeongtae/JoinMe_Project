@@ -24,8 +24,5 @@ public interface HateRepository extends JpaRepository<HateTbl, Integer> {
             """, nativeQuery = true)
     List<Object[]> findUsersWithMoreThanFiveHates();
 
-    //    @Query(value = "select h.hater,h.hated,h.hate_time from hate_tbl h where h.hater =:hater",nativeQuery = true)
-//    List<HateTbl> findHateLogs(@Param("hater") String hater);
-
     List<HateTbl> findByHater_Username(String username);
 }
