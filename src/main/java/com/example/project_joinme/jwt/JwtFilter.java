@@ -15,7 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,13 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         /* 2️⃣ "Bearer " 이후 토큰 추출 */
-        String token = header.substring(7);            // split() 대신 substring()이 조금 더 안전
-
-        /* 3️⃣ JWT 기본 형식 점( . ) 2개 여부 확인 */
-        if (token.chars().filter(ch -> ch == '.').count() != 2) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Malformed JWT");
-            return;
-        }
+        String token = header.substring(7);
 
         try {
             jwtUtil.isExpired(token);

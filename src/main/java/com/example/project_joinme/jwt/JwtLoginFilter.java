@@ -1,5 +1,11 @@
 package com.example.project_joinme.jwt;
 
+import com.example.project_joinme.data.dao.LoginDAO;
+import com.example.project_joinme.data.dao.UserDAO;
+import com.example.project_joinme.data.dto.UserInfoDTO;
+import com.example.project_joinme.data.entity.LoginTbl;
+import com.example.project_joinme.data.entity.UserTbl;
+import com.example.project_joinme.data.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,6 +31,7 @@ import java.util.Map;
 public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final UserDAO userDAO;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -40,12 +47,29 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         UserDetails user = (UserDetails) authResult.getPrincipal();
         String username = user.getUsername();
 
+        UserTbl userTbl = this.userDAO.findByUsernameWithLogin(username);
+        String nickname = userTbl.getLoginTbl().getUsernickname();
+        UserInfoDTO dto = UserInfoDTO.builder()
+                .username(userTbl.getUsername())
+                .usernickname(nickname)
+                .sexuality(userTbl.getSexuality())
+                .age(userTbl.getAge())
+                .height(userTbl.getHeight())
+                .weight(userTbl.getWeight())
+                .interest(userTbl.getInterest())
+                .address(userTbl.getAddress())
+                .introduction(userTbl.getIntroduction())
+                .mbti(userTbl.getMbti())
+                .profileimg(userTbl.getProfileimg())
+                .build();
+
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority grantedAuthority = iterator.next();
 
         String role = grantedAuthority.getAuthority();
         Map<String, Object> responseData = new HashMap<>();
+        responseData.put("user", dto);
         responseData.put("role", role);
         responseData.put("result", "로그인 성공");
         ObjectMapper objectMapper = new ObjectMapper();

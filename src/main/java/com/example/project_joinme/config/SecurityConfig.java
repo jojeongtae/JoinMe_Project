@@ -3,6 +3,7 @@ package com.example.project_joinme.config;
 
 import com.example.project_joinme.component.CustomAccessDeniedHandler;
 import com.example.project_joinme.component.CustomerUser;
+import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.jwt.JwtFilter;
 import com.example.project_joinme.jwt.JwtLoginFilter;
 import com.example.project_joinme.jwt.JwtUtil;
@@ -29,6 +30,7 @@ import java.util.List;
 public class SecurityConfig {
     private final CustomerUser customerUser;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final UserDAO userDAO;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
 
@@ -68,7 +70,7 @@ public class SecurityConfig {
                 }))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil),
+                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil,userDAO),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
 //                .exceptionHandling(exception -> {
