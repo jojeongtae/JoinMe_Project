@@ -4,6 +4,7 @@ import com.example.project_joinme.data.dao.AdminDAO;
 import com.example.project_joinme.data.dao.CourseDAO;
 import com.example.project_joinme.data.dto.AddCourseDTO;
 import com.example.project_joinme.data.dto.AdminMatchDTO;
+import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.entity.CourseTbl;
 import com.example.project_joinme.data.entity.MatchTbl;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +47,7 @@ public class AdminService {
                 .updateDate(Instant.now())
                 .build();
     }
-//    public List<HateDTO> findAllHates() {
-//        List<HateDTO> hates = this.adminDAO.findByReportFive();
-//        return hates;
-//    }
-
+    public List<HateDTO>  findAllHates() {
+        return this.adminDAO.getAllHateLog();
+    }
 }

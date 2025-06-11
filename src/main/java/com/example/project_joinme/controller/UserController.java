@@ -1,5 +1,6 @@
 package com.example.project_joinme.controller;
 
+import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.UserInfoDTO;
 import com.example.project_joinme.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +34,17 @@ public class UserController {
     public  ResponseEntity<UserInfoDTO> updateUserInfo(@RequestBody UserInfoDTO userInfoDTO) {
         UserInfoDTO saveUserinfoDTO = userService.updateUserInfo(userInfoDTO);
         return ResponseEntity.status(HttpStatus.OK).body(saveUserinfoDTO);
+    }
+    @GetMapping(value = "/user-list")
+    public ResponseEntity<List<UserInfoDTO>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.findAllUserInfo());
+    }
+
+    // 신고하기
+    @PostMapping(value = "/hate-user")
+    public ResponseEntity<HateDTO> hateUserInfo(@RequestParam String hater ,@RequestParam String hated) {
+        HateDTO reportUser = this.userService.selectHateByUsername(hater,hated);
+        return ResponseEntity.status(HttpStatus.OK).body(reportUser);
     }
 
 

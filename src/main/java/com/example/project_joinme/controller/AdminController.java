@@ -24,9 +24,9 @@ public class AdminController {
     public ResponseEntity<AddCourseDTO> addCourse(@RequestBody AddCourseDTO addCourseDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(adminService.addCourse(addCourseDTO));
     }
-//    @GetMapping("/five-hatelist")
-//    public ResponseEntity<List<HateDTO>> getAllHates() {
-//        return ResponseEntity.status(HttpStatus.OK).body(adminService.findAllHates());
-//    }
+   @GetMapping("/hate-log")
+    public ResponseEntity<List<HateDTO>> getAllHates() {
+        return ResponseEntity.status(HttpStatus.OK).body(adminService.findAllHates());
+   }
 
 }

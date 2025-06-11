@@ -2,19 +2,53 @@ package com.example.project_joinme.service;
 
 import com.example.project_joinme.data.dao.LoginDAO;
 import com.example.project_joinme.data.dao.UserDAO;
+import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.UserInfoDTO;
+import com.example.project_joinme.data.entity.HateTbl;
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
+import com.example.project_joinme.data.repository.HateRepository;
+import com.example.project_joinme.data.repository.UserRepository;
 import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+
+import java.time.Instant;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserDAO userDAO;
     private final LoginDAO loginDAO;
+    private final HateRepository hateRepository;
+    private final UserRepository userRepository;
 
+    public List<UserInfoDTO> findAllUserInfo(){
+        List<UserInfoDTO> userInfoDTOs = new ArrayList<>();
+        List<UserTbl> userTbls = this.userDAO.findAllUser();
+        for (UserTbl userTbl : userTbls) {
+            UserInfoDTO user = UserInfoDTO.builder()
+                    .username(userTbl.getUsername())
+                    .address(userTbl.getAddress())
+                    .mbti(userTbl.getMbti())
+                    .usernickname(userTbl.getUsernickname())
+                    .weight(userTbl.getWeight())
+                    .height(userTbl.getHeight())
+                    .sexuality(userTbl.getSexuality())
+                    .profileimg(userTbl.getProfileimg())
+                    .interest(userTbl.getInterest())
+                    .introduction(userTbl.getIntroduction())
+                    .age(userTbl.getAge())
+                    .build();
+            userInfoDTOs.add(user);
+        }
+        return userInfoDTOs;
+    }
 
     public UserInfoDTO getUserInfo(String username) {
        UserTbl user = userDAO.findByUsernameWithLogin(username);
@@ -107,6 +141,29 @@ public class UserService {
                 .profileimg(userInfoDTO.getProfileimg())
                 .build();
 
+    }
+
+    // 신고하기
+    public HateDTO selectHateByUsername(String haterUser , String hatedUser) {
+        UserTbl hater = userRepository.findByUsernameWithLogin(haterUser);
+        UserTbl hated = userRepository.findByUsernameWithLogin(hatedUser);
+
+        if (hater == null || hated == null) {
+            throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+        }
+
+        HateTbl saveHate = HateTbl.builder()
+                .hater(hater)
+                .hated(hated)
+                .hatetime(Instant.now())
+                .build();
+
+        this.hateRepository.save(saveHate);
+        return HateDTO.builder()
+                .hater(saveHate.getHater().getUsername())
+                .hated(saveHate.getHated().getUsername())
+                .hate_time(Instant.now())
+                .build();
     }
 
 
