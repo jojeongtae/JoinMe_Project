@@ -3,6 +3,7 @@ package com.example.project_joinme.config;
 
 import com.example.project_joinme.component.CustomAccessDeniedHandler;
 import com.example.project_joinme.component.CustomerUser;
+import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.jwt.JwtFilter;
 import com.example.project_joinme.jwt.JwtLoginFilter;
 import com.example.project_joinme.jwt.JwtUtil;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
+import java.util.List;
 
 @EnableWebSecurity
 @Configuration
@@ -28,6 +30,7 @@ import java.util.Arrays;
 public class SecurityConfig {
     private final CustomerUser customerUser;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final UserDAO userDAO;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
 
@@ -49,7 +52,8 @@ public class SecurityConfig {
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-
+                    auth.requestMatchers("/user/update-info" ,"/user/add-info").permitAll();
+                    auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
@@ -57,22 +61,22 @@ public class SecurityConfig {
                 })
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedMethods(Arrays.asList("PUT", "GET", "POST", "DELETE", "OPTIONS"));
-                    config.addAllowedHeader("*");
-                    config.addAllowedOrigin("http://localhost:3000");
-                    config.setExposedHeaders(Arrays.asList("Authorization"));
+                    config.setAllowedMethods(List.of("PUT", "GET", "POST", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(List.of("*"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000"));
+                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
                     return config;
                 }))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil),
+                .addFilterAt(new JwtLoginFilter(this.authenticationManager(this.authenticationConfiguration), this.jwtUtil,userDAO),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(this.jwtUtil), JwtLoginFilter.class)
-                .exceptionHandling(exception -> {
-                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
-                    exception.authenticationEntryPoint(this.customerUser);
-                })
+//                .exceptionHandling(exception -> {
+//                    exception.accessDeniedHandler(this.customAccessDeniedHandler);
+//                    exception.authenticationEntryPoint(this.customerUser);
+//                })
         ;
 
         return http.build();

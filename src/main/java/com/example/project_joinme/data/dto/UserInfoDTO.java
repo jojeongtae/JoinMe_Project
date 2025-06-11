@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserInfoDTO {
     private String username;
+    private String usernickname;
     private String sexuality;
     private Integer age;
     private Integer height;

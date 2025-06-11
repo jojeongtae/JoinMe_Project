@@ -40,3 +40,11 @@
 :root {
   --color-1rd: #EC1C2C;
 }
+
+.inner {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
