@@ -51,10 +51,9 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/userinfo").permitAll();  // 개발 중 임시
-                    auth.requestMatchers("/userinfo/**").permitAll();  // 개발 중 임시
-                    auth.requestMatchers("/userinfo").hasRole("USER");
+                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/user/update-info" ,"/user/add-info").permitAll();
+                    auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
