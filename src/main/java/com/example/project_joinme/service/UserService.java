@@ -15,6 +15,26 @@ public class UserService {
     private final UserDAO userDAO;
     private final LoginDAO loginDAO;
 
+
+    public UserInfoDTO getUserInfo(String username) {
+       UserTbl user = userDAO.findByUsernameWithLogin(username);
+       if (user == null) {
+           throw new MyException("없는 아이디입니다");
+       }
+        return UserInfoDTO.builder()
+                .username(user.getUsername())
+                .sexuality(user.getSexuality())
+                .age(user.getAge())
+                .height(user.getHeight())
+                .weight(user.getWeight())
+                .interest(user.getInterest())
+                .address(user.getAddress())
+                .introduction(user.getIntroduction())
+                .mbti(user.getMbti())
+                .profileimg(user.getProfileimg())
+                .build();
+
+    }
     // 회원정보추가
     public UserInfoDTO addUserInfo(UserInfoDTO userInfoDTO) {
 

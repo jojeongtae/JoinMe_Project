@@ -47,29 +47,13 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         UserDetails user = (UserDetails) authResult.getPrincipal();
         String username = user.getUsername();
 
-        UserTbl userTbl = this.userDAO.findByUsernameWithLogin(username);
-        String nickname = userTbl.getLoginTbl().getUsernickname();
-        UserInfoDTO dto = UserInfoDTO.builder()
-                .username(userTbl.getUsername())
-                .usernickname(nickname)
-                .sexuality(userTbl.getSexuality())
-                .age(userTbl.getAge())
-                .height(userTbl.getHeight())
-                .weight(userTbl.getWeight())
-                .interest(userTbl.getInterest())
-                .address(userTbl.getAddress())
-                .introduction(userTbl.getIntroduction())
-                .mbti(userTbl.getMbti())
-                .profileimg(userTbl.getProfileimg())
-                .build();
-
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority grantedAuthority = iterator.next();
 
         String role = grantedAuthority.getAuthority();
         Map<String, Object> responseData = new HashMap<>();
-        responseData.put("user", dto);
+        responseData.put("username",username);
         responseData.put("role", role);
         responseData.put("result", "로그인 성공");
         ObjectMapper objectMapper = new ObjectMapper();
