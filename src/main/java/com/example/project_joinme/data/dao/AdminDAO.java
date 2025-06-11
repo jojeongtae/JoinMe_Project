@@ -1,7 +1,10 @@
 package com.example.project_joinme.data.dao;
 
+
+import com.example.project_joinme.data.dto.AdminMatchDTO;
 import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.MatchDTO;
+
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.MatchTbl;
 import com.example.project_joinme.data.repository.HateRepository;
@@ -10,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

@@ -1,5 +1,5 @@
 import axios from "axios";
-import store, { setToken } from "../mainSlice";
+import store, {setToken} from "../mainSlice";
 
 const apiClient = axios.create({
     baseURL: "http://localhost:8080",
@@ -16,9 +16,10 @@ apiClient.interceptors.request.use(
             config.headers["Content-Type"] = "application/x-www-form-urlencoded";
         }
 
-        const jwtToken = store.getState().main.token;
+        // 토큰이 있다면 Authorization 헤더에 추가
+        const jwtToken = store.getState().token?.token; // 정확한 위치 확인
         if (jwtToken) {
-            config.headers["Authorization"] = `Bearer ${jwtToken}`;
+            config.headers["authorization"] = jwtToken;
         }
 
         return config;
@@ -32,7 +33,7 @@ apiClient.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        if (error.response?.status === 456 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
                 const res = await axios.post("http://localhost:8080/reissue", null, {
@@ -41,13 +42,11 @@ apiClient.interceptors.response.use(
 
                 const newAccessToken = res.headers["authorization"];
                 if (newAccessToken) {
-                    const tokenOnly = newAccessToken.startsWith("Bearer ")
-                        ? newAccessToken.slice(7)
-                        : newAccessToken;
+                    // 토큰 Redux에 저장
+                    store.dispatch(setToken(newAccessToken));
 
-                    store.dispatch(setToken(tokenOnly));
-
-                    originalRequest.headers["Authorization"] = `Bearer ${tokenOnly}`;
+                    // Authorization 헤더 갱신 후 재요청
+                    originalRequest.headers["authorization"] = newAccessToken;
                     return apiClient(originalRequest);
                 } else {
                     console.log("토큰 재발급 실패: 응답에 토큰 없음");

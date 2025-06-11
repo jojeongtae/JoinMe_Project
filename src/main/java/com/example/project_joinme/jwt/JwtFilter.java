@@ -17,32 +17,25 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 import java.util.List;
+
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-
-    private static final List<String> EXCLUDE_URLS = List.of("/signup", "/login", "/refresh-cookie");
 
     @Override
     public void doFilterInternal(HttpServletRequest request,
                                  HttpServletResponse response,
                                  FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-
-        // 인증 필요 없는 경로면 필터 동작 안 함
-        if (EXCLUDE_URLS.contains(path)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         String header = request.getHeader("Authorization");
 
+        /* 1️⃣ 헤더 존재 + Bearer 여부 확인 */
         if (header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);   // 인증 없이 다음 필터
             return;
         }
 
+        /* 2️⃣ "Bearer " 이후 토큰 추출 */
         String token = header.substring(7);
 
         try {
@@ -50,16 +43,18 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             response.sendError(456, "Token expired");
             return;
-        } catch (io.jsonwebtoken.MalformedJwtException e) {
+        } catch (io.jsonwebtoken.MalformedJwtException e) {       // ⬅️ 직접 캐치
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Malformed JWT");
             return;
         }
 
+        /* 4️⃣ access 토큰인지 확인 */
         if (!"access".equals(jwtUtil.getCategory(token))) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token invalid");
             return;
         }
 
+        /* 5️⃣ SecurityContext에 인증 객체 주입 */
         String username = jwtUtil.getUsername(token);
         String role     = jwtUtil.getRole(token);
         List<GrantedAuthority> auths = List.of(new SimpleGrantedAuthority("ROLE_" + role));
