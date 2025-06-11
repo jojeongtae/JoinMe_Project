@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+
 import java.time.Instant;
 
 @Builder
@@ -14,7 +13,9 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HateDTO {
-    private String hater; // 피해자
-    private String hated; // 피의자
-    private Instant hate_time; // 시간
+
+    private String hater; //신고자
+    private String hated; //신고받은자
+    private Instant hate_time;
+    private Integer report_count;
 }

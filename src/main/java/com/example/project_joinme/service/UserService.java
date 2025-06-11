@@ -13,7 +13,12 @@ import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import java.time.Instant;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +28,27 @@ public class UserService {
     private final HateRepository hateRepository;
     private final UserRepository userRepository;
 
+    public List<UserInfoDTO> findAllUserInfo(){
+        List<UserInfoDTO> userInfoDTOs = new ArrayList<>();
+        List<UserTbl> userTbls = this.userDAO.findAllUser();
+        for (UserTbl userTbl : userTbls) {
+            UserInfoDTO user = UserInfoDTO.builder()
+                    .username(userTbl.getUsername())
+                    .address(userTbl.getAddress())
+                    .mbti(userTbl.getMbti())
+                    .usernickname(userTbl.getUsernickname())
+                    .weight(userTbl.getWeight())
+                    .height(userTbl.getHeight())
+                    .sexuality(userTbl.getSexuality())
+                    .profileimg(userTbl.getProfileimg())
+                    .interest(userTbl.getInterest())
+                    .introduction(userTbl.getIntroduction())
+                    .age(userTbl.getAge())
+                    .build();
+            userInfoDTOs.add(user);
+        }
+        return userInfoDTOs;
+    }
 
     public UserInfoDTO getUserInfo(String username) {
        UserTbl user = userDAO.findByUsernameWithLogin(username);
