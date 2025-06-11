@@ -1,49 +1,44 @@
 .profile-form-container {
-    background: linear-gradient(to right, #ffe0ec, #f8c6db);
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f0f4ff, #d6e4ff);
+    padding: 40px;
 }
 
 .profile-form {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    max-width: 90%;
+    background-color: white;
+    padding: 40px 50px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .profile-form h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #d6336c;
+    margin-bottom: 30px;
+    color: #333;
 }
 
 .profile-form label {
     display: block;
-    margin-top: 15px;
-    font-weight: 500;
-    color: #333;
-}
-
-.profile-form .required {
-    color: red;
-    font-size: 0.9em;
-    margin-left: 4px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #444;
 }
 
 .profile-form input,
 .profile-form select,
 .profile-form textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
+    padding: 10px 14px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
-    box-sizing: border-box;
 }
 
 .profile-form textarea {
@@ -51,19 +46,23 @@
     min-height: 80px;
 }
 
+.profile-form .required {
+    color: red;
+}
+
 .profile-form button {
-    margin-top: 25px;
+    margin-top: 30px;
     width: 100%;
-    padding: 12px;
-    background-color: #d6336c;
+    padding: 14px;
+    background-color: #4a72f1;
     color: white;
-    font-size: 16px;
     border: none;
     border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .profile-form button:hover {
-    background-color: #bf2e5d;
+    background-color: #3c5ed8;
 }
