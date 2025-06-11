@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -31,6 +33,10 @@ public class UserController {
     public  ResponseEntity<UserInfoDTO> updateUserInfo(@RequestBody UserInfoDTO userInfoDTO) {
         UserInfoDTO saveUserinfoDTO = userService.updateUserInfo(userInfoDTO);
         return ResponseEntity.status(HttpStatus.OK).body(saveUserinfoDTO);
+    }
+    @GetMapping(value = "/user-list")
+    public ResponseEntity<List<UserInfoDTO>> getAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.findAllUserInfo());
     }
 
 

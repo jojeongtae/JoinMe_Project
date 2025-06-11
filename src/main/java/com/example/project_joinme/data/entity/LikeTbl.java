@@ -14,6 +14,7 @@ import java.time.Instant;
 @Table(name = "like_tbl")
 public class LikeTbl {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num", nullable = false)
     private Integer id;
 
