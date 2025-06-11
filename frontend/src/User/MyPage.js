@@ -12,7 +12,7 @@ export default function MyPage() {
             <div className="mypage-profile">
                 <div className="mypage-img-wrapper">
                     <img
-                        src={currentUser.imgPath}
+                        src={currentUser.profileimg}
                         alt={currentUser.usernickname}
                         className="mypage-img"
                     />
@@ -30,10 +30,10 @@ export default function MyPage() {
 
             <div className="mypage-likes-section">
                 <div className="mypage-like">
-                    👍 좋아요 받은 수: {currentUser.userLikedReceived.length}
+                    👍 좋아요 받은 수: {}
                 </div>
                 <div className="mypage-like">
-                    ❤️ 내가 좋아요 누른 수: {currentUser.userLiked.length}
+                    ❤️ 내가 좋아요 누른 수: {}
                 </div>
             </div>
         </div>

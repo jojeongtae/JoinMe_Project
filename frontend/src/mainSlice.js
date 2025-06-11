@@ -9,7 +9,7 @@ const mainSlice = createSlice({
         matchingInfo: [],
         courses: [],
         hates: [],
-
+        users:[]
     },
     reducers: {
         setToken: (state, action) => {
@@ -24,6 +24,9 @@ const mainSlice = createSlice({
         logoutUser: (state) => {
             state.currentUser = null;
             state.token = null;
+        },
+        setUsers:(state, action)=>{
+            state.users = action.payload;
         },
         giveLike: (state, action) => {
             const giver = state.currentUser;
@@ -164,7 +167,7 @@ const mainSlice = createSlice({
 })
 export const {
 
-    giveLike, loginUser, unlike, togglePostHidden,
+    setUsers,giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
     addHate, removeHate, fetchHates
 
