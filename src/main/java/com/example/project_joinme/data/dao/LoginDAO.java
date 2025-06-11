@@ -31,4 +31,6 @@ public class LoginDAO {
         return this.loginRepository.existsById(username);
     }
 
+    public void deleteByUsername(String username) {loginRepository.deleteById(username);}
+
 }

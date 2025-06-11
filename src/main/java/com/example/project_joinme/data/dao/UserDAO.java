@@ -20,11 +20,15 @@ public class UserDAO {
 
     // 회원정보 수정
     public UserTbl updateUserInfo(UserTbl user) {
-
         return userRepository.save(user);
     }
     public UserTbl findByUsernameWithLogin(String username) {
         return userRepository.findByUsernameWithLogin(username);
+    }
+
+    // 회원탈퇴
+    public void deleteUser(UserTbl user) {
+        this.userRepository.delete(user);
     }
 
 

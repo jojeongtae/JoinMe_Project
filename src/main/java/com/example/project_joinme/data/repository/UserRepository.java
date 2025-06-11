@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserTbl,String> {
-    @Query("SELECT u FROM UserTbl u JOIN FETCH u.loginTbl WHERE u.username = :username")
+    @Query("SELECT u FROM UserTbl u JOIN FETCH u.logintbl WHERE u.username = :username")
     UserTbl findByUsernameWithLogin(@Param("username") String username);
 }

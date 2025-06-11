@@ -20,6 +20,7 @@ import Admin_BlackList from "./Admin/Admin_BlackList";
 import Register from "./Common/Register";
 import MBTI from "./User/MBTI";
 import Admin_Intro from "./Admin/Admin_Intro";
+import UserInfoPost from "./User/UserInfoPost";
 
 
 
@@ -31,6 +32,7 @@ function App() {
             <Route path={"/"} element={<Logo/>}></Route>
             <Route path={"/login"} element={<Login/>}></Route>
             <Route path={"/register"} element={<Register/>}></Route>
+            <Route path={"/userinfo-post"} element={<UserInfoPost/>}></Route>
             <Route path={"/main"} element={<MainLayout/>}>
                 <Route index element={<Intro/>}></Route>
                 <Route path={"users"} element={<Users/>}></Route>
