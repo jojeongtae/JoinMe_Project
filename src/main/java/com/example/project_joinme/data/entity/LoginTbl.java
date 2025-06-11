@@ -6,24 +6,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "login_tbl")
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class LoginTbl {
     @Id
-    @Column(name = "username", nullable = false, length = 40)
+    @Column(name = "username", nullable = false, length = 20)
     private String username;
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
-
-    @Column(name = "usernickname", nullable = false, length = 45)
-    private String usernickname;
 
     @Column(name = "role", nullable = false, length = 45)
     private String role;

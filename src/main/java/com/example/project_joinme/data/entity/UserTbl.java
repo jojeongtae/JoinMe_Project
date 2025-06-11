@@ -3,14 +3,13 @@ package com.example.project_joinme.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "user_tbl")
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class UserTbl {
     @Id
     @Column(name = "username", nullable = false, length = 40)
@@ -19,7 +18,7 @@ public class UserTbl {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "username", nullable = false)
-    private LoginTbl loginTbl;
+    private LoginTbl logintbl;
 
     @Column(name = "sexuality", nullable = false, length = 10)
     private String sexuality;
@@ -48,5 +47,12 @@ public class UserTbl {
 
     @Column(name = "profileimg", length = 200)
     private String profileimg;
+
+    @ColumnDefault("0")
+    @Column(name = "liked")
+    private Integer liked;
+
+    @Column(name = "usernickname", nullable = false, length = 100)
+    private String usernickname;
 
 }

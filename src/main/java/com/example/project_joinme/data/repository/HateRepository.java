@@ -1,6 +1,5 @@
 package com.example.project_joinme.data.repository;
 
-import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.entity.HateTbl;
 import com.example.project_joinme.data.entity.LoginTbl;
 import org.springframework.data.jpa.repository.JpaRepository;

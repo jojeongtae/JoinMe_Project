@@ -1,6 +1,5 @@
 package com.example.project_joinme.data.dto;
 
-import com.example.project_joinme.data.entity.LoginTbl;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
