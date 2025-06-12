@@ -19,29 +19,35 @@ export default function Admin_PostHiding() {
 
     return (
         <>
-            <section id={"post-hiding"} style={styles.container}>
+            <section style={styles.container}>
                 <h2 style={styles.title}>게시물 숨김 관리</h2>
                 <table style={styles.table}>
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>이름</th>
-                        <th>관리</th>
-                        <th>상세</th>
+                        <th style={styles.th}>ID</th>
+                        <th style={styles.th}>이름</th>
+                        <th style={styles.th}>관리</th>
+                        <th style={styles.th}>상세</th>
                     </tr>
                     </thead>
                     <tbody>
                     {posts.map(post => (
-                        <tr key={post.id}>
-                            <td>{post.id}</td>
-                            <td>{post.name}</td>
-                            <td>
-                                <button onClick={() => handleToggleHidden(post.id)}>
+                        <tr key={post.username}>
+                            <td style={styles.td}>{post.username}</td>
+                            <td style={styles.td}>{post.usernickname}</td>
+                            <td style={styles.td}>
+                                <button
+                                    style={styles.actionBtnHide}
+                                    onClick={() => handleToggleHidden(post.id)}
+                                >
                                     {post.hidden ? '공개' : '숨김'}
                                 </button>
                             </td>
-                            <td>
-                                <button onClick={() => handleShowPopup(post)}>
+                            <td style={styles.td}>
+                                <button
+                                    style={styles.actionBtnDetail}
+                                    onClick={() => handleShowPopup(post)}
+                                >
                                     상세보기
                                 </button>
                             </td>
@@ -50,11 +56,12 @@ export default function Admin_PostHiding() {
                     </tbody>
                 </table>
             </section>
+
             {showPopup && selectedPost && (
                 <div style={styles.overlay}>
                     <div style={styles.popup}>
                         <div style={styles.card}>
-                            <img src={selectedPost.imgPath} alt="img" style={styles.image}/>
+                            <img src={selectedPost.profileimg} alt="img" style={styles.image}/>
                             <div style={styles.info}>
                                 <h3>{selectedPost.name}</h3>
                                 <p>키: {selectedPost.height}cm / 몸무게: {selectedPost.weight}kg</p>
@@ -66,7 +73,14 @@ export default function Admin_PostHiding() {
                         </div>
 
                         <div style={styles.buttons}>
-                            <button style={styles.close} onClick={() => setShowPopup(false)}>닫기</button>
+                            <button
+                                style={styles.close}
+                                onMouseOver={(e) => e.target.style.backgroundColor = '#ff5aa7'}
+                                onMouseOut={(e) => e.target.style.backgroundColor = '#ff7eb9'}
+                                onClick={() => setShowPopup(false)}
+                            >
+                                닫기
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -75,65 +89,115 @@ export default function Admin_PostHiding() {
     );
 }
 
+
 const styles = {
-    container: {padding: '20px'},
-    title: {fontSize: '1.5rem', marginBottom: '20px'},
+    container: {
+        padding: '32px',
+        maxWidth: '1000px',
+        margin: '0 auto',
+    },
+    title: {
+        fontSize: '2rem',
+        marginBottom: '24px',
+        fontWeight: '600',
+        textAlign: 'center',
+        color: '#222',
+    },
     table: {
         width: '100%',
         borderCollapse: 'collapse',
-        border: '1px solid #ccc',
-        textAlign: 'center'
-
+        border: '1px solid #e0e0e0',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        backgroundColor: '#fff',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
     },
-    card: {
-        width: "300px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        padding: "15px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-        backgroundColor: "#fff",
+    th: {
+        backgroundColor: '#f5f5f5',
+        padding: '12px',
+        fontWeight: '600',
+        fontSize: '0.95rem',
+        borderBottom: '1px solid #ddd',
     },
-    image: {
-        width: "100%",
-        height: "300px",
-        objectFit: "cover",
-        borderRadius: "10px",
+    td: {
+        padding: '12px',
+        fontSize: '0.9rem',
+        borderBottom: '1px solid #eee',
+        textAlign: 'center',
     },
-    info: {
-        marginTop: "10px",
+    actionBtnHide: {
+        padding: '6px 12px',
+        backgroundColor: '#caa8f5',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        fontSize: '0.85rem',
+        transition: 'background-color 0.2s ease',
     },
-    intro: {
-        fontStyle: "italic",
-        marginTop: "10px",
-        color: "#444",
-    },
-    buttons: {
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "15px",
-    },
-    close: {
-        padding: "6px 20px",
-        backgroundColor: "#ff5b5b",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        cursor: "pointer",
+    actionBtnDetail: {
+        padding: '6px 12px',
+        backgroundColor: '#ff7eb9',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        fontSize: '0.85rem',
+        transition: 'background-color 0.2s ease',
     },
     overlay: {
-        position: 'fixed', top: 0, left: 0,
+        position: 'fixed',
+        top: 0, left: 0,
         width: '100vw', height: '100vh',
         backgroundColor: 'rgba(0,0,0,0.5)',
-        display: 'flex', justifyContent: 'center', alignItems: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     },
     popup: {
-        width: '500px',
-        height: '600px',
-        overflow: 'auto',
-        backgroundColor: 'white',
-        padding: '20px',
+        width: '520px',
+        maxHeight: '90vh',
+        backgroundColor: '#fff',
+        padding: '24px',
         borderRadius: '12px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.3)'
+        boxShadow: '0 6px 18px rgba(0,0,0,0.1)',
+        overflowY: 'auto',
     },
-
+    card: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+    },
+    image: {
+        width: '100%',
+        objectFit: 'cover',
+        borderRadius: '10px',
+        border: '1px solid #ddd',
+    },
+    info: {
+        fontSize: '0.95rem',
+        color: '#333',
+        lineHeight: '1.6',
+    },
+    intro: {
+        marginTop: '10px',
+        fontStyle: 'italic',
+        color: '#666',
+    },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '20px',
+    },
+    close: {
+        padding: '8px 24px',
+        backgroundColor: '#ff7eb9',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        fontSize: '0.9rem',
+        transition: 'background-color 0.2s ease',
+    },
 };
