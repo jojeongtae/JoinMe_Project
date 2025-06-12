@@ -2,16 +2,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {addCourse} from "../mainSlice";
 import apiClient from "../api/apiClient";
+import {useNavigate} from "react-router-dom";
 
 export default function Admin_AddCourse() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const token = useSelector((state) => state.main.token);
 
     const [coursename, setCoursename] = useState("");
     const [address, setAddress] = useState("");
     const [body, setBody] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         console.log("추가 요청할 코스:", coursename, address, body);
@@ -26,7 +28,7 @@ export default function Admin_AddCourse() {
         };
 
         try {
-            const response = apiClient.post("/admin/add-course",
+            const response = await apiClient.post("/admin/add-course",
                 courseData,
                 {
                     withCredentials: true,
@@ -39,7 +41,7 @@ export default function Admin_AddCourse() {
 
             dispatch(addCourse({ coursename, address, body }));
             alert("코스가 추가되었습니다.");
-
+            navigate("/admin-main/course-list");
         } catch (err) {
             console.error("코스 추가 실패:", err);
             alert("코스 추가 실패: " + err.response?.status);
