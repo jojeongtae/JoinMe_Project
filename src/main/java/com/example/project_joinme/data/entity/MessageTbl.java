@@ -20,11 +20,11 @@ public class MessageTbl {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender", nullable = false)
+    @JoinColumn(name = "sender", nullable = false, referencedColumnName = "username")
     private UserTbl sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver", nullable = false)
+    @JoinColumn(name = "receiver", nullable = false, referencedColumnName = "username")
     private UserTbl receiver;
 
     @Column(nullable = false)
@@ -33,6 +33,6 @@ public class MessageTbl {
     @Column(name = "send_time", nullable = false)
     private Instant sendTime;
 
-    @Column(nullable = false)
-    private boolean read = false;
+    @Column(name = "`read`") // ← 백틱으로 감싸기
+    private boolean read;
 }
