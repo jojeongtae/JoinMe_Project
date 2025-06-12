@@ -41,11 +41,13 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
 
         try {
             setLoading(true);
-            const res = await apiClient.put("/user/update-info", formData);
-            console.log("✅ 수정 성공:", res.data);
-            dispatch(loginUser(res.data));
 
-            if (onSubmit) onSubmit(res.data);
+            // profileimg는 수정 없이 기존 값 유지
+            const submitData = { ...formData, profileimg: user.profileimg };
+
+            const res = await apiClient.put("/user/update-info", submitData);
+
+            dispatch(loginUser(res.data));
             onCancel();
         } catch (err) {
             console.error("❌ 수정 실패:", err);
