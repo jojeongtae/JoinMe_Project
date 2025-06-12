@@ -1,36 +1,105 @@
 import { useSelector, useDispatch } from "react-redux";
-import {giveLike, setUsers} from "../mainSlice";
+import {fetchHates, fetchLikes, giveLike, setUsers} from "../mainSlice";
 import {useEffect} from "react";
 import apiClient from "../api/apiClient";
 
 export default function Users() {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.main.currentUser);
-    const users = useSelector((state) =>
-        state.main.users.filter((e) => e.username !== currentUser.username)
+    const hates = useSelector((state) => state.main.hates || []);
+    const likes = useSelector((state) => state.main.likes || []);
+    const allUsers = useSelector((state) => state.main.users || []);
+
+    const blockedUsernames = hates.map((hate) => hate.hated);
+    const likedUsernames = likes.map((like) => like.username); // like.username 기준
+
+    const users = allUsers.filter(
+        (e) =>
+            e.username !== currentUser.username &&
+            !blockedUsernames.includes(e.username) &&
+            !likedUsernames.includes(e.username) &&
+            e.sexuality !== currentUser.sexuality // 동성 제외
     );
+
+    // 차단 목록 불러오기
+    const fetchHateList = async () => {
+        try {
+            const res = await apiClient.get(`/hate-list/${currentUser.username}`);
+            dispatch(fetchHates(res.data));
+        } catch (err) {
+            console.error("차단 목록 로딩 실패", err);
+        }
+    };
+
+    // 좋아요한 유저 목록 불러오기
+    const fetchLikeList = async () => {
+        try {
+            const res = await apiClient.get(`/like/liked-users?liker=${currentUser.username}`);
+            dispatch(fetchLikes(res.data));
+        } catch (err) {
+            console.error("좋아요 목록 로딩 실패", err);
+        }
+    };
+
+    useEffect(() => {
+        if (currentUser?.username) {
+            fetchHateList();
+            fetchLikeList();
+        }
+    }, [currentUser]);
+
+    // 유저 리스트 불러오기
     const fetchUserList = async () => {
         try {
-            const response = await apiClient.get("/user-list");
+            const response = await apiClient.get("/user/list");
             return response.data;
         } catch (error) {
             console.error("유저 리스트를 가져오는 중 오류 발생:", error);
             throw error;
         }
     };
+
     useEffect(() => {
         const loadUsers = async () => {
             try {
                 const userList = await fetchUserList();
                 dispatch(setUsers(userList));
-                console.log(userList)
             } catch (error) {
                 console.error("유저 리스트 로딩 실패:", error);
             }
         };
-
         loadUsers();
     }, [dispatch]);
+
+    // 좋아요 보내기
+    const handleLike = async (likedUser) => {
+        try {
+            const payload = { liker: currentUser.username, liked: likedUser.username };
+            await apiClient.post("/like", payload);
+            alert("좋아요가 등록되었습니다.");
+            fetchLikeList(); // 좋아요 누른 뒤 목록 재로딩
+        } catch (error) {
+            console.error("좋아요 요청 실패:", error);
+            const errorMessage = error.response?.data || "좋아요 등록에 실패했습니다.";
+            alert(errorMessage);
+        }
+    };
+
+    // 신고하기
+    const handleReport = async (hatedUser) => {
+        try {
+            const params = new URLSearchParams({
+                hater: currentUser.username,
+                hated: hatedUser.username,
+            });
+            await apiClient.post("/hate-user?" + params.toString());
+            alert("차단되었습니다.");
+            fetchHateList(); // 차단 후 재로딩
+        } catch (error) {
+            console.error("신고 요청 실패:", error);
+            alert("신고 처리에 실패했습니다.");
+        }
+    };
 
     return (
         <div style={styles.container}>
@@ -45,13 +114,12 @@ export default function Users() {
                         <p>주소: {e.address}</p>
                         <p style={styles.intro}>{e.introduction}</p>
                         <div style={styles.buttons}>
-                            <button
-                                style={styles.like}
-                                onClick={() => dispatch(giveLike(e.id))}
-                            >
+                            <button style={styles.like} onClick={() => handleLike(e)}>
                                 좋아요
                             </button>
-                            <button style={styles.block}>차단하기</button>
+                            <button style={styles.block} onClick={() => handleReport(e)}>
+                                신고하기
+                            </button>
                         </div>
                     </div>
                 </div>

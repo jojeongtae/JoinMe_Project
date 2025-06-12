@@ -9,6 +9,7 @@ const mainSlice = createSlice({
         matchingInfo: [],
         courses: [],
         hates: [],
+        likes:[],
         users:[]
     },
     reducers: {
@@ -163,11 +164,14 @@ const mainSlice = createSlice({
         fetchHates: (state, action) => {
             state.hates = action.payload;
         },
+        fetchLikes:(state,action)=>{
+            state.likes = action.payload;
+        }
     }
 })
 export const {
 
-    setUsers,giveLike, loginUser, unlike, togglePostHidden,
+    logoutUser,fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
     addHate, removeHate, fetchHates
 
