@@ -13,5 +13,5 @@ public interface CourseRepository extends JpaRepository<CourseTbl,String> {
     @Query(value = "select * from course_tbl where address = :address",nativeQuery = true)
     List<CourseTbl> findByAddress(@Param("address") String address);
     @Query(value = "select * from course_tbl where course_name = :course_name",nativeQuery = true)
-    CourseTbl findByCourseName(@Param("course_name") String course_name);
+    List<CourseTbl> findByCourseName(@Param("course_name") String course_name);
 }

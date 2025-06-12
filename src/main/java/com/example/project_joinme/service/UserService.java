@@ -1,9 +1,11 @@
 package com.example.project_joinme.service;
 
+import com.example.project_joinme.data.dao.CourseDAO;
 import com.example.project_joinme.data.dao.LoginDAO;
 import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.UserInfoDTO;
+import com.example.project_joinme.data.entity.CourseTbl;
 import com.example.project_joinme.data.entity.HateTbl;
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.Instant;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.List;
 public class UserService {
     private final UserDAO userDAO;
     private final LoginDAO loginDAO;
+    private final CourseDAO courseDAO;
     private final HateRepository hateRepository;
     private final UserRepository userRepository;
 
