@@ -20,7 +20,7 @@ public class LikeDAO {
 
     // 좋아요 추가
     @Transactional
-    public Boolean addLike(String liker, String liked) {
+    public String addLike(String liker, String liked) {
         UserTbl likerUser = this.userRepository.findById(liker).orElseThrow(() -> new IllegalArgumentException("Liker not found" + liker));
         UserTbl likedUser = this.userRepository.findById(liked).orElseThrow(() -> new IllegalArgumentException("Liked not found" + liked));
         LikeTbl like = LikeTbl.builder()
@@ -28,8 +28,8 @@ public class LikeDAO {
                 .liked(likedUser)
                 .liketime(Instant.now())
                 .build();
-        this.likeRepository.save(like);
-        return true;
+        String likedUsername = this.likeRepository.save(like).getLiked().getUsername();
+        return likedUsername + " 좋아요 등록 성공";
     }
 
     // 좋아요 삭제
