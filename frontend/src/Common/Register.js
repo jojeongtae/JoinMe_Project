@@ -9,7 +9,6 @@ function Register() {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        usernickname: "",
         phone: "",
     });
 
@@ -56,7 +55,6 @@ function Register() {
                     <h2>회원가입</h2>
                     <input name="username" type="text" placeholder="아이디" value={formData.username} onChange={handleChange} required />
                     <input name="password" type="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
-                    <input name="usernickname" type="text" placeholder="닉네임" value={formData.usernickname} onChange={handleChange} required />
                     <input name="phone" type="text" placeholder="전화번호" value={formData.phone} onChange={handleChange} required />
                     <button type="submit">회원가입</button>
                     <button type="button" onClick={goToLogin} className="signup-btn">로그인</button>
