@@ -28,14 +28,18 @@ export default function LikedBy() {
     // 좋아요 돌려주기
     const handleReturnLike = async (likedUser) => {
         try {
-            await apiClient.post("/like", {
+            const res = await apiClient.post("/like", {
                 liker: currentUser.username,
                 liked: likedUser.username,
             });
-            alert(`${likedUser.usernickname}님께 좋아요를 돌려줬습니다.`);
+            alert(res.data); // 매칭 메시지 또는 좋아요 등록 메시지
         } catch (error) {
             console.error("좋아요 돌려주기 실패:", error);
-            alert("좋아요 돌려주기에 실패했습니다.");
+            if (error.response?.data) {
+                alert(error.response.data); // 서버에서 온 메시지 보여주기
+            } else {
+                alert("좋아요 돌려주기에 실패했습니다.");
+            }
         }
     };
 
