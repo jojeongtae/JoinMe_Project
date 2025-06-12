@@ -1,11 +1,26 @@
 import React from "react";
 import {Link, Outlet, useNavigate} from "react-router-dom";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {hover} from "@testing-library/user-event/dist/hover";
+import apiClient from "../api/apiClient";
+import {logoutUser} from "../mainSlice";
 
 export default function MainLayout() {
-    const currentUser = useSelector(state => state.main.currentUser);
+    const currentUser = useSelector((state) => state.main.currentUser);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await apiClient.post("/logout");  // 백엔드 로그아웃 API 호출
+            dispatch(logoutUser());           // Redux 상태 초기화 (currentUser: null 등)
+            navigate("/");                   // 로그인 페이지 또는 초기 페이지로 이동
+        } catch (error) {
+            console.error("로그아웃 실패:", error);
+            alert("로그아웃에 실패했습니다.");
+        }
+    };
+
     return (
         <>
             <header style={styles.header}>
@@ -28,9 +43,7 @@ export default function MainLayout() {
                 {currentUser && (
                     <div style={styles.userInfo}>
                         <span style={styles.userName}>{currentUser.usernickname} 님</span>
-                        <button onClick={()=>{
-                            navigate("/")
-                        }}>로그아웃</button>
+                        <button onClick={handleLogout}>로그아웃</button>
                     </div>
                 )}
             </header>

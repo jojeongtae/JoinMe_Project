@@ -171,7 +171,7 @@ const mainSlice = createSlice({
 })
 export const {
 
-    fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
+    logoutUser,fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
     addHate, removeHate, fetchHates
 

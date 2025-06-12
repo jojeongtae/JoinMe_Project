@@ -1,15 +1,38 @@
 import { useSelector, useDispatch } from "react-redux";
-import {giveLike, setUsers} from "../mainSlice";
+import {fetchHates, giveLike, setUsers} from "../mainSlice";
 import {useEffect} from "react";
 import apiClient from "../api/apiClient";
 
 export default function Users() {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.main.currentUser);
+    const hates = useSelector((state) => state.main.hates || []);
+
+    const blockedUsernames = hates.map(hate => hate.hated);
+
     const users = useSelector((state) =>
-        state.main.users.filter((e) => e.username !== currentUser.username)
+        state.main.users.filter(
+            (e) => e.username !== currentUser.username && !blockedUsernames.includes(e.username)
+        )
     );
 
+    // 차단 목록 불러오기 함수
+    const fetchHateList = async () => {
+        try {
+            const res = await apiClient.get(`/hate-list/${currentUser.username}`);
+            dispatch(fetchHates(res.data));
+        } catch (err) {
+            console.error("차단 목록 로딩 실패", err);
+        }
+    };
+
+    useEffect(() => {
+        if (currentUser?.username) {
+            fetchHateList();
+        }
+    }, [currentUser]);
+
+    // 유저 리스트 불러오기
     const fetchUserList = async () => {
         try {
             const response = await apiClient.get("/user/list");
@@ -36,7 +59,7 @@ export default function Users() {
     const handleLike = async (likedUser) => {
         try {
             const payload = { liker: currentUser.username, liked: likedUser.username };
-            const res = await apiClient.post("/like", payload);
+            await apiClient.post("/like", payload);
             alert("좋아요가 등록되었습니다.");
         } catch (error) {
             console.error("좋아요 요청 실패:", error);
@@ -44,15 +67,18 @@ export default function Users() {
         }
     };
 
-    // 신고하기 (hate-user API 호출해서 신고 내역 받음)
+    // 신고하기 (신고 API 호출 후 차단 목록 재갱신)
     const handleReport = async (hatedUser) => {
         try {
             const params = new URLSearchParams({
                 hater: currentUser.username,
                 hated: hatedUser.username,
             });
-            const res = await apiClient.post("/hate-user?" + params.toString());
+            await apiClient.post("/hate-user?" + params.toString());
             alert(`차단되었습니다`);
+
+            // 신고 성공하면 차단 목록 다시 불러오기
+            fetchHateList();
         } catch (error) {
             console.error("신고 요청 실패:", error);
             alert("신고 처리에 실패했습니다.");
