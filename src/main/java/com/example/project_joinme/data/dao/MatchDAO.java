@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,12 @@ public class MatchDAO {
                 .matchfemale(matchTbl.getMatchfemale())
                 .matchtime(Instant.now()) // 현재시간 추가
                 .build();
-        return matchRepository.save(match);
+        return this.matchRepository.save(match);
+    }
+
+    // 나의 매치기록 보기
+    public List<MatchTbl> getMatchesByUsername(String username) {
+        return this.matchRepository.findMatchesByUsername(username);
     }
     
 }

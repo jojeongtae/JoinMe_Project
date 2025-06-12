@@ -97,7 +97,6 @@ const mainSlice = createSlice({
             const getMbtiCompatibility = (mbti1, mbti2) => {
                 const key1 = `${mbti1.toUpperCase()}-${mbti2.toUpperCase()}`;
                 const key2 = `${mbti2.toUpperCase()}-${mbti1.toUpperCase()}`;
-
                 return mbtiCompatibility[key1] || mbtiCompatibility[key2] || "🤝 서로의 개성이 잘 맞는 좋은 조합입니다!";
             };
 
@@ -107,16 +106,14 @@ const mainSlice = createSlice({
                     if (!matchedPairs.has(pairKey)) {
                         matchedPairs.add(pairKey);
 
-                        const male = user;
-                        const female = state.users.find(u => u.id === match.id);
-
-                        if (female) {
-                            const mbtiResult = getMbtiCompatibility(male.mbti, female.mbti);
+                        const otherUser = state.users.find(u => u.id === match.id);
+                        if (otherUser) {
+                            const mbtiResult = getMbtiCompatibility(user.mbti, otherUser.mbti);
                             matches.push({
                                 num: matches.length + 1,
-                                male: {id: male.id, name: male.name, mbti: male.mbti.toUpperCase()},
-                                female: {id: female.id, name: female.name, mbti: female.mbti.toUpperCase()},
-                                matchTime: '2025-06-10',
+                                userA: { id: user.id, name: user.name, mbti: user.mbti.toUpperCase() },
+                                userB: { id: otherUser.id, name: otherUser.name, mbti: otherUser.mbti.toUpperCase() },
+                                matchTime: '2025-06-10', // 추후 DB 연결 시 실제 시간으로 교체 가능
                                 mbtiResult
                             });
                         }
