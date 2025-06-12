@@ -39,7 +39,7 @@ function App() {
                 <Route path={"users"} element={<Users/>}></Route>
                 <Route path={"i-liked"} element={<ILike/>}></Route>
                 <Route path={"liked-by"} element={<LikedBy/>}></Route>
-                <Route path={"/main/mypage"} element={<MyPage/>}></Route>
+                <Route path={"mypage"} element={<MyPage/>}></Route>
                 <Route path={"course"} element={<Course/>} />
                 <Route path={"mbti"} element={<MBTI/>} />
             </Route>
