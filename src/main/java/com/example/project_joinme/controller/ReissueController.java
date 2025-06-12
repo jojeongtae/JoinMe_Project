@@ -42,7 +42,7 @@ public class ReissueController {
         String username = jwtUtil.getUsername(refreshToken);
         String role = jwtUtil.getRole(refreshToken);
         String access = this.jwtUtil.createToken("access", username, role, 60 * 10 * 1000L);
-        response.addHeader("Authorizationh", "Bearer " + access);
+        response.addHeader("Authorization", "Bearer " + access);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
     @DeleteMapping("/refresh-cookie")
