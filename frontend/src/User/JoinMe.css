@@ -1,0 +1,70 @@
+.joinme-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1a2935;
+}
+
+.top-sections {
+    display: flex;
+    gap: 40px;
+    /* 프로필-궁합 섹션 가로 배치 */
+}
+
+.profile-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 3px solid #3399ff;
+    box-shadow: 0 0 8px #66b3ffaa;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.compatibility-section {
+    flex: 2;
+    background-color: #e9f1fc;
+    border-radius: 10px;
+    padding: 15px;
+    color: #333;
+}
+
+.course-list-container {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    padding: 20px;
+    color: #333;
+    /* width: 100%; 필요시 추가 */
+}
+.course-item {
+    display: flex;
+    gap: 15px;
+    background: #ffffffcc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px #b0c4deaa;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-map {
+    flex: 1;
+    min-width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px #aaa;
+    background-color: #eee;
+}

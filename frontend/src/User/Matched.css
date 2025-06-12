@@ -172,3 +172,18 @@
 .unnamed-button:hover {
     background: #ff80b3;
 }
+
+.leave-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #5f4e77;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.leave-button:hover {
+    background: #5c1a65;
+}

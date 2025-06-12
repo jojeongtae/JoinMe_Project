@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import apiClient from "../api/apiClient";
 import "./Matched.css";
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 export default function Matched({ currentUsername }) {
+    const navigate = useNavigate();
+
     const [matchedUsers, setMatchedUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
     const currentUser = useSelector(state => state.main.currentUser)
+
 
     useEffect(() => {
         if (!currentUser || !currentUser.username) {
@@ -54,7 +58,6 @@ export default function Matched({ currentUsername }) {
     }, [currentUser]);
 
 
-
     return (
         <>
             {/* 화면 전체 배경 하트 */}
@@ -89,7 +92,9 @@ export default function Matched({ currentUsername }) {
                             <p className="match-date">
                                 매칭 날짜: {new Date(user.matchtime).toLocaleDateString()}
                             </p>
-                            <button className="unnamed-button">♥Join Me♥</button>
+                            <button className="unnamed-button" onClick={() => navigate(`/main/joinme/${user.username}`)}>💕Join Me💕</button>
+                            <button className="leave-button">💔Leave Me💔</button>
+
                         </div>
 
                     </div>
