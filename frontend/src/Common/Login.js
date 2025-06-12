@@ -16,7 +16,7 @@ function Login() {
         if (!accessToken) return null; // 토큰 없으면 호출하지 않음
 
         try {
-            const response = await axios.get(`http://localhost:8080/userinfo/${username}`, {
+            const response = await axios.get(`http://localhost:8080/user/userinfo/${username}`, {
                 headers: { Authorization: `Bearer ${accessToken}` },
                 withCredentials: true,
             });

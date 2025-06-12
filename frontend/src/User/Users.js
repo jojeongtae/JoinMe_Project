@@ -11,7 +11,7 @@ export default function Users() {
     );
     const fetchUserList = async () => {
         try {
-            const response = await apiClient.get("/user-list");
+            const response = await apiClient.get("/user/list");
             return response.data;
         } catch (error) {
             console.error("유저 리스트를 가져오는 중 오류 발생:", error);

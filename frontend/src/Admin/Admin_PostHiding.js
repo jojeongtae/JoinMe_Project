@@ -60,7 +60,7 @@ export default function Admin_PostHiding() {
                                 <p>키: {selectedPost.height}cm / 몸무게: {selectedPost.weight}kg</p>
                                 <p>MBTI: {selectedPost.mbti}</p>
                                 <p>관심사: {selectedPost.interest}</p>
-                                <p>주소: {selectedPost.addr}</p>
+                                <p>주소: {selectedPost.address}</p>
                                 <p style={styles.intro}>{selectedPost.intro}</p>
                             </div>
                         </div>
