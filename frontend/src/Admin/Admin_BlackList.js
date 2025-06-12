@@ -49,7 +49,7 @@ export default function Admin_BlackList() {
                         return (
                             <tr key={hate.num}>
                                 <td style={styles.td}>{hate.hated}</td>
-                                <td style={styles.td}>{new Date(hate.hateTime).toLocaleString("ko-KR", {
+                                <td style={styles.td}>{new Date(hate.hate_time).toLocaleString("ko-KR", {
                                     timeZone: "Asia/Seoul"
                                 })}</td>
                             </tr>

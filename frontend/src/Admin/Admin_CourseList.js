@@ -56,12 +56,11 @@ export default function Admin_CourseList() {
     // 코스 삭제
     const handleDelete = async (id) => {
         if (!window.confirm("정말 이 코스를 삭제하시겠어요?")) return;
-        console.log("삭제할 코스 id:", id);
 
         try {
             await apiClient.delete(`/delete-course?courseId=${id}`);
             alert("삭제 완료!");
-            fetchData(); // 삭제 후 새로고침
+            fetchData();
         } catch (error) {
             console.error("코스 삭제 실패", error);
         }
