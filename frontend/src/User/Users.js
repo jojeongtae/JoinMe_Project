@@ -2,8 +2,17 @@ import { useSelector, useDispatch } from "react-redux";
 import {fetchHates, fetchLikes, giveLike, setUsers} from "../mainSlice";
 import {useEffect} from "react";
 import apiClient from "../api/apiClient";
-
+import "./Users.css";
+import { useState } from "react";
 export default function Users() {
+    // 추가
+
+    const [minAge, setMinAge] = useState("");
+    const [maxAge, setMaxAge] = useState("");
+    const [selectedAddress, setSelectedAddress] = useState("");
+    const [minHeight, setMinHeight] = useState("");
+    const [selectedMbtiList, setSelectedMbtiList] = useState([]);
+    const [interestKeyword, setInterestKeyword] = useState("");
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.main.currentUser);
     const hates = useSelector((state) => state.main.hates || []);
@@ -13,13 +22,25 @@ export default function Users() {
     const blockedUsernames = hates.map((hate) => hate.hated);
     const likedUsernames = likes.map((like) => like.username); // like.username 기준
 
-    const users = allUsers.filter(
-        (e) =>
-            e.username !== currentUser.username &&
-            !blockedUsernames.includes(e.username) &&
-            !likedUsernames.includes(e.username) &&
-            e.sexuality !== currentUser.sexuality // 동성 제외
-    );
+    const users = allUsers.filter((e) => {
+        if (e.username === currentUser.username) return false;
+        if (blockedUsernames.includes(e.username)) return false;
+        if (likedUsernames.includes(e.username)) return false;
+        if (e.sexuality === currentUser.sexuality) return false;
+
+        if (minAge && e.age < parseInt(minAge)) return false;
+        if (maxAge && e.age > parseInt(maxAge)) return false;
+
+        if (selectedAddress && !e.address.includes(selectedAddress)) return false;
+
+        if (minHeight && e.height < parseInt(minHeight)) return false;
+
+        if (selectedMbtiList.length > 0 && !selectedMbtiList.includes(e.mbti)) return false;
+
+        if (interestKeyword && !e.interest?.includes(interestKeyword)) return false;
+
+        return true;
+    });
 
     // 차단 목록 불러오기
     const fetchHateList = async () => {
@@ -100,24 +121,92 @@ export default function Users() {
             alert("신고 처리에 실패했습니다.");
         }
     };
-
+    const resetFilters = () => {
+        setMinAge("");
+        setMaxAge("");
+        setSelectedAddress("");
+        setMinHeight("");
+        setSelectedMbtiList([]);
+        setInterestKeyword("");
+    };
     return (
-        <div style={styles.container}>
+        <>
+        <div className="user-filter">
+            <div>
+                나이:
+                <input type="number" placeholder="최소" value={minAge} onChange={(e) => setMinAge(e.target.value)} />
+                ~
+                <input type="number" placeholder="최대" value={maxAge} onChange={(e) => setMaxAge(e.target.value)} />
+            </div>
+
+            <div>
+                지역:
+                <select value={selectedAddress} onChange={(e) => setSelectedAddress(e.target.value)}>
+                    <option value="">전체</option>
+                    <option value="서울">서울</option>
+                    <option value="경기">경기</option>
+                    <option value="부산">부산</option>
+                    <option value="충청">충청</option>
+                    <option value="강원">강원</option>
+                </select>
+            </div>
+
+            <div>
+                키:
+                <input type="number" placeholder="최소 키" value={minHeight} onChange={(e) => setMinHeight(e.target.value)} /> cm 이상
+            </div>
+
+            <div>
+                선호 MBTI:
+                {["INTJ", "INFP", "ENTP", "ESFP", "ISTP", "ENFP", "ISFJ", "INFJ"].map((type) => (
+                    <label key={type}>
+                        <input
+                            type="checkbox"
+                            value={type}
+                            checked={selectedMbtiList.includes(type)}
+                            onChange={(e) => {
+                                if (e.target.checked) {
+                                    setSelectedMbtiList([...selectedMbtiList, type]);
+                                } else {
+                                    setSelectedMbtiList(selectedMbtiList.filter((mbti) => mbti !== type));
+                                }
+                            }}
+                        />
+                        {type}
+                    </label>
+                ))}
+            </div>
+            <div>
+                관심사:
+                <input
+                    type="text"
+                    placeholder="예: 영화"
+                    value={interestKeyword}
+                    onChange={(e) => setInterestKeyword(e.target.value)}
+                />
+            </div>
+        </div>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                <button onClick={resetFilters}  className="reset-button">
+                    초기화
+                </button>
+            </div>
+        <div className="users-container">
             {users.map((e) => (
-                <div key={e.username} style={styles.card}>
-                    <img src={e.profileimg} alt="img" style={styles.image} />
-                    <div style={styles.info}>
+                <div key={e.username} className="user-card">
+                    <img src={e.profileimg} alt="img" className="user-image" />
+                    <div className="user-info">
                         <h3>{e.usernickname}</h3>
                         <p>키: {e.height}cm / 몸무게: {e.weight}kg</p>
                         <p>MBTI: {e.mbti}</p>
                         <p>관심사: {e.interest}</p>
                         <p>주소: {e.address}</p>
-                        <p style={styles.intro}>{e.introduction}</p>
-                        <div style={styles.buttons}>
-                            <button style={styles.like} onClick={() => handleLike(e)}>
+                        <p className="user-intro">{e.introduction}</p>
+                        <div className="user-buttons">
+                            <button className="like-button" onClick={() => handleLike(e)}>
                                 좋아요
                             </button>
-                            <button style={styles.block} onClick={() => handleReport(e)}>
+                            <button className="block-button" onClick={() => handleReport(e)}>
                                 신고하기
                             </button>
                         </div>
@@ -125,58 +214,6 @@ export default function Users() {
                 </div>
             ))}
         </div>
+        </>
     );
 }
-
-const styles = {
-    container: {
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "20px",
-        padding: "20px",
-        justifyContent: "center",
-    },
-    card: {
-        width: "300px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-        padding: "15px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-        backgroundColor: "#fff",
-    },
-    image: {
-        width: "100%",
-        height: "300px",
-        objectFit: "cover",
-        borderRadius: "10px",
-    },
-    info: {
-        marginTop: "10px",
-    },
-    intro: {
-        fontStyle: "italic",
-        marginTop: "10px",
-        color: "#444",
-    },
-    buttons: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginTop: "15px",
-    },
-    like: {
-        padding: "6px 12px",
-        backgroundColor: "#ff5b5b",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        cursor: "pointer",
-    },
-    block: {
-        padding: "6px 12px",
-        backgroundColor: "#aaa",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        cursor: "pointer",
-    },
-};
