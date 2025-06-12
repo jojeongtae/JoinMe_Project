@@ -20,9 +20,9 @@ public class CourseDAO {
     public List<CourseTbl> findByAddress(String address) {
         return this.courseRepository.findByAddress(address);
     }
-    public CourseTbl findByCourseName(String course_name) {
-        return this.courseRepository.findByCourseName(course_name);
-    }
+
+    public List<CourseTbl> findByCourseName(String course_name) {return this.courseRepository.findByCourseName(course_name);}
+
     public CourseTbl addCourse(String course_name, String address,String body) {
         CourseTbl course = CourseTbl.builder()
                 .coursename(course_name)
