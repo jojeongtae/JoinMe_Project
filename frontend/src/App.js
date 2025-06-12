@@ -22,6 +22,7 @@ import MBTI from "./User/MBTI";
 import Admin_Intro from "./Admin/Admin_Intro";
 import UserInfoPost from "./User/UserInfoPost";
 import Admin_UserList from "./Admin/Admin_UserList";
+import Admin_CourseList from "./Admin/Admin_CourseList";
 
 
 
@@ -48,7 +49,8 @@ function App() {
                 <Route path={"user-list"} element={<Admin_UserList/>}/>
                 <Route path={"post-hiding"} element={<Admin_PostHiding />} />
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
-                <Route path={"add-cource"} element={<Admin_AddCourse/>} />
+                <Route path={"course-list"} element={<Admin_CourseList/>} />
+                <Route path={"add-course"} element={<Admin_AddCourse/>} />
                 <Route path={"blacklist"} element={<Admin_BlackList/>} />
             </Route>
         </Routes>
