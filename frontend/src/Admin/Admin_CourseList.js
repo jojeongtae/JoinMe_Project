@@ -1,12 +1,16 @@
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import apiClient from "../api/apiClient";
+import {useDispatch} from "react-redux";
+import {removeCourse} from "../mainSlice";
 
 export default function Admin_CourseList() {
+    const dispatch = useDispatch();
     const [courses, setCourses] = useState([]);
     const [searchType, setSearchType] = useState("all");
     const [searchKeyword, setSearchKeyword] = useState("");
 
+    // 코스 리스트 호출
     const fetchData = async () => {
         try {
             const response = await apiClient.get("/course-list");
@@ -16,6 +20,7 @@ export default function Admin_CourseList() {
         }
     };
 
+    // 검색
     const search = async () => {
         if (!searchKeyword.trim()) {
             fetchData();
@@ -46,6 +51,20 @@ export default function Admin_CourseList() {
     const handleSearch = (e) => {
         e.preventDefault();
         search();
+    };
+
+    // 코스 삭제
+    const handleDelete = async (id) => {
+        if (!window.confirm("정말 이 코스를 삭제하시겠어요?")) return;
+        console.log("삭제할 코스 id:", id);
+
+        try {
+            await apiClient.delete(`/delete-course?courseId=${id}`);
+            alert("삭제 완료!");
+            fetchData(); // 삭제 후 새로고침
+        } catch (error) {
+            console.error("코스 삭제 실패", error);
+        }
     };
 
     return (
@@ -85,6 +104,8 @@ export default function Admin_CourseList() {
                         <th style={styles.th}>지역</th>
                         <th style={styles.th}>설명</th>
                         <th style={styles.th}>업데이트 시각</th>
+                        <th style={styles.th}>수정</th>
+                        <th style={styles.th}>삭제</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,8 +114,9 @@ export default function Admin_CourseList() {
                             <td colSpan={4} style={styles.td}>조회된 코스가 없습니다.</td>
                         </tr>
                     ) : (
-                        courses.map((course, idx) => (
-                            <tr key={idx}>
+                        courses.map((course) => (
+
+                            <tr key={course.id}>
                                 <td style={styles.td}>{course.coursename}</td>
                                 <td style={styles.td}>{course.address}</td>
                                 <td style={styles.td}>{course.body}</td>
@@ -102,6 +124,12 @@ export default function Admin_CourseList() {
                                     {new Date(course.updateDate).toLocaleString("ko-KR", {
                                         timeZone: "Asia/Seoul",
                                     })}
+                                </td>
+                                <td style={styles.td}>
+                                    <button style={styles.grayBtn} >수정</button>
+                                </td>
+                                <td style={styles.td}>
+                                    <button style={styles.grayBtn} onClick={() => handleDelete(course.id)} >삭제</button>
                                 </td>
                             </tr>
                         ))
@@ -152,6 +180,17 @@ const styles = {
     detailBtn: {
         padding: '6px 12px',
         backgroundColor: '#ff7eb9',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        fontSize: '0.85rem',
+        transition: 'background-color 0.2s ease',
+        textDecoration: 'none',
+    },
+    grayBtn: {
+        padding: '6px 12px',
+        backgroundColor: '#999',
         color: '#fff',
         border: 'none',
         borderRadius: '6px',

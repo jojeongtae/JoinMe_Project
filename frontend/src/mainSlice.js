@@ -133,6 +133,9 @@ const mainSlice = createSlice({
 
             state.courses.push(newCourse);
         },
+        removeCourse: (state, action) => {
+            state.courses = state.courses.filter(course => course.num !== action.payload);
+        },
         addHate: (state, action) => {
             const {hater, hated} = action.payload;
 
@@ -170,7 +173,7 @@ export const {
 
     logoutUser,fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
-    addHate, removeHate, fetchHates
+    addHate, removeHate, fetchHates, removeCourse
 
 } = mainSlice.actions;
 const store = configureStore(
