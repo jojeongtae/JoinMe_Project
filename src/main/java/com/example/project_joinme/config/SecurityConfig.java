@@ -53,9 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
 
-                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/hate-user","/userinfo").permitAll();
-
-                    auth.requestMatchers("*").permitAll();
+                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/like", "/userinfo", "/**").permitAll();
 
                     auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");

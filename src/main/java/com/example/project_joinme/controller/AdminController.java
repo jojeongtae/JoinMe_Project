@@ -28,5 +28,9 @@ public class AdminController {
     public ResponseEntity<List<HateDTO>> getAllHates() {
         return ResponseEntity.status(HttpStatus.OK).body(adminService.findAllHates());
    }
+   @GetMapping("/hated-five")
+    public ResponseEntity<List<HateDTO>> getAllHatedFive() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.adminService.findReportedUsers());
+   }
 
 }

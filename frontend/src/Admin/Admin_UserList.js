@@ -1,55 +1,65 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {togglePostHidden} from "../mainSlice";
+import apiClient from "../api/apiClient";
+import {useEffect, useState} from "react";
+import {giveLike, setUsers, togglePostHidden} from "../mainSlice";
 
-export default function Admin_PostHiding() {
-    const posts = useSelector(state => state.main.users);
+export default function Admin_UserList() {
     const dispatch = useDispatch();
+    const users = useSelector(state => state.main.users ?? []);
+
     const [showPopup, setShowPopup] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
-    const handleShowPopup = (post) => {
-        setSelectedPost(post);
-        setShowPopup(true);
+    const fetchData = async () => {
+        try {
+            const response = await apiClient.get("/user/list");
+            return response.data;
+        } catch (error) {
+            console.error("유저 리스트 불러오기 실패:", error);
+        }
     };
 
-    const handleToggleHidden = (postId) => {
-        dispatch(togglePostHidden(postId));
+    useEffect(() => {
+        const loadUsers = async () => {
+            try {
+                const userList = await fetchData();
+                dispatch(setUsers(userList));
+            } catch (error) {
+                console.error("유저 리스트 로딩 실패:", error);
+            }
+        };
+
+        loadUsers();
+    }, [dispatch]);
+
+    const handleShowPopup = (user) => {
+        setSelectedPost(user);
+        setShowPopup(true);
     };
 
     return (
         <>
             <section style={styles.container}>
-                <h2 style={styles.title}>게시물 숨김 관리</h2>
+                <h2 style={styles.title}>전체 유저 리스트</h2>
                 <table style={styles.table}>
                     <thead>
                     <tr>
                         <th style={styles.th}>ID</th>
-                        <th style={styles.th}>이름</th>
-                        <th style={styles.th}>관리</th>
+                        <th style={styles.th}>닉네임</th>
+                        <th style={styles.th}>성별</th>
+                        <th style={styles.th}>나이</th>
                         <th style={styles.th}>상세</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {posts.map(post => (
-                        <tr key={post.username}>
-                            <td style={styles.td}>{post.username}</td>
-                            <td style={styles.td}>{post.usernickname}</td>
+                    {users.map(user => (
+                        <tr key={user.username}>
+                            <td style={styles.td}>{user.username}</td>
+                            <td style={styles.td}>{user.usernickname}</td>
+                            <td style={styles.td}>{user.sexuality}</td>
+                            <td style={styles.td}>{user.age}</td>
                             <td style={styles.td}>
-                                <button
-                                    style={styles.actionBtnHide}
-                                    onClick={() => handleToggleHidden(post.id)}
-                                >
-                                    {post.hidden ? '공개' : '숨김'}
-                                </button>
-                            </td>
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.actionBtnDetail}
-                                    onClick={() => handleShowPopup(post)}
-                                >
-                                    상세보기
-                                </button>
+                                <button style={styles.detailBtn} onClick={() => handleShowPopup(user)}>상세보기</button>
                             </td>
                         </tr>
                     ))}
@@ -61,7 +71,7 @@ export default function Admin_PostHiding() {
                 <div style={styles.overlay}>
                     <div style={styles.popup}>
                         <div style={styles.card}>
-                            <img src={selectedPost.profileimg} alt="img" style={styles.image}/>
+                            <img src={selectedPost.profileimg} alt="img" style={styles.image} />
                             <div style={styles.info}>
                                 <h3>{selectedPost.name}</h3>
                                 <p>키: {selectedPost.height}cm / 몸무게: {selectedPost.weight}kg</p>
@@ -71,16 +81,8 @@ export default function Admin_PostHiding() {
                                 <p style={styles.intro}>{selectedPost.intro}</p>
                             </div>
                         </div>
-
                         <div style={styles.buttons}>
-                            <button
-                                style={styles.close}
-                                onMouseOver={(e) => e.target.style.backgroundColor = '#ff5aa7'}
-                                onMouseOut={(e) => e.target.style.backgroundColor = '#ff7eb9'}
-                                onClick={() => setShowPopup(false)}
-                            >
-                                닫기
-                            </button>
+                            <button style={styles.close} onClick={() => setShowPopup(false)}>닫기</button>
                         </div>
                     </div>
                 </div>
@@ -88,8 +90,6 @@ export default function Admin_PostHiding() {
         </>
     );
 }
-
-
 const styles = {
     container: {
         padding: '32px',
@@ -125,17 +125,7 @@ const styles = {
         borderBottom: '1px solid #eee',
         textAlign: 'center',
     },
-    actionBtnHide: {
-        padding: '6px 12px',
-        backgroundColor: '#caa8f5',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-    },
-    actionBtnDetail: {
+    detailBtn: {
         padding: '6px 12px',
         backgroundColor: '#ff7eb9',
         color: '#fff',
@@ -153,11 +143,11 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 999,
+        zIndex: 9999,
     },
     popup: {
         width: '520px',
-        maxHeight: '90vh',
+        maxHeight: '80vh',
         backgroundColor: '#fff',
         padding: '24px',
         borderRadius: '12px',

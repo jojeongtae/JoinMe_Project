@@ -9,28 +9,55 @@ export default function Users() {
     const users = useSelector((state) =>
         state.main.users.filter((e) => e.username !== currentUser.username)
     );
+
     const fetchUserList = async () => {
         try {
-            const response = await apiClient.get("/user-list");
+            const response = await apiClient.get("/user/list");
             return response.data;
         } catch (error) {
             console.error("유저 리스트를 가져오는 중 오류 발생:", error);
             throw error;
         }
     };
+
     useEffect(() => {
         const loadUsers = async () => {
             try {
                 const userList = await fetchUserList();
                 dispatch(setUsers(userList));
-                console.log(userList)
             } catch (error) {
                 console.error("유저 리스트 로딩 실패:", error);
             }
         };
-
         loadUsers();
     }, [dispatch]);
+
+    // 좋아요 보내기
+    const handleLike = async (likedUser) => {
+        try {
+            const payload = { liker: currentUser.username, liked: likedUser.username };
+            const res = await apiClient.post("/like", payload);
+            alert("좋아요가 등록되었습니다.");
+        } catch (error) {
+            console.error("좋아요 요청 실패:", error);
+            alert("좋아요 등록에 실패했습니다.");
+        }
+    };
+
+    // 신고하기 (hate-user API 호출해서 신고 내역 받음)
+    const handleReport = async (hatedUser) => {
+        try {
+            const params = new URLSearchParams({
+                hater: currentUser.username,
+                hated: hatedUser.username,
+            });
+            const res = await apiClient.post("/hate-user?" + params.toString());
+            alert(`차단되었습니다`);
+        } catch (error) {
+            console.error("신고 요청 실패:", error);
+            alert("신고 처리에 실패했습니다.");
+        }
+    };
 
     return (
         <div style={styles.container}>
@@ -45,13 +72,12 @@ export default function Users() {
                         <p>주소: {e.address}</p>
                         <p style={styles.intro}>{e.introduction}</p>
                         <div style={styles.buttons}>
-                            <button
-                                style={styles.like}
-                                onClick={() => dispatch(giveLike(e.id))}
-                            >
+                            <button style={styles.like} onClick={() => handleLike(e)}>
                                 좋아요
                             </button>
-                            <button style={styles.block}>차단하기</button>
+                            <button style={styles.block} onClick={() => handleReport(e)}>
+                                신고하기
+                            </button>
                         </div>
                     </div>
                 </div>

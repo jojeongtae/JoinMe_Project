@@ -17,10 +17,10 @@ export default function Admin_Main() {
                 {/* 내비게이션 */}
                 <nav style={styles.nav}>
                     <Link to="/admin-main" style={styles.link}>홈</Link>
+                    <Link to="/admin-main/user-list" style={styles.link}>유저 리스트</Link>
                     <Link to="/admin-main/post-hiding" style={styles.link}>게시물관리</Link>
                     <Link to="/admin-main/matching-list" style={styles.link}>매칭현황</Link>
-                    <Link to="/admin-main/add-cource" style={styles.link}>데이트코스</Link>
-                    <Link to="/admin-main/user-grade" style={styles.link}>유저등급</Link>
+                    <Link to="/admin-main/course-list" style={styles.link}>데이트코스</Link>
                     <Link to="/admin-main/blacklist" style={styles.link}>블랙리스트</Link>
                 </nav>
 

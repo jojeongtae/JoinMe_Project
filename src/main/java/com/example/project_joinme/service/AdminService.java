@@ -50,4 +50,7 @@ public class AdminService {
     public List<HateDTO>  findAllHates() {
         return this.adminDAO.getAllHateLog();
     }
+    public List<HateDTO> findReportedUsers() {
+        return adminDAO.getUsersWithManyHates();
+    }
 }

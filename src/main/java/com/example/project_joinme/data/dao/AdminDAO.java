@@ -36,4 +36,16 @@ public class AdminDAO {
     public List<MatchTbl> findAllMatches() {
         return this.matchRepository.findAllMatches();
     }
+    public List<HateDTO> getUsersWithManyHates() {
+        List<Object[]> rows = hateRepository.findUsersWithMoreThanFiveHates();
+
+        return rows.stream()
+                .map(row -> new HateDTO(
+                        null,                          // hater는 없음
+                        (String) row[0],               // hated
+                        null,                          // hate_time도 없음
+                        ((Number) row[1]).intValue()   // report_count
+                ))
+                .toList();
+    }
 }
