@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import EditProfileForm from "./EditProfileForm";
 import "./MyPage.css";
+import ReportList from "./ReportList"; // 추가
 
 export default function MyPage() {
     const currentUser = useSelector((state) => state.main.currentUser);
     const [isEditing, setIsEditing] = useState(false);
+    const [showReports, setShowReports] = useState(false); // 추가
 
     if (!currentUser) return <div>사용자 정보를 불러오는 중입니다...</div>;
 
@@ -17,7 +19,7 @@ export default function MyPage() {
                 className="mypage-banner-img"
             />
 
-            {!isEditing ? (
+            {!isEditing && !showReports ? (
                 <>
                     <div className="mypage-info-vertical">
                         <h2>{currentUser.usernickname}</h2>
@@ -32,10 +34,12 @@ export default function MyPage() {
 
                     <div className="mypage-buttons-centered">
                         <button className="mypage-btn" onClick={() => setIsEditing(true)}>정보수정</button>
-                        <button className="mypage-btn">신고목록</button>
+                        <button className="mypage-btn" onClick={() => setShowReports(true)}>차단목록</button>
                         <button className="mypage-btn">쪽지함</button>
                     </div>
                 </>
+            ) : showReports ? (
+                <ReportList hater={currentUser.username} onClose={() => setShowReports(false)} />
             ) : (
                 <EditProfileForm user={currentUser} onCancel={() => setIsEditing(false)} />
             )}

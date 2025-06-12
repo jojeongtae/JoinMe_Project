@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './UserInfoPost.css';
+import {useDispatch, useSelector} from "react-redux";
+import apiClient from "../api/apiClient";
+import {loginUser} from "../mainSlice";
+import {useNavigate} from "react-router-dom";
 
 export default function UserInfoPost() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const currentUser = useSelector(state => state.main.currentUser)
     const [formData, setFormData] = useState({
         username: '',
         sexuality: '',
@@ -20,11 +27,28 @@ export default function UserInfoPost() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+    useEffect(() => {
+        if (currentUser?.username) {
+            setFormData(prev => ({ ...prev, username: currentUser.username }));
+        }
+    }, [currentUser]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('제출된 정보:', formData);
-        // 여기에 axios.post 등으로 서버로 전송하면 됨
+
+        try {
+            // 사용자 정보 서버로 전송 (예: POST /api/userinfo)
+            const response = await apiClient.post("user/add-info", formData);
+
+            // 전송 성공 시 받은 사용자 정보로 currentUser 갱신
+            dispatch(loginUser(response.data)); // 예: { username, nickname, mbti, ... }
+
+            // 메인 페이지로 이동
+            navigate("/main");
+        } catch (error) {
+            console.error("프로필 제출 오류:", error);
+            alert("프로필 제출에 실패했습니다.");
+        }
     };
 
     return (
@@ -32,8 +56,15 @@ export default function UserInfoPost() {
             <form className="profile-form" onSubmit={handleSubmit}>
                 <h2>세부 프로필 작성</h2>
 
+
                 <label>아이디 (username) <span className="required">*</span></label>
-                <input name="username" value={formData.username} onChange={handleChange} required />
+                <input
+                    name="username"
+                    value={currentUser.username}
+                    onChange={handleChange}
+                    required
+                    readOnly
+                />
 
                 <label>닉네임 <span className="required">*</span></label>
                 <input name="usernickname" value={formData.usernickname} onChange={handleChange} required />
@@ -43,7 +74,6 @@ export default function UserInfoPost() {
                     <option value="">선택</option>
                     <option value="남성">남성</option>
                     <option value="여성">여성</option>
-                    <option value="기타">기타</option>
                 </select>
 
                 <label>나이 <span className="required">*</span></label>
@@ -65,8 +95,25 @@ export default function UserInfoPost() {
                 <textarea name="introduction" value={formData.introduction} onChange={handleChange} />
 
                 <label>MBTI</label>
-                <input name="mbti" value={formData.mbti} onChange={handleChange} />
-
+                <select name="mbti" value={formData.mbti} onChange={handleChange}>
+                    <option value="">선택</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFP">ESFP</option>
+                </select>
                 <label>프로필 이미지 경로 <span className="required">*</span></label>
                 <input name="profileimg" value={formData.profileimg} onChange={handleChange} required />
 

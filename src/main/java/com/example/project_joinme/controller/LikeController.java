@@ -13,17 +13,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class LikeController {
-    // 필요기능: like추가 / like삭제 / 내가 좋아요한 유저 / 나를 조아요한 유저
     private final LikeService likeService;
 
+    // 좋아요, 매칭
     @PostMapping(value = "/like")
     public ResponseEntity<String> addLike(@RequestBody LikeDTO likeDTO) {
-        Boolean result = this.likeService.addLike(likeDTO.getLiker(), likeDTO.getLiked());
-        if (result) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("like 추가 완료");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("like 추가 실패");
-        }
+        String result = this.likeService.addLike(likeDTO.getLiker(), likeDTO.getLiked());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
     @DeleteMapping(value = "/like")
     public ResponseEntity<String> deleteLike(@RequestBody LikeDTO likeDTO) {
