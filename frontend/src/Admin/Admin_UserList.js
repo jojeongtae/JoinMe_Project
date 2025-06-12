@@ -2,13 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import apiClient from "../api/apiClient";
 import {useEffect, useState} from "react";
 import {giveLike, setUsers, togglePostHidden} from "../mainSlice";
+import {useOutletContext} from "react-router-dom";
 
 export default function Admin_UserList() {
     const dispatch = useDispatch();
     const users = useSelector(state => state.main.users ?? []);
 
-    const [showPopup, setShowPopup] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null);
+    const {setShowPopup, setSelectedPost} = useOutletContext();
 
     const fetchData = async () => {
         try {
@@ -67,26 +67,6 @@ export default function Admin_UserList() {
                 </table>
             </section>
 
-            {showPopup && selectedPost && (
-                <div style={styles.overlay}>
-                    <div style={styles.popup}>
-                        <div style={styles.card}>
-                            <img src={selectedPost.profileimg} alt="img" style={styles.image} />
-                            <div style={styles.info}>
-                                <h3>{selectedPost.name}</h3>
-                                <p>키: {selectedPost.height}cm / 몸무게: {selectedPost.weight}kg</p>
-                                <p>MBTI: {selectedPost.mbti}</p>
-                                <p>관심사: {selectedPost.interest}</p>
-                                <p>주소: {selectedPost.address}</p>
-                                <p style={styles.intro}>{selectedPost.intro}</p>
-                            </div>
-                        </div>
-                        <div style={styles.buttons}>
-                            <button style={styles.close} onClick={() => setShowPopup(false)}>닫기</button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </>
     );
 }
@@ -133,61 +113,6 @@ const styles = {
         borderRadius: '6px',
         cursor: 'pointer',
         fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-    },
-    overlay: {
-        position: 'fixed',
-        top: 0, left: 0,
-        width: '100vw', height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-    },
-    popup: {
-        width: '520px',
-        maxHeight: '80vh',
-        backgroundColor: '#fff',
-        padding: '24px',
-        borderRadius: '12px',
-        boxShadow: '0 6px 18px rgba(0,0,0,0.1)',
-        overflowY: 'auto',
-    },
-    card: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-    },
-    image: {
-        width: '100%',
-        objectFit: 'cover',
-        borderRadius: '10px',
-        border: '1px solid #ddd',
-    },
-    info: {
-        fontSize: '0.95rem',
-        color: '#333',
-        lineHeight: '1.6',
-    },
-    intro: {
-        marginTop: '10px',
-        fontStyle: 'italic',
-        color: '#666',
-    },
-    buttons: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '20px',
-    },
-    close: {
-        padding: '8px 24px',
-        backgroundColor: '#ff7eb9',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.9rem',
         transition: 'background-color 0.2s ease',
     },
 };
