@@ -23,6 +23,7 @@ import Admin_Intro from "./Admin/Admin_Intro";
 import UserInfoPost from "./User/UserInfoPost";
 import Admin_UserList from "./Admin/Admin_UserList";
 import Admin_CourseList from "./Admin/Admin_CourseList";
+import Matched from "./User/Matched";
 
 
 
@@ -43,6 +44,7 @@ function App() {
                 <Route path={"mypage"} element={<MyPage/>}></Route>
                 <Route path={"course"} element={<Course/>} />
                 <Route path={"mbti"} element={<MBTI/>} />
+                <Route path={"matched"} element={<Matched/>} ></Route>
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Admin_Intro/>} />
