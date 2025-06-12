@@ -23,18 +23,18 @@ export default function ReportList({ hater, onClose }) {
 
     return (
         <div className="reportlist-wrapper">
-            <h3>📋 내가 신고한 유저 목록</h3>
+            <h3>📋 내가 차단한 유저 목록</h3>
             <button className="reportlist-close" onClick={onClose}>닫기</button>
             {loading ? (
                 <p>불러오는 중...</p>
             ) : reportList.length === 0 ? (
-                <p>신고한 유저가 없습니다.</p>
+                <p>차단한 유저가 없습니다.</p>
             ) : (
                 reportList.map((item, i) => (
                     <div key={i} className="reportlist-card">
-                        <p><strong>신고 대상:</strong> {item.hated}</p>
+                        <p><strong>차단 대상:</strong> {item.hated}</p>
                         <p>
-                            <strong>신고 일시:</strong>{" "}
+                            <strong>차단 일시:</strong>{" "}
                             {item.hate_time
                                 ? new Date(item.hate_time).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
                                 : "날짜 정보 없음"}
