@@ -129,8 +129,8 @@ public class UserService {
                 .mbti(userInfoDTO.getMbti())
                 .profileimg(userInfoDTO.getProfileimg())
                 .build();
+
         this.userDAO.updateUserInfo(userTbl);
-        userDAO.addUserInfo(userTbl);
 
         return UserInfoDTO.builder()
                 .username(userInfoDTO.getUsername())
