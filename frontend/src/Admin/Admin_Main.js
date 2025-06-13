@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 import {hover} from "@testing-library/user-event/dist/hover";
+import UserDetailPopup from "./UserDetailPopup";
 
 export default function Admin_Main() {
     const currentUser = useSelector(state => state.main.currentUser);
     const navigate = useNavigate();
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedUser, setSelectedPost] = useState(null);
+    const closePopup = () => setShowPopup(false);
+
     return (
         <>
             <header style={styles.header}>
@@ -36,8 +42,12 @@ export default function Admin_Main() {
             </header>
 
             <main style={styles.main}>
-                <Outlet />
+                <Outlet context={{showPopup, setShowPopup, selectedUser, setSelectedPost, closePopup}} />
             </main>
+
+            {showPopup && selectedUser && (
+                <UserDetailPopup user={selectedUser} onClose={closePopup} />
+            )}
         </>
     );
 }

@@ -27,7 +27,8 @@ public class AdminService {
         for (MatchTbl match : matches) {
             AdminMatchDTO dto = AdminMatchDTO.builder()
                     .num(match.getId())
-
+                    .userA(match.getMatchmale().getUsername())
+                    .userB(match.getMatchfemale().getUsername())
                     .matchingTime(match.getMatchtime())
                     .build();
             matchDTOS.add(dto);

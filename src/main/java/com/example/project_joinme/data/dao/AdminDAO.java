@@ -12,6 +12,7 @@ import com.example.project_joinme.data.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +42,10 @@ public class AdminDAO {
 
         return rows.stream()
                 .map(row -> new HateDTO(
-                        null,                          // hater는 없음
-                        (String) row[0],               // hated
-                        null,                          // hate_time도 없음
-                        ((Number) row[1]).intValue()   // report_count
+                        null,                            // hater
+                        (String) row[0],                 // hated
+                        ((Timestamp) row[2]).toInstant(), // 5번째 신고 시각
+                        ((Number) row[1]).intValue()     // 신고 횟수
                 ))
                 .toList();
     }

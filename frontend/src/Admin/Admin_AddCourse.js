@@ -50,7 +50,7 @@ export default function Admin_AddCourse() {
 
     return (
         <>
-            <section id={"admin-course"} style={styles.container}>
+            <section id={"add-course"} style={styles.container}>
                 <h2 style={styles.title}>데이트 코스 추가</h2>
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div style={styles.formGroup}>

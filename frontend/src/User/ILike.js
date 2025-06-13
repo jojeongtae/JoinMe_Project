@@ -6,9 +6,11 @@ import "./ILike.css";
 export default function ILike() {
     const currentUser = useSelector((state) => state.main.currentUser);
     const [likedUsers, setLikedUsers] = useState([]);
+    const [matchedUsers, setMatchedUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // 좋아요한 사람들과 매칭된 유저 불러오기
     useEffect(() => {
         if (!currentUser || !currentUser.username) return;
 
@@ -28,9 +30,25 @@ export default function ILike() {
             }
         };
 
+        const fetchMatchedUsers = async () => {
+            try {
+                const res = await apiClient.get(`/match/${currentUser.username}`);
+                setMatchedUsers(res.data);
+            } catch (error) {
+                console.error("매칭된 유저 불러오기 실패:", error);
+            }
+        };
+
         fetchLikedUsers();
+        fetchMatchedUsers();
     }, [currentUser]);
 
+    const matchedUsernames = matchedUsers.map((match) => match.matchername);
+    const filteredLikedUsers = likedUsers.filter(
+        (user) => !matchedUsernames.includes(user.username)
+    );
+
+    // 좋아요 취소 핸들러
     const handleUnlike = async (likedUserId) => {
         try {
             await apiClient.delete("/like", {
@@ -39,7 +57,15 @@ export default function ILike() {
                     liked: likedUserId,
                 },
             });
-            setLikedUsers((prev) => prev.filter((user) => user.username !== likedUserId));
+
+            // 좋아요 취소 후 다시 likedUsers 및 match 목록 갱신
+            const [likedRes, matchRes] = await Promise.all([
+                apiClient.get(`/like/liked-users?liker=${currentUser.username}`),
+                apiClient.get(`/match/${currentUser.username}`),
+            ]);
+
+            setLikedUsers(likedRes.data);
+            setMatchedUsers(matchRes.data);
         } catch (err) {
             alert("좋아요 취소 실패");
             console.error(err);
@@ -61,11 +87,11 @@ export default function ILike() {
     return (
         <div className="ilike-wrapper">
             <h2 className="ilike-title">❤️ 내가 좋아요 누른 사람들</h2>
-            {likedUsers.length === 0 ? (
-                <p className="ilike-empty">아직 좋아요를 누른 사람이 없어요.</p>
+            {filteredLikedUsers.length === 0 ? (
+                <p className="ilike-empty">아직 매칭되지 않은 좋아요 유저가 없어요.</p>
             ) : (
-                likedUsers.map((user) => (
-                    <div className="ilike-card" key={user.id}>
+                filteredLikedUsers.map((user) => (
+                    <div className="ilike-card" key={user.username}>
                         <img
                             className="ilike-img"
                             src={user.profileimg || user.imgPath}

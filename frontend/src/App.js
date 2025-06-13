@@ -24,13 +24,15 @@ import UserInfoPost from "./User/UserInfoPost";
 import Admin_UserList from "./Admin/Admin_UserList";
 import Admin_CourseList from "./Admin/Admin_CourseList";
 import Matched from "./User/Matched";
-
+import JoinMe from "./User/JoinMe";
+import {useEffect} from "react";
+import Admin_EditCourse from "./Admin/Admin_EditCourse";
 
 
 function App() {
 
-
     return (
+
         <Routes>
             <Route path={"/"} element={<Logo/>}></Route>
             <Route path={"/login"} element={<Login/>}></Route>
@@ -45,6 +47,7 @@ function App() {
                 <Route path={"course"} element={<Course/>} />
                 <Route path={"mbti"} element={<MBTI/>} />
                 <Route path={"matched"} element={<Matched/>} ></Route>
+                <Route path={"joinme/:username"} element={<JoinMe/>} ></Route>
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Admin_Intro/>} />
@@ -53,6 +56,7 @@ function App() {
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
                 <Route path={"course-list"} element={<Admin_CourseList/>} />
                 <Route path={"add-course"} element={<Admin_AddCourse/>} />
+                <Route path={"edit-course/:id"} element={<Admin_EditCourse/>} />
                 <Route path={"blacklist"} element={<Admin_BlackList/>} />
             </Route>
         </Routes>

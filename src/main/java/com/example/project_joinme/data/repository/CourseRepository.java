@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends JpaRepository<CourseTbl,String> {
+public interface CourseRepository extends JpaRepository<CourseTbl,Integer> {
     @Query(value = "select * from course_tbl where address = :address",nativeQuery = true)
     List<CourseTbl> findByAddress(@Param("address") String address);
     @Query(value = "select * from course_tbl where course_name = :course_name",nativeQuery = true)

@@ -12,8 +12,8 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class MessageDTO {
-    private String senderUsername;
-    private String receiverUsername;
+    private String sender;
+    private String receiver;
     private String content;
     private Instant sendTime;
 

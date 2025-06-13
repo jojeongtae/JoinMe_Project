@@ -5,6 +5,7 @@ import com.example.project_joinme.data.entity.MessageTbl;
 import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.data.repository.MessageRepository;
 import com.example.project_joinme.data.repository.UserRepository;
+import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     public void sendMessage(MessageDTO dto) {
-        UserTbl sender = userRepository.findByUsernameWithLogin(dto.getSenderUsername());
-        UserTbl receiver = userRepository.findByUsernameWithLogin(dto.getReceiverUsername());
+        UserTbl sender = userRepository.findByUsernameWithLogin(dto.getSender());
+        UserTbl receiver = userRepository.findByUsernameWithLogin(dto.getReceiver());
         MessageTbl message = MessageTbl.builder()
                 .sender(sender)
                 .receiver(receiver)
@@ -31,8 +32,9 @@ public class MessageService {
         messageRepository.save(message);
 
     }
-    public List<MessageDTO> getChat(String user1,String user2) {
-        List<MessageTbl> messages = messageRepository.findChatBetween(user1,user2);
+
+    public List<MessageDTO> getChat(String user1, String user2) {
+        List<MessageTbl> messages = messageRepository.findChatBetween(user1, user2);
         List<MessageDTO> result = new ArrayList<>();
         for (MessageTbl message : messages) {
             result.add(new MessageDTO(
@@ -43,6 +45,25 @@ public class MessageService {
             ));
         }
         return result;
+    }
+
+    public List<MessageDTO> getAllMessages(String username) {
+        List<MessageTbl> messageTbls = messageRepository.findAllMessagesByUser(username);
+        if (messageTbls.isEmpty()) {
+            throw new MyException("온 메세지가 없습니다 ");
+        }
+        List<MessageDTO> result = new ArrayList<>();
+        for (MessageTbl message : messageTbls) {
+            MessageDTO messageDTO = MessageDTO.builder()
+                    .content(message.getContent())
+                    .receiver(message.getReceiver().getUsername())
+                    .sender(message.getSender().getUsername())
+                    .sendTime(message.getSendTime())
+                    .build();
+            result.add(messageDTO);
+        }
+        return result;
+
     }
 
 }

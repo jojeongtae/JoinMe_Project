@@ -1,26 +1,21 @@
 package com.example.project_joinme.service;
 
-import com.example.project_joinme.data.dao.CourseDAO;
 import com.example.project_joinme.data.dao.LoginDAO;
 import com.example.project_joinme.data.dao.UserDAO;
-import com.example.project_joinme.data.dto.HateDTO;
 import com.example.project_joinme.data.dto.UserInfoDTO;
-import com.example.project_joinme.data.entity.CourseTbl;
-import com.example.project_joinme.data.entity.HateTbl;
+
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
-import com.example.project_joinme.data.repository.HateRepository;
-import com.example.project_joinme.data.repository.UserRepository;
+
 import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
-import java.time.Instant;
 import java.util.List;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -28,9 +23,9 @@ import java.util.List;
 public class UserService {
     private final UserDAO userDAO;
     private final LoginDAO loginDAO;
-    private final CourseDAO courseDAO;
-    private final HateRepository hateRepository;
-    private final UserRepository userRepository;
+
+    @Value("${file.upload-dir}")
+    private String uploadDIr;
 
     //모든 유저 정보가져오기
     public List<UserInfoDTO> findAllUserInfo() {
@@ -151,6 +146,8 @@ public class UserService {
                 .build();
 
     }
+    // 이미지 기능
+
 
 
 
