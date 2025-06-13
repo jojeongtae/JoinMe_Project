@@ -44,6 +44,8 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -51,12 +53,13 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie", "/images/**").permitAll();
 
                     auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/like", "/userinfo", "/**").permitAll();
 
                     auth.requestMatchers("/user/**").hasRole("USER");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/upload").authenticated(); // 업로드는 인증 필요
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
                     auth.anyRequest().authenticated();
