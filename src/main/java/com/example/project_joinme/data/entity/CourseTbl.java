@@ -33,4 +33,7 @@ public class CourseTbl {
     @Column(name = "update_time")
     private Instant updatetime;
 
+    @Column(name = "imgpath", nullable = false, length = 200)
+    private String imgpath;
+
 }

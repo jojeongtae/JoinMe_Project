@@ -28,6 +28,7 @@ public class CourseServiec {
                         .address(course.getAddress())
                         .body(course.getBody())
                         .updateDate(course.getUpdatetime())
+                        .imgpath(course.getImgpath())
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -41,6 +42,7 @@ public class CourseServiec {
                         .address(addr.getAddress())
                         .body(addr.getBody())
                         .updateDate(addr.getUpdatetime())
+                        .imgpath(addr.getImgpath())
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -54,6 +56,7 @@ public class CourseServiec {
                         .address(course.getAddress())
                         .body(course.getBody())
                         .updateDate(course.getUpdatetime())
+                        .imgpath(course.getImgpath())
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -68,6 +71,7 @@ public class CourseServiec {
                     .address(tbl.get().getAddress())
                     .body(tbl.get().getBody())
                     .updateDate(tbl.get().getUpdatetime())
+                    .imgpath(tbl.get().getImgpath())
                     .build();
             return dto;
         }
@@ -97,6 +101,7 @@ public class CourseServiec {
                 .address(updatedCourse.getAddress())
                 .body(updatedCourse.getBody())
                 .updateDate(Instant.now())
+                .imgpath(updatedCourse.getImgpath())
                 .build();
         return updatedCourseDTO;
 

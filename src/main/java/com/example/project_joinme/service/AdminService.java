@@ -40,12 +40,14 @@ public class AdminService {
         CourseTbl courseTbl  = this.courseDAO.addCourse(
                 addCourseDTO.getCoursename(),
                 addCourseDTO.getAddress(),
-                addCourseDTO.getBody());
+                addCourseDTO.getBody(),
+                addCourseDTO.getImage());
         return AddCourseDTO.builder()
                 .coursename(courseTbl.getCoursename())
                 .address(addCourseDTO.getAddress())
                 .body(addCourseDTO.getBody())
                 .updateDate(Instant.now())
+                .image(addCourseDTO.getImage())
                 .build();
     }
     public List<HateDTO>  findAllHates() {
