@@ -21,7 +21,7 @@ public class DateController {
         return ResponseEntity.status(HttpStatus.OK).body(this.dateService.addDate(dateDTO));
     }
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteDate(DateDTO dateDTO) {
+    public ResponseEntity<String> deleteDate(@RequestBody DateDTO dateDTO) {
         if(this.dateService.deleteDate(dateDTO)) {
             return ResponseEntity.status(HttpStatus.OK).body("삭제완료");
         }
