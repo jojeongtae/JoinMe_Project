@@ -14,11 +14,13 @@ import java.util.List;
 @RequestMapping("/message")
 public class MessageController {
     private final MessageService messageService;
+    //채팅보내기
     @PostMapping
     public ResponseEntity<Void> sendMessage(@RequestBody MessageDTO messageDTO) {
         this.messageService.sendMessage(messageDTO);
         return ResponseEntity.ok().build();
     }
+    //채팅기록 읽음처리
     @GetMapping("/chat")
     public ResponseEntity<List<MessageDTO>> getAllMessages(@RequestParam String user1, @RequestParam String user2) {
         return ResponseEntity.ok(this.messageService.getChat(user1, user2));
@@ -26,5 +28,9 @@ public class MessageController {
     @GetMapping("/chat-list")
     public ResponseEntity<List<MessageDTO>> getAllMessagesByUser(@RequestParam String username) {
         return ResponseEntity.ok(messageService.getAllMessages(username));
+    }
+    @GetMapping("/unread-count")
+    public ResponseEntity<Integer> getUnreadMessages(@RequestParam String username) {
+        return ResponseEntity.ok(this.messageService.getUnreadMessageCount(username));
     }
 }
