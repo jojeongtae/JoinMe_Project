@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {togglePostHidden} from "../mainSlice";
+import {setUsers, togglePostHidden} from "../mainSlice";
 import {useOutletContext} from "react-router-dom";
 
 export default function Admin_PostHiding() {
@@ -13,42 +13,42 @@ export default function Admin_PostHiding() {
         setShowPopup(true);
     };
 
-    const handleToggleHidden = (postId) => {
-        dispatch(togglePostHidden(postId));
+    const handleToggleHidden = (username) => {
+        dispatch(togglePostHidden(username));
     };
 
     return (
         <>
             <section style={styles.container}>
-                <h2 style={styles.title}>게시물 숨김 관리</h2>
+                <h2 style={styles.title}>숨긴 게시물 관리</h2>
                 <table style={styles.table}>
                     <thead>
                     <tr>
                         <th style={styles.th}>ID</th>
                         <th style={styles.th}>이름</th>
-                        <th style={styles.th}>관리</th>
                         <th style={styles.th}>상세</th>
+                        <th style={styles.th}>공개처리</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {posts.map(post => (
+                    {posts.filter(post => post.hidden).map(post => (
                         <tr key={post.username}>
                             <td style={styles.td}>{post.username}</td>
                             <td style={styles.td}>{post.usernickname}</td>
-                            <td style={styles.td}>
-                                <button
-                                    style={styles.actionBtnHide}
-                                    onClick={() => handleToggleHidden(post.id)}
-                                >
-                                    {post.hidden ? '공개' : '숨김'}
-                                </button>
-                            </td>
                             <td style={styles.td}>
                                 <button
                                     style={styles.actionBtnDetail}
                                     onClick={() => handleShowPopup(post)}
                                 >
                                     상세보기
+                                </button>
+                            </td>
+                            <td style={styles.td}>
+                                <button
+                                    style={styles.unhideBtn}
+                                    onClick={() => handleToggleHidden(post.username)}
+                                >
+                                    숨김 풀기
                                 </button>
                             </td>
                         </tr>
@@ -96,16 +96,6 @@ const styles = {
         borderBottom: '1px solid #eee',
         textAlign: 'center',
     },
-    actionBtnHide: {
-        padding: '6px 12px',
-        backgroundColor: '#caa8f5',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-    },
     actionBtnDetail: {
         padding: '6px 12px',
         backgroundColor: '#ff7eb9',
@@ -115,5 +105,13 @@ const styles = {
         cursor: 'pointer',
         fontSize: '0.85rem',
         transition: 'background-color 0.2s ease',
+    },
+    unhideBtn: {
+        padding: '6px 10px',
+        backgroundColor: '#7dc87d',
+        color: 'white',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
     },
 };
