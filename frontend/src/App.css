@@ -38,13 +38,71 @@
 }
 /*-----------------------------------------------------------*/
 :root {
-  --color-1rd: #EC1C2C;
+  --color-1rd: #FB5356;
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 1040px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 20px;
 }
+
+header {
+  width: 100%;
+  padding: 1rem 4rem;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 2px solid rgb(238, 238, 238);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+header > .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  width: 10rem;
+  display: block;
+}
+
+header .logo img {
+  width: 100%;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav-list a {
+  font-size: 2rem;
+  transition: 0.2s;
+}
+
+.nav-list a:hover {
+  color: var(--color-1rd);
+  font-weight: 600;
+}
+
+header .userinfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .userinfo .username {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+/*header .userinfo .log-btn {*/
+/*  */
+/*}*/
