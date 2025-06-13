@@ -6,6 +6,7 @@ import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.data.repository.MessageRepository;
 import com.example.project_joinme.data.repository.UserRepository;
 import com.example.project_joinme.exception.MyException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +35,18 @@ public class MessageService {
     }
 
     public List<MessageDTO> getChat(String user1, String user2) {
+
+        markMessagesAsRead(user2, user1);
         List<MessageTbl> messages = messageRepository.findChatBetween(user1, user2);
         List<MessageDTO> result = new ArrayList<>();
+
         for (MessageTbl message : messages) {
             result.add(new MessageDTO(
                     message.getSender().getUsername(),
                     message.getReceiver().getUsername(),
                     message.getContent(),
-                    message.getSendTime()
+                    message.getSendTime(),
+                    message.isRead()
             ));
         }
         return result;
@@ -65,5 +70,16 @@ public class MessageService {
         return result;
 
     }
-
+    public int getUnreadMessageCount(String username) {
+        List<MessageTbl> unread = messageRepository.findByReceiver_UsernameAndReadFalse(username);
+        return unread.size();
+    }
+        @Transactional
+    public void markMessagesAsRead(String sender, String receiver) {
+        List<MessageTbl> unreadMessages = messageRepository.findUnreadMessages(sender, receiver);
+        for (MessageTbl message : unreadMessages) {
+            message.setRead(true);
+        }
+        messageRepository.saveAll(unreadMessages);
+    }
 }
