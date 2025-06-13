@@ -66,7 +66,6 @@ export default function Admin_UserList() {
                     </tbody>
                 </table>
             </section>
-
         </>
     );
 }

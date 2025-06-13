@@ -1,5 +1,4 @@
 export default function UserDetailPopup({ user, onClose }) {
-    console.log("Popup user:", user);
 
     return (
         <div style={styles.overlay}>

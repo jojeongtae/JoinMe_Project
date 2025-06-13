@@ -148,6 +148,9 @@ export default function Users() {
                     <option value="부산">부산</option>
                     <option value="충청">충청</option>
                     <option value="강원">강원</option>
+                    <option value="대전">대전</option>
+                    <option value="대구">대구</option>
+
                 </select>
             </div>
 
@@ -158,8 +161,13 @@ export default function Users() {
 
             <div>
                 선호 MBTI:
-                {["INTJ", "INFP", "ENTP", "ESFP", "ISTP", "ENFP", "ISFJ", "INFJ"].map((type) => (
-                    <label key={type}>
+                {[
+                    "INTJ", "INTP", "ENTJ", "ENTP",
+                    "INFJ", "INFP", "ENFJ", "ENFP",
+                    "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+                    "ISTP", "ISFP", "ESTP", "ESFP",
+                ].map((type) => (
+                    <label key={type} style={{ marginRight: "10px" }}>
                         <input
                             type="checkbox"
                             value={type}

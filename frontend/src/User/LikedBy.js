@@ -6,9 +6,12 @@ import apiClient from "../api/apiClient";
 export default function LikedBy() {
     const currentUser = useSelector((state) => state.main.currentUser);
     const [likedMeUsers, setLikedMeUsers] = useState([]);
+    const [matchedUsers, setMatchedUsers] = useState([]);
 
-    // 나를 좋아한 유저 목록 가져오기
     useEffect(() => {
+        if (!currentUser) return;
+
+        // 나를 좋아한 사람들 가져오기
         const fetchLikedMeUsers = async () => {
             try {
                 const res = await apiClient.get("/like/liker-users", {
@@ -16,16 +19,30 @@ export default function LikedBy() {
                 });
                 setLikedMeUsers(res.data);
             } catch (error) {
-                console.error("좋아요한 유저 목록 가져오기 실패:", error);
+                console.error(error);
             }
         };
 
-        if (currentUser) {
-            fetchLikedMeUsers();
-        }
+        // 매칭된 사람들 가져오기
+        const fetchMatchedUsers = async () => {
+            try {
+                const res = await apiClient.get(`/match/${currentUser.username}`);
+                setMatchedUsers(res.data); // 매칭된 유저 리스트
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchLikedMeUsers();
+        fetchMatchedUsers();
     }, [currentUser]);
 
-    // 좋아요 돌려주기
+    const matchedUsernames = matchedUsers.map(match => match.matchername);
+    const filteredLikedMeUsers = likedMeUsers.filter(
+        user => !matchedUsernames.includes(user.username)
+    );   // 좋아요 돌려주기
     const handleReturnLike = async (likedUser) => {
         try {
             const res = await apiClient.post("/like", {
@@ -33,6 +50,8 @@ export default function LikedBy() {
                 liked: likedUser.username,
             });
             alert(res.data); // 매칭 메시지 또는 좋아요 등록 메시지
+            setLikedMeUsers(prev => prev.filter(u => u.username !== likedUser.username));
+
         } catch (error) {
             console.error("좋아요 돌려주기 실패:", error);
             if (error.response?.data) {
@@ -61,10 +80,10 @@ export default function LikedBy() {
     return (
         <div className="likedby-wrapper">
             <h2 className="likedby-title">💌 나를 좋아요한 사람들</h2>
-            {likedMeUsers.length === 0 ? (
+            {filteredLikedMeUsers.length === 0 ? (
                 <p className="likedby-empty">아직 나를 좋아요한 사람이 없어요.</p>
             ) : (
-                likedMeUsers.map((user) => (
+                filteredLikedMeUsers.map((user) => (
                     <div className="likedby-card" key={user.username}>
                         <img className="likedby-img" src={user.profileimg} alt={user.usernickname} />
                         <div className="likedby-info">

@@ -12,6 +12,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class CourseDTO {
+    private Integer id;
     private String coursename;
     private String body;
     private String address;
