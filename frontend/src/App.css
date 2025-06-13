@@ -246,6 +246,87 @@ input {
   background-color: #ec4e51;
 }
 
+/*프로필 작성*/
+#userinfo-post {
+  background-color: #fff5f6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+#userinfo-post .profile-form {
+  background-color: #ffffff;
+  padding: 4rem;
+  border-radius: 2rem;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+  width: 40rem;
+  max-width: 90%;
+}
+
+#userinfo-post .profile-form h2 {
+  text-align: center;
+  margin-bottom: 4rem;
+  color: var(--color-1rd);
+}
+
+#userinfo-post .profile-form label {
+  display: block;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+#userinfo-post .profile-form .required {
+  color: red;
+  font-size: 0.9em;
+  margin-left: 0.4rem;
+}
+
+#userinfo-post .profile-form input,
+#userinfo-post .profile-form select,
+#userinfo-post .profile-form textarea {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border: 0.1rem solid #ddd;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  box-sizing: border-box;
+}
+
+#userinfo-post .profile-form input:focus,
+#userinfo-post .profile-form select:focus,
+#userinfo-post .profile-form textarea:focus {
+  outline: none;
+  border-color: var(--color-2rd);
+}
+
+#userinfo-post .profile-form textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+#userinfo-post .profile-form button {
+  margin-top: 2.5rem;
+  width: 100%;
+  padding: 1.2rem;
+  background-color: var(--color-1rd);
+  color: white;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#userinfo-post .profile-form button:hover {
+  background-color: #ec4e51;
+}
+
+
+
 /****유저 페이지****/
 
 /*main*/
