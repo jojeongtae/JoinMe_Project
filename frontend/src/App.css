@@ -37,8 +37,17 @@
   }
 }
 /*-----------------------------------------------------------*/
+/*공통*/
 :root {
   --color-1rd: #FB5356;
+  --color-2rd: #FE9397;
+
+  --header-ht: 10.3rem;
+}
+
+.main-wrap {
+  min-height: calc(100vh - var(--header-ht));
+  box-sizing: border-box;
 }
 
 .inner {
@@ -49,9 +58,11 @@
   padding: 0 20px;
 }
 
+/*header*/
 header {
   width: 100%;
-  padding: 1rem 4rem;
+  height: 10.3rem;
+  padding: 0 2rem;
   background-color: rgb(255, 255, 255);
   border-bottom: 2px solid rgb(238, 238, 238);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
@@ -103,6 +114,183 @@ header .userinfo .username {
   font-weight: 600;
 }
 
-/*header .userinfo .log-btn {*/
-/*  */
-/*}*/
+/*button*/
+.btn {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-1rd);
+  color: #fff;
+  border-radius: 0.6rem;
+}
+
+.btn.gray {
+  background-color: #aaa;
+}
+
+.btn.light-pink {
+  background-color: var(--color-2rd);
+}
+
+/*input*/
+input {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+
+/*-----------------------------------------------------------*/
+/*logo page*/
+#logo-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffe0e6, #ffe4b5);
+  padding: 2rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#logo-page .logo-image {
+  width: 30rem;
+  max-width: 80%;
+  margin-bottom: 4rem;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+  animation: fadeInDown 1s ease;
+}
+
+#logo-page .login-button {
+  background-color: var(--color-1rd);
+  color: white;
+  padding: 1.2rem 3rem;
+  border: none;
+  border-radius: 3rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+#logo-page .login-button:hover {
+  background-color: #ec4e51;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*login*/
+#login {
+  background-image: url('../public/backgroundintro.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login .overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 반투명 레이어 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+#login .welcome-text {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+#login .login-box {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 3rem 4rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 30rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#login .login-box h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#login .login-box button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-1rd);
+  color: #fff;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+#login .login-box button:hover {
+  background-color: #ec4e51;
+}
+
+/****유저 페이지****/
+
+/*main*/
+#user-main {
+  padding: 4rem;
+  box-sizing: border-box;
+  height: calc(100vh - var(--header-ht));
+}
+
+#user-main .user-main-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../public/background.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 0 4rem;
+}
+
+#user-main .bg-overlay {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2rem;
+  padding: 4rem;
+  text-align: center;
+  max-width: 80rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#user-main .main-title {
+  font-size: 3.2rem;
+  margin-bottom: 2rem;
+}
+
+#user-main .main-paragraph {
+  font-size: 1.8rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+#user-main .main-banner {
+  width: 70%;
+  border-radius: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+

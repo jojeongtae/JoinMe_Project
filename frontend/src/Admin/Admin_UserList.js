@@ -73,7 +73,7 @@ export default function Admin_UserList() {
                                 </button>
                             </td>
                             <td style={styles.td}>
-                                <button style={styles.detailBtn} onClick={() => handleShowPopup(user)}>상세보기</button>
+                                <button className={"btn"} onClick={() => handleShowPopup(user)}>상세보기</button>
                             </td>
                         </tr>
                     ))}
@@ -131,7 +131,7 @@ const styles = {
     },
     hideBtn: {
         padding: '6px 10px',
-        backgroundColor: '#d58282',
+        backgroundColor: '#aaa',
         color: 'white',
         border: 'none',
         borderRadius: '6px',

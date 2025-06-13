@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link, Outlet, useNavigate} from "react-router-dom";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 import {hover} from "@testing-library/user-event/dist/hover";
 import UserDetailPopup from "./UserDetailPopup";
 
@@ -14,94 +14,43 @@ export default function Admin_Main() {
 
     return (
         <>
-            <header style={styles.header}>
-                {/* 로고 */}
-                <div style={styles.logoBox}>
-                    <img src="/logo.png" alt="logo" style={styles.logo} />
+            <header>
+                <div className={"inner"}>
+                    {/* 로고 */}
+                    <Link className={"logo"} to="/admin-main">
+                        <img src="/logo.png" alt="logo"/>
+                    </Link>
+
+                    {/* 내비게이션 */}
+                    <nav className={"nav-list"}>
+                        <Link to="/admin-main">홈</Link>
+                        <Link to="/admin-main/user-list">유저 리스트</Link>
+                        <Link to="/admin-main/post-hiding">게시물관리</Link>
+                        <Link to="/admin-main/matching-list" >매칭현황</Link>
+                        <Link to="/admin-main/course-list">데이트코스</Link>
+                        <Link to="/admin-main/blacklist">블랙리스트</Link>
+                    </nav>
+
+                    {/* 유저 정보 */}
+                    {currentUser && (
+                        <div className={"userinfo"}>
+                            <span className={"username"}>{currentUser.name} 님</span>
+                            <button className={"btn light-pink"} onClick={() => {
+                                navigate("/")
+                            }}>로그아웃
+                            </button>
+                        </div>
+                    )}
                 </div>
-
-                {/* 내비게이션 */}
-                <nav style={styles.nav}>
-                    <Link to="/admin-main" style={styles.link}>홈</Link>
-                    <Link to="/admin-main/user-list" style={styles.link}>유저 리스트</Link>
-                    <Link to="/admin-main/post-hiding" style={styles.link}>게시물관리</Link>
-                    <Link to="/admin-main/matching-list" style={styles.link}>매칭현황</Link>
-                    <Link to="/admin-main/course-list" style={styles.link}>데이트코스</Link>
-                    <Link to="/admin-main/blacklist" style={styles.link}>블랙리스트</Link>
-                </nav>
-
-                {/* 유저 정보 */}
-                {currentUser && (
-                    <div style={styles.userInfo}>
-                        <span style={styles.userName}>{currentUser.name} 님</span>
-                        <button onClick={()=>{
-                            navigate("/")
-                        }}>로그아웃</button>
-                    </div>
-                )}
             </header>
 
-            <main style={styles.main}>
-                <Outlet context={{showPopup, setShowPopup, selectedUser, setSelectedPost, closePopup}} />
+            <main className={"main-wrap"}>
+                <Outlet context={{showPopup, setShowPopup, selectedUser, setSelectedPost, closePopup}}/>
             </main>
 
             {showPopup && selectedUser && (
-                <UserDetailPopup user={selectedUser} onClose={closePopup} />
+                <UserDetailPopup user={selectedUser} onClose={closePopup}/>
             )}
         </>
     );
 }
-const styles = {
-    header: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 40px",
-        backgroundColor: "#ffffff",
-        borderBottom: "2px solid #eee",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-    },
-    logoBox: {
-        flex: "0 0 auto",
-    },
-    logo: {
-        height: "100px",
-    },
-    nav: {
-        display: "flex",
-        gap: "25px",
-        flex: "1",
-        justifyContent: "center",
-    },
-    link: {
-        textDecoration: "none",
-        color:hover? "#333":"blue",
-        fontWeight: "500",
-        fontSize: "20px",
-        transition: "color 0.2s",
-    },
-    userInfo: {
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-    },
-    userName: {
-        fontSize: "14px",
-        color: "#555",
-        fontWeight: "bold",
-    },
-    userImage: {
-        width: "40px",
-        height: "40px",
-        borderRadius: "50%",
-        objectFit: "cover",
-    },
-    main: {
-        padding: "30px",
-        backgroundColor: "#fafafa",
-        minHeight: "100vh",
-    },
-};

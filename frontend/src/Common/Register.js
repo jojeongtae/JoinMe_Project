@@ -39,16 +39,7 @@ function Register() {
     };
 
     return (
-        <div className="login-container"
-             style={{
-                 backgroundImage: `url(${process.env.PUBLIC_URL}/backgroundintro.jpg)`,
-                 backgroundSize: "cover",
-                 backgroundPosition: "center",
-                 height: "100vh",
-                 display: "flex",
-                 justifyContent: "center",
-                 alignItems: "center",
-             }}>
+        <section id={"login"}>
             <div className="overlay">
                 <h1 className="welcome-text">당신의 인연, 오늘 여기에서 시작됩니다.</h1>
                 <form className="login-box" onSubmit={handleSubmit}>
@@ -57,10 +48,10 @@ function Register() {
                     <input name="password" type="password" placeholder="비밀번호" value={formData.password} onChange={handleChange} required />
                     <input name="phone" type="text" placeholder="전화번호" value={formData.phone} onChange={handleChange} required />
                     <button type="submit">회원가입</button>
-                    <button type="button" onClick={goToLogin} className="signup-btn">로그인</button>
+                    <button type="button" onClick={goToLogin}>로그인</button>
                 </form>
             </div>
-        </div>
+        </section>
     );
 }
 

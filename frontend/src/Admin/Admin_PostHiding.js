@@ -68,7 +68,6 @@ const styles = {
         margin: '0 auto',
     },
     title: {
-        fontSize: '2rem',
         marginBottom: '24px',
         fontWeight: '600',
         textAlign: 'center',
@@ -87,12 +86,10 @@ const styles = {
         backgroundColor: '#f5f5f5',
         padding: '12px',
         fontWeight: '600',
-        fontSize: '0.95rem',
         borderBottom: '1px solid #ddd',
     },
     td: {
         padding: '12px',
-        fontSize: '0.9rem',
         borderBottom: '1px solid #eee',
         textAlign: 'center',
     },
@@ -103,7 +100,6 @@ const styles = {
         border: 'none',
         borderRadius: '6px',
         cursor: 'pointer',
-        fontSize: '0.85rem',
         transition: 'background-color 0.2s ease',
     },
     unhideBtn: {

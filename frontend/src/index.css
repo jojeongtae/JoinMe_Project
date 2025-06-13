@@ -85,3 +85,17 @@ a{
   color: inherit;
 }
 
+button{
+  cursor: pointer;
+  background-color: transparent;
+  color: #000;
+  border: none;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+input, select{
+  outline: none;
+}
