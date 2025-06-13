@@ -17,4 +17,5 @@ public class CourseDTO {
     private String body;
     private String address;
     private Instant updateDate;
+    private String imgpath;
 }
