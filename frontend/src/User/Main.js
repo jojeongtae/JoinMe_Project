@@ -20,21 +20,7 @@ export default function MainLayout() {
             alert("로그아웃에 실패했습니다.");
         }
     };
-    const loadMessages = async () => {
-        try {
-            const res = await apiClient.get(`/message/chat-list?username=${currentUser.username}`);
-            const messages = res.data;
-            dispatch(fetchUserMessages(messages)); // 이건 redux action creator
-        } catch (err) {
-            console.error("채팅목록 로딩 실패", err);
-        }
-    };
 
-    useEffect(() => {
-        if (currentUser?.username) {
-            loadMessages();
-        }
-    }, [currentUser]);
     return (
         <>
             <header>
