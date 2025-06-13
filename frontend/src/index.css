@@ -96,6 +96,6 @@ div {
   box-sizing: border-box;
 }
 
-input, select{
+input, select, textarea{
   outline: none;
 }
