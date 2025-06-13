@@ -12,11 +12,5 @@ public class DateDAO {
     public DateTbl addDate(DateTbl dateTbl) {
        return dateRepository.save(dateTbl);
     }
-    public boolean deleteDate(Integer id) {
-        if (dateRepository.existsById(id)) {
-            this.dateRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
+
 }

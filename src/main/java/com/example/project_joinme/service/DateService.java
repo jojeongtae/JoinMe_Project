@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -41,9 +42,11 @@ public class DateService {
                 .course_id(save.getCourse_id().getId())
                 .build();
     }
-//    public boolean deleteDate(DateDTO dateDTO) {
-//        UserTbl sender = userRepository.findById(dateDTO.getSender()).orElse(null);
-//        UserTbl receiver = userRepository.findById(dateDTO.getReceiver()).orElse(null);
-//
-//    }
+    public boolean deleteDate(DateDTO dateDTO) {
+        UserTbl sender = userRepository.findById(dateDTO.getSender()).orElse(null);
+        UserTbl receiver = userRepository.findById(dateDTO.getReceiver()).orElse(null);
+        CourseTbl course = courseRepository.findById(dateDTO.getCourse_id()).orElse(null);
+        dateRepository.deleteBySenderAndReceiverAndCourse(sender, receiver, course);
+        return true;
+    }
 }
