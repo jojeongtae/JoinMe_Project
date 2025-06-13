@@ -23,6 +23,7 @@ public class CourseServiec {
     public List<CourseDTO> getAllCourses() {
         return this.courseDAO.findAll().stream()
                 .map(course -> CourseDTO.builder()
+                        .id(course.getId())
                         .coursename(course.getCoursename())
                         .address(course.getAddress())
                         .body(course.getBody())
@@ -35,6 +36,7 @@ public class CourseServiec {
     public List<CourseDTO> getAddress(String address) {
         return this.courseDAO.findByAddress(address).stream()
                 .map(addr -> CourseDTO.builder()
+                        .id(addr.getId())
                         .coursename(addr.getCoursename())
                         .address(addr.getAddress())
                         .body(addr.getBody())
@@ -47,6 +49,7 @@ public class CourseServiec {
     public List<CourseDTO> getCourseName(String courseName) {
         return this.courseDAO.findByCourseName(courseName).stream()
                 .map(course -> CourseDTO.builder()
+                        .id(course.getId())
                         .coursename(course.getCoursename())
                         .address(course.getAddress())
                         .body(course.getBody())
@@ -54,6 +57,21 @@ public class CourseServiec {
                         .build()
                 )
                 .collect(Collectors.toList());
+    }
+
+    public CourseDTO getCourseId(Integer id) {
+        Optional<CourseTbl> tbl = this.courseDAO.findById(id);
+        if(tbl.isPresent()) {
+            CourseDTO dto = CourseDTO.builder()
+                    .id(tbl.get().getId())
+                    .coursename(tbl.get().getCoursename())
+                    .address(tbl.get().getAddress())
+                    .body(tbl.get().getBody())
+                    .updateDate(tbl.get().getUpdatetime())
+                    .build();
+            return dto;
+        }
+        throw new MyException("아이디 업승");
     }
 
     public boolean deleteCourse(Integer courseId) {
