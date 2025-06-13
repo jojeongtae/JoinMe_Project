@@ -29,12 +29,13 @@ public class CourseDAO {
         return this.courseRepository.findByCourseName(course_name);
     }
 
-    public CourseTbl addCourse(String course_name, String address, String body) {
+    public CourseTbl addCourse(String course_name, String address, String body, String imgpath) {
         CourseTbl course = CourseTbl.builder()
                 .coursename(course_name)
                 .body(body)
                 .address(address)
                 .updatetime(Instant.now())
+                .imgpath(imgpath)
                 .build();
         return this.courseRepository.save(course);
     }

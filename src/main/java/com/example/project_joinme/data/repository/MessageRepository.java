@@ -22,4 +22,9 @@ public interface MessageRepository extends JpaRepository<MessageTbl, Integer> {
             "WHERE m.sender.username = :username OR m.receiver.username = :username " +
             "ORDER BY m.sendTime ASC")
     List<MessageTbl> findAllMessagesByUser(@Param("username") String username);
+
+    List<MessageTbl> findByReceiver_UsernameAndReadFalse(String username);
+
+    @Query("SELECT m FROM MessageTbl m WHERE m.sender.username = :sender AND m.receiver.username = :receiver AND m.read = false")
+    List<MessageTbl> findUnreadMessages(@Param("sender") String sender, @Param("receiver") String receiver);
 }

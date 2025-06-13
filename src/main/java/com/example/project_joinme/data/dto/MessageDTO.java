@@ -16,6 +16,6 @@ public class MessageDTO {
     private String receiver;
     private String content;
     private Instant sendTime;
-
+    private boolean read;
 }
 
