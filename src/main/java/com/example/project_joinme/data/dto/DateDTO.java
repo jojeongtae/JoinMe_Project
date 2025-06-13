@@ -15,6 +15,6 @@ import java.time.Instant;
 public class DateDTO {
     private String sender;
     private String receiver;
-    private Instant date_time;
+    private Instant sendTime;
     private Integer course_id;
 }
