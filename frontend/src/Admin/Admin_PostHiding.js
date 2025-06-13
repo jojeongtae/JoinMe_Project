@@ -1,31 +1,56 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {setUsers, togglePostHidden} from "../mainSlice";
 import {useOutletContext} from "react-router-dom";
+import apiClient from "../api/apiClient";
 
 export default function Admin_PostHiding() {
-    const posts = useSelector(state => state.main.users);
-    const dispatch = useDispatch();
+    const [posts, setPosts] = useState([]);
     const {setShowPopup, setSelectedPost} = useOutletContext();
+
+    const fetchData = async () => {
+        try {
+            const response = await apiClient.get("/hide-list");
+            const postsWithHidden = response.data.map(post => ({
+                ...post,
+                hidden: true
+            }));
+            setPosts(postsWithHidden);
+        } catch (error) {
+            console.error("숨김 유저 리스트 로딩 실패", error);
+        }
+    };
+
+    const handleToggleHidden = async (id) => {
+        try {
+            await apiClient.delete("/hide-delete", {
+                data: { id: id }
+            });
+            fetchData();
+        } catch (error) {
+            console.error("숨김 해제 실패:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleShowPopup = (post) => {
         setSelectedPost(post);
         setShowPopup(true);
     };
 
-    const handleToggleHidden = (username) => {
-        dispatch(togglePostHidden(username));
-    };
-
     return (
         <>
             <section style={styles.container}>
-                <h2 style={styles.title}>숨긴 게시물 관리</h2>
+                <h2 style={styles.title}>숨김 유저 리스트</h2>
                 <table style={styles.table}>
                     <thead>
                     <tr>
                         <th style={styles.th}>ID</th>
                         <th style={styles.th}>이름</th>
+                        <th style={styles.th}>처리 시각</th>
                         <th style={styles.th}>상세</th>
                         <th style={styles.th}>공개처리</th>
                     </tr>
@@ -35,6 +60,11 @@ export default function Admin_PostHiding() {
                         <tr key={post.username}>
                             <td style={styles.td}>{post.username}</td>
                             <td style={styles.td}>{post.usernickname}</td>
+                            <td style={styles.td}>
+                                {new Date(post.hide_time).toLocaleString("ko-KR", {
+                                    timeZone: "Asia/Seoul",
+                                })}
+                            </td>
                             <td style={styles.td}>
                                 <button
                                     style={styles.actionBtnDetail}
@@ -46,7 +76,7 @@ export default function Admin_PostHiding() {
                             <td style={styles.td}>
                                 <button
                                     style={styles.unhideBtn}
-                                    onClick={() => handleToggleHidden(post.username)}
+                                    onClick={() => handleToggleHidden(post.id)} // username 대신 id 넘김
                                 >
                                     숨김 풀기
                                 </button>

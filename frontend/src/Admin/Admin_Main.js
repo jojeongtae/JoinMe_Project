@@ -24,8 +24,8 @@ export default function Admin_Main() {
                     {/* 내비게이션 */}
                     <nav className={"nav-list"}>
                         <Link to="/admin-main">홈</Link>
-                        <Link to="/admin-main/user-list">유저 리스트</Link>
-                        <Link to="/admin-main/post-hiding">게시물관리</Link>
+                        <Link to="/admin-main/user-list">현재 유저</Link>
+                        <Link to="/admin-main/post-hiding">숨김 유저</Link>
                         <Link to="/admin-main/matching-list" >매칭현황</Link>
                         <Link to="/admin-main/course-list">데이트코스</Link>
                         <Link to="/admin-main/blacklist">블랙리스트</Link>
