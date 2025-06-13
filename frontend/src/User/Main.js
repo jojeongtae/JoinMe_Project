@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {hover} from "@testing-library/user-event/dist/hover";
 import apiClient from "../api/apiClient";
-import {logoutUser} from "../mainSlice";
+import {fetchUserMessages, logoutUser} from "../mainSlice";
 
 export default function MainLayout() {
     const currentUser = useSelector((state) => state.main.currentUser);
@@ -20,7 +20,21 @@ export default function MainLayout() {
             alert("로그아웃에 실패했습니다.");
         }
     };
+    const loadMessages = async () => {
+        try {
+            const res = await apiClient.get(`/message/chat-list?username=${currentUser.username}`);
+            const messages = res.data;
+            dispatch(fetchUserMessages(messages)); // 이건 redux action creator
+        } catch (err) {
+            console.error("채팅목록 로딩 실패", err);
+        }
+    };
 
+    useEffect(() => {
+        if (currentUser?.username) {
+            loadMessages();
+        }
+    }, [currentUser]);
     return (
         <>
             <header>

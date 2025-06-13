@@ -95,3 +95,92 @@
 .ask-date:active {
     transform: scale(0.98);        /* 눌렀을 때 살짝 줄어듦 */
 }
+.chat-modal {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    width: 320px;
+    max-height: 500px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background: #f5f5f5;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.chat-body {
+    padding: 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    max-width: 85%;
+}
+
+.chat-message.mine {
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.chat-message.theirs {
+    justify-content: flex-start;
+}
+
+.chat-profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+    object-fit: cover;
+}
+
+.chat-bubble {
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: #f1f0f0;
+}
+
+.chat-message.mine .chat-bubble {
+    background-color: #d1e7dd;
+}
+.chat-input-form {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+}
+
+.chat-input-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-input-form button {
+    margin-left: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}

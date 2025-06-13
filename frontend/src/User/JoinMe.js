@@ -2,7 +2,7 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import apiClient from "../api/apiClient";
 import {mbtiCompatibility} from "./mbtiCompatibility";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {mbtiBehaviorTips} from "./mbtiBehaviorTips";
 import "./JoinMe.css";
 
@@ -10,6 +10,7 @@ import { useLayoutEffect, useRef } from "react";
 import {loadKakaoScript} from "../App";
 import CourseMap from "./KakaoMap";
 import courseLinks from "./CourseLink";
+import {addUserMessage} from "../mainSlice";
 
 
 export default function JoinMe() {
@@ -19,7 +20,50 @@ export default function JoinMe() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [chatMessages, setChatMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const dispatch = useDispatch();
+    const messages = useSelector((state) => state.main.userMessages);
+    const getChatWithUser = (allMessages, currentUser, targetUser) => {
+        return allMessages
+            .filter(m =>
+                (m.sender === currentUser && m.receiver === targetUser) ||
+                (m.sender === targetUser && m.receiver === currentUser)
+            )
+            .sort((a, b) => new Date(a.sendTime) - new Date(b.sendTime)); // 오름차순
+    };
+    const handleSendMessage = () => {
+        const filteredMessages = getChatWithUser(messages, currentUser.username, userInfo.username);
+        setChatMessages(filteredMessages);
+        setIsChatOpen(true);
+        if(isChatOpen){
+            setIsChatOpen(false);
+        }
+    };
+    const handleSendChat = async (e) => {
+        e.preventDefault();
+        if (!newMessage.trim()) return;
 
+        const messageDTO = {
+            sender: currentUser.username,
+            receiver: userInfo.username,
+            content: newMessage,
+            sendTime: new Date().toISOString(),
+            read: false
+        };
+
+        try {
+            await apiClient.post('/message', messageDTO);
+
+            // 실시간 반영: 새 메시지를 리스트에 추가
+            setChatMessages(prev => [...prev, messageDTO]);
+            setNewMessage('');
+            dispatch(addUserMessage(messageDTO))
+        } catch (err) {
+            console.error('메시지 전송 실패:', err);
+        }
+    };
     useEffect(() => {
         if (!username) return;
 
@@ -101,9 +145,41 @@ export default function JoinMe() {
                     <h3>당신이 취하면 좋을 행동</h3>
                     <p><strong>👍 좋은 점:</strong> {behaviorTip.good}</p>
                     <p><strong>⚠️ 주의할 점:</strong> {behaviorTip.caution}</p>
+                    <br></br>
+                    <button className="ask-date" onClick={handleSendMessage}>채팅하기</button>
                 </div>
             </div>
-
+            {isChatOpen && (
+                <div className="chat-modal">
+                    <div className="chat-header">{userInfo.usernickname}님과의 채팅</div>
+                    <div className="chat-body">
+                        {chatMessages.map((msg, i) => {
+                            const isMine = msg.sender === currentUser.username;
+                            return (
+                                <div key={i} className={`chat-message ${isMine ? 'mine' : 'theirs'}`}>
+                                    {!isMine && (
+                                        <img
+                                            src={userInfo.profileimg || userInfo.imgPath}
+                                            alt="상대 프로필"
+                                            className="chat-profile-img"
+                                        />
+                                    )}
+                                    <div className="chat-bubble">{msg.content}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <form className="chat-input-form" onSubmit={handleSendChat}>
+                        <input
+                            type="text"
+                            value={newMessage}
+                            onChange={e => setNewMessage(e.target.value)}
+                            placeholder="메시지를 입력하세요..."
+                        />
+                        <button type="submit">보내기</button>
+                    </form>
+                </div>
+            )}
             <div className="course-list-container">
                 <h2>추천 코스</h2>
                 {courses.length === 0 ? (
