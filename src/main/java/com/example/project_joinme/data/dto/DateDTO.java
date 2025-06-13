@@ -1,5 +1,6 @@
 package com.example.project_joinme.data.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,15 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
-public class MessageDTO {
+public class DateDTO {
     private String sender;
     private String receiver;
-    private String content;
-    private Instant sendTime;
-
+    private Instant date_time;
+    private Integer course_id;
 }
-

@@ -20,8 +20,8 @@ public class MessageService {
     private final MessageRepository messageRepository;
 
     public void sendMessage(MessageDTO dto) {
-        UserTbl sender = userRepository.findByUsernameWithLogin(dto.getSenderUsername());
-        UserTbl receiver = userRepository.findByUsernameWithLogin(dto.getReceiverUsername());
+        UserTbl sender = userRepository.findByUsernameWithLogin(dto.getSender());
+        UserTbl receiver = userRepository.findByUsernameWithLogin(dto.getReceiver());
         MessageTbl message = MessageTbl.builder()
                 .sender(sender)
                 .receiver(receiver)
@@ -56,8 +56,8 @@ public class MessageService {
         for (MessageTbl message : messageTbls) {
             MessageDTO messageDTO = MessageDTO.builder()
                     .content(message.getContent())
-                    .receiverUsername(message.getReceiver().getUsername())
-                    .senderUsername(message.getSender().getUsername())
+                    .receiver(message.getReceiver().getUsername())
+                    .sender(message.getSender().getUsername())
                     .sendTime(message.getSendTime())
                     .build();
             result.add(messageDTO);
