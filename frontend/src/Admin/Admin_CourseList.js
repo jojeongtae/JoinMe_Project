@@ -116,7 +116,6 @@ export default function Admin_CourseList() {
                         </tr>
                     ) : (
                         courses.map((course) => {
-                            console.log(course);
                             return (
                                 <tr key={course.id}>
                                     <td style={styles.td}>{course.coursename}</td>
