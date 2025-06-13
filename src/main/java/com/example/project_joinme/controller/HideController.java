@@ -6,15 +6,19 @@ import com.example.project_joinme.service.HideService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class HideController {
     private final HideService hideService;
+    @GetMapping("/hide-list")
+    public ResponseEntity<List<HideuserDTO>> findAll() {
+        return ResponseEntity.ok(hideService.findAll());
+    }
+
     @PostMapping("/hide")
     public ResponseEntity<String> hideUser(@RequestBody HideuserDTO dto) {
         hideService.hideUser(dto);  // void 메서드
