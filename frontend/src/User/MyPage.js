@@ -35,7 +35,8 @@ export default function MyPage() {
                     <div className="mypage-buttons-centered">
                         <button className="mypage-btn" onClick={() => setIsEditing(true)}>정보수정</button>
                         <button className="mypage-btn" onClick={() => setShowReports(true)}>차단목록</button>
-                        <button className="mypage-btn">쪽지함</button>
+                        <button className="mypage-btn">내 데이트 일정</button>
+                        <button className="mypage-btn">데이트 신청함</button>
                     </div>
                 </>
             ) : showReports ? (

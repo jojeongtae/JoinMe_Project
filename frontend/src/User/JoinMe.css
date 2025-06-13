@@ -29,7 +29,13 @@
     object-fit: cover;
     margin-bottom: 15px;
 }
-
+.image-container{
+    box-shadow: 0 0 8px #4da3ff;
+    border-radius: 10%;
+}
+.course-image{
+    border-radius: 10%;
+}
 .compatibility-section {
     flex: 2;
     background-color: #e9f1fc;
@@ -67,4 +73,25 @@
     overflow: hidden;
     box-shadow: 0 1px 3px #aaa;
     background-color: #eee;
+}
+.ask-date {
+    background-color: #a4dbf8;     /* 파스텔 핑크 */
+    color: #1e308b;                /* 다크 핑크 텍스트 */
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.ask-date:hover {
+    background-color: #42bfed;     /* hover 시 조금 더 진한 핑크 */
+    transform: scale(1.05);        /* 살짝 확대 */
+}
+
+.ask-date:active {
+    transform: scale(0.98);        /* 눌렀을 때 살짝 줄어듦 */
 }

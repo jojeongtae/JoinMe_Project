@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import apiClient from "../api/apiClient";
 import {mbtiCompatibility} from "./mbtiCompatibility";
@@ -110,7 +110,7 @@ export default function JoinMe() {
                     <p>추천할 코스가 없습니다.</p>
                 ) : (
                     courses.map(course => (
-                        <div key={course.coursename} className="course-item">
+                        <div key={course.id} className="course-item">
                             <div className="course-info">
                                 <h4>{course.coursename}</h4>
                                 <p>{course.body}</p>
@@ -122,6 +122,10 @@ export default function JoinMe() {
                                         </a>
                                     </p>
                                 )}
+                                <button className="ask-date">데이트 신청하기</button>
+                            </div>
+                            <div className="image-container">
+                                <img className="course-image" src={course.imgpath} alt={course.coursename}></img>
                             </div>
                             <div
                                 className="course-map"
