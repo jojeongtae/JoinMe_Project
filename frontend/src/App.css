@@ -38,13 +38,22 @@
 }
 /*-----------------------------------------------------------*/
 :root {
-  --color-1rd: #EC1C2C;
+  --color-1rd: #FB5356;
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 1040px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
   padding: 0 20px;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list a {
+  font-size: 20px;
 }
