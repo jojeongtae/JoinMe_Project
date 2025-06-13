@@ -37,8 +37,16 @@
   }
 }
 /*-----------------------------------------------------------*/
+/*공통*/
 :root {
   --color-1rd: #FB5356;
+  --color-2rd: #FE9397;
+}
+
+.main-wrap {
+  min-height: 100vh;
+  padding: 3rem;
+  box-sizing: border-box;
 }
 
 .inner {
@@ -49,6 +57,7 @@
   padding: 0 20px;
 }
 
+/*header*/
 header {
   width: 100%;
   padding: 1rem 4rem;
@@ -103,6 +112,24 @@ header .userinfo .username {
   font-weight: 600;
 }
 
-/*header .userinfo .log-btn {*/
-/*  */
-/*}*/
+header .userinfo .log-btn {
+
+}
+
+/*button*/
+.btn {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--color-1rd);
+  color: #fff;
+  border-radius: 0.6rem;
+}
+
+.btn.gray {
+  background-color: #aaa;
+}
+
+.btn.light-pink {
+  background-color: var(--color-2rd);
+}
+
+/*-----------------------------------------------------------*/

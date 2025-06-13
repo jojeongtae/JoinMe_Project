@@ -39,7 +39,7 @@ const styles = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: "40px",
+        boxSizing:"borderBox"
     },
     overlay: {
         backgroundColor: "rgba(255, 255, 255, 0.8)",
