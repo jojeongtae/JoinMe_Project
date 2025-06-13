@@ -23,6 +23,9 @@ export default function JoinMe() {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [chatMessages, setChatMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const [openFormId, setOpenFormId] = useState(null);
+    const [selectedDateTime, setSelectedDateTime] = useState('');
+
     const dispatch = useDispatch();
     const messages = useSelector((state) => state.main.userMessages);
     const getChatWithUser = (allMessages, currentUser, targetUser) => {
@@ -62,6 +65,29 @@ export default function JoinMe() {
             dispatch(addUserMessage(messageDTO))
         } catch (err) {
             console.error('메시지 전송 실패:', err);
+        }
+    };
+    const handleSubmitDate = async (e, courseId) => {
+        e.preventDefault();
+        if (!selectedDateTime) return alert("날짜를 선택해주세요.");
+
+        const dateDTO = {
+            sender: currentUser.username,
+            receiver: userInfo.username,
+            sendTime: new Date().toISOString(),
+            course_id: courseId,
+            dateTime: new Date(selectedDateTime).toISOString()
+        };
+
+        try {
+            await apiClient.post('/date/add', dateDTO);
+            alert("데이트 신청이 전송되었습니다!");
+            setOpenFormId(null); // 폼 닫기
+            setSelectedDateTime('');
+            dispatch(addUserMessage(dateDTO))
+        } catch (error) {
+            console.error('데이트 신청 실패:', error);
+            alert("신청 실패. 다시 시도해주세요.");
         }
     };
     useEffect(() => {
@@ -145,16 +171,48 @@ export default function JoinMe() {
                     <h3>당신이 취하면 좋을 행동</h3>
                     <p><strong>👍 좋은 점:</strong> {behaviorTip.good}</p>
                     <p><strong>⚠️ 주의할 점:</strong> {behaviorTip.caution}</p>
-                    <br></br>
+                    <br />
                     <button className="ask-date" onClick={handleSendMessage}>채팅하기</button>
                 </div>
             </div>
+
             {isChatOpen && (
                 <div className="chat-modal">
                     <div className="chat-header">{userInfo.usernickname}님과의 채팅</div>
                     <div className="chat-body">
                         {chatMessages.map((msg, i) => {
                             const isMine = msg.sender === currentUser.username;
+                            const isDateRequest = msg.course_id && msg.dateTime;
+
+                            if (isDateRequest) {
+                                const matchedCourse = courses.find(c => c.id === msg.course_id);
+                                const courseName = matchedCourse ? matchedCourse.coursename : '알 수 없는 장소';
+                                const formattedDate = new Date(msg.dateTime).toLocaleString('ko-KR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                });
+
+                                return (
+                                    <div key={i} className={`chat-message ${isMine ? 'mine' : 'theirs'}`}>
+                                        {!isMine && (
+                                            <img
+                                                src={userInfo.profileimg || userInfo.imgPath}
+                                                alt="상대 프로필"
+                                                className="chat-profile-img"
+                                            />
+                                        )}
+                                        <div className="chat-bubble date-request-message">
+                                            <div><strong>{msg.sender}</strong>가 <strong>{msg.receiver}</strong>님에게 데이트를 신청했습니다!</div>
+                                            <div>데이트 장소: {courseName}</div>
+                                            <div>데이트 신청 날짜: {formattedDate}</div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
                             return (
                                 <div key={i} className={`chat-message ${isMine ? 'mine' : 'theirs'}`}>
                                     {!isMine && (
@@ -180,6 +238,7 @@ export default function JoinMe() {
                     </form>
                 </div>
             )}
+
             <div className="course-list-container">
                 <h2>추천 코스</h2>
                 {courses.length === 0 ? (
@@ -191,17 +250,30 @@ export default function JoinMe() {
                                 <h4>{course.coursename}</h4>
                                 <p>{course.body}</p>
                                 <p><strong>주소:</strong> {course.address}</p>
-                                {courseLinks[course.coursename] && (
-                                    <p>
-                                        <a href={courseLinks[course.coursename]} target="_blank" rel="noopener noreferrer">
-                                            블로그 보러가기
-                                        </a>
-                                    </p>
+                                <button
+                                    className="ask-date"
+                                    onClick={() => setOpenFormId(openFormId === course.id ? null : course.id)}
+                                >
+                                    데이트 신청하기
+                                </button>
+
+                                {openFormId === course.id && (
+                                    <form onSubmit={(e) => handleSubmitDate(e, course.id)} className="date-form">
+                                        <label>
+                                            날짜/시간 선택:
+                                            <input
+                                                type="datetime-local"
+                                                value={selectedDateTime}
+                                                onChange={(e) => setSelectedDateTime(e.target.value)}
+                                                required
+                                            />
+                                        </label>
+                                        <button type="submit">신청 보내기</button>
+                                    </form>
                                 )}
-                                <button className="ask-date">데이트 신청하기</button>
                             </div>
                             <div className="image-container">
-                                <img className="course-image" src={course.imgpath} alt={course.coursename}></img>
+                                <img className="course-image" src={course.imgpath} alt={course.coursename} />
                             </div>
                             <div
                                 className="course-map"
