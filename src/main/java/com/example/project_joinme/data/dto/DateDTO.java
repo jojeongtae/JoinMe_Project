@@ -17,4 +17,5 @@ public class DateDTO {
     private String receiver;
     private Instant sendTime;
     private Integer course_id;
+    private Instant dateTime;
 }

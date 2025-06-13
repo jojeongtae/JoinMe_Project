@@ -38,4 +38,6 @@ public class DateTbl {
     @Column(name = "date_time")
     private Instant date_time;
 
+    @Column(name = "send_time")
+    private Instant send_time;
 }

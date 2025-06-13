@@ -29,13 +29,15 @@ public class DateService {
                 .date_sender(sender)
                 .date_receiver(receiver)
                 .course_id(course)
-                .date_time(dateDTO.getSendTime())
+                .date_time(dateDTO.getDateTime())
+                .send_time(dateDTO.getSendTime())
                 .build();
         DateTbl save = dateDAO.addDate(dateTbl);
         return DateDTO.builder()
                 .sender(save.getDate_sender().getUsername())
                 .receiver(save.getDate_receiver().getUsername())
-                .sendTime(save.getDate_time())
+                .sendTime(save.getSend_time())
+                .dateTime(save.getDate_time())
                 .course_id(save.getCourse_id().getId())
                 .build();
     }
