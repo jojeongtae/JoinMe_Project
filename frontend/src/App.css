@@ -41,11 +41,12 @@
 :root {
   --color-1rd: #FB5356;
   --color-2rd: #FE9397;
+
+  --header-ht: 10.3rem;
 }
 
 .main-wrap {
-  min-height: 100vh;
-  padding: 3rem;
+  min-height: calc(100vh - var(--header-ht));
   box-sizing: border-box;
 }
 
@@ -60,7 +61,8 @@
 /*header*/
 header {
   width: 100%;
-  padding: 1rem 4rem;
+  height: 10.3rem;
+  padding: 0 2rem;
   background-color: rgb(255, 255, 255);
   border-bottom: 2px solid rgb(238, 238, 238);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 4px;
@@ -133,3 +135,50 @@ header .userinfo .log-btn {
 }
 
 /*-----------------------------------------------------------*/
+
+/****유저 페이지****/
+
+/*main*/
+#user-main {
+  padding: 4rem;
+  box-sizing: border-box;
+  height: calc(100vh - var(--header-ht));
+}
+
+#user-main .user-main-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../public/background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+#user-main .bg-overlay {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2rem;
+  padding: 4rem;
+  text-align: center;
+  max-width: 80rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#user-main .main-title {
+  font-size: 3.2rem;
+  margin-bottom: 2rem;
+}
+
+#user-main .main-paragraph {
+  font-size: 1.8rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+#user-main .main-banner {
+  width: 70%;
+  border-radius: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
