@@ -49,5 +49,10 @@ public class CourseController {
 
     }
 
+    @GetMapping("/course/{id}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Integer id) {
+        return ResponseEntity.ok(courseServiec.getCourseId(id));
+    }
+
 
 }
