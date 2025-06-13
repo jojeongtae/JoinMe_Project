@@ -5,7 +5,6 @@ import {useDispatch} from "react-redux";
 import {removeCourse} from "../mainSlice";
 
 export default function Admin_CourseList() {
-    const dispatch = useDispatch();
     const [courses, setCourses] = useState([]);
     const [searchType, setSearchType] = useState("all");
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -14,7 +13,10 @@ export default function Admin_CourseList() {
     const fetchData = async () => {
         try {
             const response = await apiClient.get("/course-list");
-            setCourses(response.data);
+            const sorted = [...response.data].sort(
+                (a, b) => new Date(b.updateDate) - new Date(a.updateDate)
+            );
+            setCourses(sorted);
         } catch (error) {
             console.error("코스 리스트 불러오기 실패", error);
         }
@@ -71,11 +73,11 @@ export default function Admin_CourseList() {
             <section style={styles.container}>
                 <h2 style={styles.title}>데이트 코스 목록</h2>
 
-                <div style={{ marginBottom: '40px', textAlign: 'right' }}>
+                <div style={{marginBottom: '40px', textAlign: 'right'}}>
                     <Link to="/admin-main/add-course" style={styles.detailBtn}>코스 추가</Link>
                 </div>
 
-                <form onSubmit={handleSearch} style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
+                <form onSubmit={handleSearch} style={{display: 'flex', gap: '12px', marginBottom: '24px'}}>
                     <select
                         value={searchType}
                         onChange={(e) => setSearchType(e.target.value)}
@@ -113,25 +115,29 @@ export default function Admin_CourseList() {
                             <td colSpan={4} style={styles.td}>조회된 코스가 없습니다.</td>
                         </tr>
                     ) : (
-                        courses.map((course) => (
+                        courses.map((course) => {
+                            console.log(course);
+                            return (
+                                <tr key={course.id}>
+                                    <td style={styles.td}>{course.coursename}</td>
+                                    <td style={styles.td}>{course.address}</td>
+                                    <td style={styles.td}>{course.body}</td>
+                                    <td style={styles.td}>
+                                        {new Date(course.updateDate).toLocaleString("ko-KR", {
+                                            timeZone: "Asia/Seoul",
+                                        })}
+                                    </td>
+                                    <td style={styles.td}>
+                                        <Link to={`/admin-main/edit-course/${course.id}`} style={styles.grayBtn}>수정</Link>
+                                    </td>
+                                    <td style={styles.td}>
+                                        <button style={styles.grayBtn} onClick={() => handleDelete(course.id)}>삭제
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })
 
-                            <tr key={course.id}>
-                                <td style={styles.td}>{course.coursename}</td>
-                                <td style={styles.td}>{course.address}</td>
-                                <td style={styles.td}>{course.body}</td>
-                                <td style={styles.td}>
-                                    {new Date(course.updateDate).toLocaleString("ko-KR", {
-                                        timeZone: "Asia/Seoul",
-                                    })}
-                                </td>
-                                <td style={styles.td}>
-                                    <button style={styles.grayBtn} >수정</button>
-                                </td>
-                                <td style={styles.td}>
-                                    <button style={styles.grayBtn} onClick={() => handleDelete(course.id)} >삭제</button>
-                                </td>
-                            </tr>
-                        ))
                     )}
                     </tbody>
                 </table>
@@ -188,6 +194,7 @@ const styles = {
         textDecoration: 'none',
     },
     grayBtn: {
+        display: 'inline-block',
         padding: '6px 12px',
         backgroundColor: '#999',
         color: '#fff',
