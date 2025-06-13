@@ -7,6 +7,7 @@ import com.example.project_joinme.data.dto.UserInfoDTO;
 import com.example.project_joinme.data.entity.LoginTbl;
 import com.example.project_joinme.data.entity.UserTbl;
 
+import com.example.project_joinme.data.repository.UserRepository;
 import com.example.project_joinme.exception.MyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,15 +24,15 @@ import java.util.ArrayList;
 public class UserService {
     private final UserDAO userDAO;
     private final LoginDAO loginDAO;
-
+    private final UserRepository userRepository;
     @Value("${file.upload-dir}")
     private String uploadDIr;
 
     //모든 유저 정보가져오기
     public List<UserInfoDTO> findAllUserInfo() {
+        List<UserTbl> hideuserTbl = this.userRepository.findAllVisibleUsers();
         List<UserInfoDTO> userInfoDTOs = new ArrayList<>();
-        List<UserTbl> userTbls = this.userDAO.findAllUser();
-        for (UserTbl userTbl : userTbls) {
+        for (UserTbl userTbl : hideuserTbl) {
             UserInfoDTO user = UserInfoDTO.builder()
                     .username(userTbl.getUsername())
                     .address(userTbl.getAddress())

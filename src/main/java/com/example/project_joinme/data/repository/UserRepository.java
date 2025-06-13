@@ -15,4 +15,9 @@ public interface UserRepository extends JpaRepository<UserTbl,String> {
     UserTbl findByUsernameWithLogin(@Param("username") String username);
     @Query("SELECT u FROM UserTbl u WHERE u.username NOT IN (SELECT h.username.username FROM HideuserTbl h)")
     List<UserTbl> findAllVisibleUsers();
+    @Query("""
+    SELECT u FROM UserTbl u
+    WHERE u.username IN (SELECT h.username.username FROM HideuserTbl h)
+""")
+    List<UserTbl> findAllHiddenUsers();
 }
