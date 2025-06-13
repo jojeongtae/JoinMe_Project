@@ -20,10 +20,10 @@
 .login-button {
     background-color: #ff4d6d;
     color: white;
-    padding: 12px 30px;
+    padding: 1.2rem 3rem;
     border: none;
-    border-radius: 30px;
-    font-size: 1.1rem;
+    border-radius: 3rem;
+    font-size: 1.8rem;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;

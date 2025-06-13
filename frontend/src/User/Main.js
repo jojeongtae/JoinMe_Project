@@ -42,8 +42,8 @@ export default function MainLayout() {
 
                 {/* 유저 정보 */}
                 {currentUser && (
-                    <div style={styles.userInfo}>
-                        <span style={styles.userName}>{currentUser.usernickname} 님</span>
+                    <div className={"userinfo"}>
+                        <span className={"username"}>{currentUser.usernickname} 님</span>
                         <button onClick={handleLogout}>로그아웃</button>
                     </div>
                 )}
@@ -57,18 +57,6 @@ export default function MainLayout() {
     );
 }
 const styles = {
-    logoBox: {
-        flex: "0 0 auto",
-    },
-    logo: {
-        height: "100px",
-    },
-    nav: {
-        display: "flex",
-        gap: "25px",
-        flex: "1",
-        justifyContent: "center",
-    },
     link: {
         textDecoration: "none",
         color:hover? "#333":"blue",

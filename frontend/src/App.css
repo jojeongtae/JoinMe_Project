@@ -84,6 +84,7 @@ header .logo img {
 
 .nav-list a {
   font-size: 2rem;
+  transition: 0.2s;
 }
 
 .nav-list a:hover {
@@ -91,3 +92,17 @@ header .logo img {
   font-weight: 600;
 }
 
+header .userinfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .userinfo .username {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+/*header .userinfo .log-btn {*/
+/*  */
+/*}*/
