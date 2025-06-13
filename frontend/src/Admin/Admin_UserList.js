@@ -7,7 +7,6 @@ import {useOutletContext} from "react-router-dom";
 export default function Admin_UserList() {
     const dispatch = useDispatch();
     const users = useSelector(state => state.main.users ?? []);
-
     const {setShowPopup, setSelectedPost} = useOutletContext();
 
     const fetchData = async () => {
@@ -23,7 +22,11 @@ export default function Admin_UserList() {
         const loadUsers = async () => {
             try {
                 const userList = await fetchData();
-                dispatch(setUsers(userList));
+                const hiddenFlag = userList.map(user => ({
+                    ...user,
+                    hidden: user.hidden ?? false
+                }));
+                dispatch(setUsers(hiddenFlag));
             } catch (error) {
                 console.error("유저 리스트 로딩 실패:", error);
             }
@@ -37,6 +40,10 @@ export default function Admin_UserList() {
         setShowPopup(true);
     };
 
+    const handleToggleHidden = (username) => {
+        dispatch(togglePostHidden(username));
+    };
+
     return (
         <>
             <section style={styles.container}>
@@ -48,6 +55,7 @@ export default function Admin_UserList() {
                         <th style={styles.th}>닉네임</th>
                         <th style={styles.th}>성별</th>
                         <th style={styles.th}>나이</th>
+                        <th style={styles.th}>게시물 관리</th>
                         <th style={styles.th}>상세</th>
                     </tr>
                     </thead>
@@ -59,6 +67,12 @@ export default function Admin_UserList() {
                             <td style={styles.td}>{user.sexuality}</td>
                             <td style={styles.td}>{user.age}</td>
                             <td style={styles.td}>
+                                <button style={user.hidden ? styles.unhideBtn : styles.hideBtn}
+                                        onClick={() => handleToggleHidden(user.username)}>
+                                    {user.hidden ? '공개' : '숨김'}
+                                </button>
+                            </td>
+                            <td style={styles.td}>
                                 <button style={styles.detailBtn} onClick={() => handleShowPopup(user)}>상세보기</button>
                             </td>
                         </tr>
@@ -69,6 +83,7 @@ export default function Admin_UserList() {
         </>
     );
 }
+
 const styles = {
     container: {
         padding: '32px',
@@ -113,5 +128,21 @@ const styles = {
         cursor: 'pointer',
         fontSize: '0.85rem',
         transition: 'background-color 0.2s ease',
+    },
+    hideBtn: {
+        padding: '6px 10px',
+        backgroundColor: '#d58282',
+        color: 'white',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+    },
+    unhideBtn: {
+        padding: '6px 10px',
+        backgroundColor: '#7dc87d',
+        color: 'white',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
     },
 };
