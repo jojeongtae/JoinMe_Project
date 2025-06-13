@@ -40,14 +40,25 @@ export default function Admin_UserList() {
         setShowPopup(true);
     };
 
-    const handleToggleHidden = (username) => {
-        dispatch(togglePostHidden(username));
+    const handleToggleHidden = async (username, isHidden) => {
+        try {
+            if (isHidden) {
+                await apiClient.delete("/hide-delete", { data: { username } });
+            } else {
+                await apiClient.post("/hide", { username });
+            }
+
+            const userList = await apiClient.get("/user/list");
+            dispatch(setUsers(userList.data));
+        } catch (error) {
+            console.error("숨김/공개 처리 실패:", error);
+        }
     };
 
     return (
         <>
             <section style={styles.container}>
-                <h2 style={styles.title}>전체 유저 리스트</h2>
+                <h2 style={styles.title}>현재 유저 리스트</h2>
                 <table style={styles.table}>
                     <thead>
                     <tr>
@@ -67,8 +78,10 @@ export default function Admin_UserList() {
                             <td style={styles.td}>{user.sexuality}</td>
                             <td style={styles.td}>{user.age}</td>
                             <td style={styles.td}>
-                                <button style={user.hidden ? styles.unhideBtn : styles.hideBtn}
-                                        onClick={() => handleToggleHidden(user.username)}>
+                                <button
+                                    style={user.hidden ? styles.unhideBtn : styles.hideBtn}
+                                    onClick={() => handleToggleHidden(user.username, user.hidden)}
+                                >
                                     {user.hidden ? '공개' : '숨김'}
                                 </button>
                             </td>
