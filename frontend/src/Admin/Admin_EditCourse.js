@@ -1,11 +1,10 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addCourse} from "../mainSlice";
+import {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 import apiClient from "../api/apiClient";
-import {useNavigate} from "react-router-dom";
 
-export default function Admin_AddCourse() {
-    const dispatch = useDispatch();
+export default function Admin_EditCourse() {
+    const {id} = useParams();
     const navigate = useNavigate();
     const token = useSelector((state) => state.main.token);
 
@@ -13,45 +12,54 @@ export default function Admin_AddCourse() {
     const [address, setAddress] = useState("");
     const [body, setBody] = useState("");
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await apiClient.get(`/course/${id}`); // 얘만 만들면 됨
+                const { coursename, address, body } = response.data;
+                setCoursename(coursename);
+                setAddress(address);
+                setBody(body);
+            } catch (error) {
+                console.error("코스 정보 조회 실패", error);
+                alert("코스 정보를 불러올 수 없습니다.");
+                navigate("/admin-main/course-list");
+            }
+        };
+
+        fetchData();
+    }, [id, navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("추가 요청할 코스:", coursename, address, body);
-        console.log("토큰 확인:", token);
-
-        const courseData = {
+        const updatedCourse = {
+            id: parseInt(id),
             coursename,
             address,
             body,
-            image: "",
             updateDate: new Date().toISOString(),
         };
 
         try {
-            const response = await apiClient.post("/admin/add-course",
-                courseData,
-                {
-                    withCredentials: true,
-                    headers: {
-                        // "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            await apiClient.put("/update-course", updatedCourse, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-            dispatch(addCourse({ coursename, address, body }));
-            alert("코스가 추가되었습니다.");
+            alert("코스가 수정되었습니다.");
             navigate("/admin-main/course-list");
         } catch (err) {
-            console.error("코스 추가 실패:", err);
-            alert("코스 추가 실패: " + err.response?.status);
+            console.error("코스 수정 실패:", err);
+            alert("코스 수정 실패: " + err.response?.status);
         }
-    }
+    };
 
     return (
         <>
-            <section id={"add-course"} style={styles.container}>
-                <h2 style={styles.title}>데이트 코스 추가</h2>
+            <section id={"edit-course"} style={styles.container}>
+                <h2 style={styles.title}>데이트 코스 수정</h2>
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div style={styles.formGroup}>
                         <label style={styles.label} htmlFor="coursename">코스명</label>
@@ -59,8 +67,8 @@ export default function Admin_AddCourse() {
                             id="coursename"
                             type="text"
                             value={coursename}
-                            placeholder="코스명을 작성해주세요."
                             onChange={(e) => setCoursename(e.target.value)}
+                            placeholder="코스명을 입력해주세요."
                             required
                             style={styles.input}
                         />
@@ -95,13 +103,15 @@ export default function Admin_AddCourse() {
                     </div>
 
                     <div style={styles.buttons}>
-                        <button type="submit" style={styles.btn}>추가하기</button>
+                        <button type="button" onClick={() => navigate("/admin-main/course-list")} style={styles.grayBtn}>취소하기</button>
+                        <button type="submit" style={styles.btn}>수정하기</button>
                     </div>
                 </form>
             </section>
         </>
     );
 }
+
 
 const styles = {
     container: {
@@ -173,6 +183,17 @@ const styles = {
         cursor: "pointer",
         fontWeight: "600",
         boxShadow: "0 4px 8px rgba(255, 91, 91, 0.4)",
+        transition: "background-color 0.3s ease",
+    },
+    grayBtn: {
+        padding: "12px 28px",
+        fontSize: "1rem",
+        backgroundColor: '#999',
+        color: '#fff',
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer",
+        fontWeight: "600",
         transition: "background-color 0.3s ease",
     },
 };

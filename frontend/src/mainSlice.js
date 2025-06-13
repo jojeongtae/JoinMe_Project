@@ -85,7 +85,7 @@ const mainSlice = createSlice({
             receiver.userLikedReceived = receiver.userLikedReceived.filter(e => e.id !== giver.id);
         },
         togglePostHidden: (state, action) => {
-            const targetUser = state.users.find(user => user.id === action.payload);
+            const targetUser = state.users.find(user => user.username === action.payload);
             if (targetUser) {
                 targetUser.hidden = !targetUser.hidden;
             }

@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MessageDTO {
-    private String sender;
-    private String receiver;
-    private String content;
-    private Instant sendTime;
-
+public class HideuserDTO {
+    private Integer id;
+    private String username;
+    private Instant hide_time;
 }
-

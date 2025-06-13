@@ -9,6 +9,7 @@ import "./JoinMe.css";
 import { useLayoutEffect, useRef } from "react";
 import {loadKakaoScript} from "../App";
 import CourseMap from "./KakaoMap";
+import courseLinks from "./CourseLink";
 
 
 export default function JoinMe() {
@@ -114,7 +115,13 @@ export default function JoinMe() {
                                 <h4>{course.coursename}</h4>
                                 <p>{course.body}</p>
                                 <p><strong>주소:</strong> {course.address}</p>
-                                <p><small>업데이트: {new Date(course.updateDate).toLocaleDateString()}</small></p>
+                                {courseLinks[course.coursename] && (
+                                    <p>
+                                        <a href={courseLinks[course.coursename]} target="_blank" rel="noopener noreferrer">
+                                            블로그 보러가기
+                                        </a>
+                                    </p>
+                                )}
                             </div>
                             <div
                                 className="course-map"

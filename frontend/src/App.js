@@ -26,6 +26,7 @@ import Admin_CourseList from "./Admin/Admin_CourseList";
 import Matched from "./User/Matched";
 import JoinMe from "./User/JoinMe";
 import {useEffect} from "react";
+import Admin_EditCourse from "./Admin/Admin_EditCourse";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                 <Route path={"matching-list"} element={<Admin_MatchingList/>} />
                 <Route path={"course-list"} element={<Admin_CourseList/>} />
                 <Route path={"add-course"} element={<Admin_AddCourse/>} />
+                <Route path={"edit-course/:id"} element={<Admin_EditCourse/>} />
                 <Route path={"blacklist"} element={<Admin_BlackList/>} />
             </Route>
         </Routes>
