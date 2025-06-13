@@ -52,14 +52,14 @@
   src: url('../public/font/Pretendard-Thin.woff') format('woff');
 }
 
-/*html{*/
-/*  font: 400 10px/1 "Pretendard", sans-serif;*/
-/*  color:#000;*/
-/*}*/
+html{
+  font: 400 10px/1 "Pretendard", sans-serif;
+  color:#000;
+}
 
-/*body{*/
-/*  font-size: 1.5rem;*/
-/*}*/
+body{
+  font-size: 1.5rem;
+}
 
 body {
   margin: 0;
@@ -78,5 +78,10 @@ code {
 ul {
   list-style: none;
   padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
 }
 

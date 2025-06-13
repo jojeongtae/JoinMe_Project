@@ -24,19 +24,20 @@ export default function MainLayout() {
     return (
         <>
             <header style={styles.header}>
+                <div className={"inner"}>
                 {/* 로고 */}
-                <div style={styles.logoBox}>
-                    <img src="/logo.png" alt="logo" style={styles.logo} />
-                </div>
+                <Link className={"logo"} to="/main">
+                    <img src="/logo.png" alt="logo"/>
+                </Link>
 
                 {/* 내비게이션 */}
-                <nav style={styles.nav}>
-                    <Link to="/main" style={styles.link}>홈</Link>
-                    <Link to="/main/users" style={styles.link}>소개팅</Link>
-                    <Link to="/main/i-liked" style={styles.link}>보낸 좋아요</Link>
-                    <Link to="/main/liked-by" style={styles.link}>받은 좋아요</Link>
-                    <Link to="/main/matched" style={styles.link}>매칭</Link>
-                    <Link to="/main/mypage" style={styles.link}>마이페이지</Link>
+                <nav className={"nav-list"}>
+                    <Link to="/main" >홈</Link>
+                    <Link to="/main/users">소개팅</Link>
+                    <Link to="/main/i-liked">보낸 좋아요</Link>
+                    <Link to="/main/liked-by">받은 좋아요</Link>
+                    <Link to="/main/matched">매칭</Link>
+                    <Link to="/main/mypage">마이페이지</Link>
                 </nav>
 
                 {/* 유저 정보 */}
@@ -46,6 +47,7 @@ export default function MainLayout() {
                         <button onClick={handleLogout}>로그아웃</button>
                     </div>
                 )}
+                </div>
             </header>
 
             <main style={styles.main}>
@@ -55,18 +57,6 @@ export default function MainLayout() {
     );
 }
 const styles = {
-    header: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 40px",
-        backgroundColor: "#ffffff",
-        borderBottom: "2px solid #eee",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-    },
     logoBox: {
         flex: "0 0 auto",
     },
