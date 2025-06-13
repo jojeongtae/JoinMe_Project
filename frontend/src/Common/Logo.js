@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import "./Logo.css"; // 아래 CSS 연결
 
 export default function Logo() {
     const navigate = useNavigate();

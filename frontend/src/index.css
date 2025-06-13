@@ -91,3 +91,11 @@ button{
   color: #000;
   border: none;
 }
+
+div {
+  box-sizing: border-box;
+}
+
+input, select{
+  outline: none;
+}

@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {loginUser, setToken} from "../mainSlice";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
-import apiClient from "../api/apiClient";
 import axios from "axios";
 import {useState} from "react";
 
@@ -86,18 +84,7 @@ function Login() {
     };
 
     return (
-        <div
-            className="login-container"
-            style={{
-                backgroundImage: `url(${process.env.PUBLIC_URL}/backgroundintro.jpg)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                height: "100vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
+        <section id={"login"}>
             <div className="overlay">
                 <h1 className="welcome-text">당신의 인연, 오늘 여기에서 시작됩니다.</h1>
                 <form className="login-box" onSubmit={handleLogin}>
@@ -125,7 +112,7 @@ function Login() {
                 </form>
             </div>
             <p>{loginResult}</p>
-        </div>
+        </section>
     );
 }
 
