@@ -23,12 +23,12 @@ public class DateTbl {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "date_sender", nullable = false)
-    private UserTbl date_sender;
+    private UserTbl dateSender;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "date_receiver", nullable = false)
-    private UserTbl date_receiver;
+    private UserTbl dateReceiver;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
