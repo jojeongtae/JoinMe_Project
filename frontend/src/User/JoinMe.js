@@ -10,7 +10,7 @@ import { useLayoutEffect, useRef } from "react";
 import {loadKakaoScript} from "../App";
 import CourseMap from "./KakaoMap";
 import courseLinks from "./CourseLink";
-import {addUserMessage} from "../mainSlice";
+import {addUserMessage, fetchUserMessages} from "../mainSlice";
 
 
 export default function JoinMe() {
@@ -28,6 +28,20 @@ export default function JoinMe() {
 
     const dispatch = useDispatch();
     const messages = useSelector((state) => state.main.userMessages);
+    const loadMessages = async () => {
+        try {
+            const res = await apiClient.get(`/message/chat-list?username=${currentUser.username}`);
+            const messages = res.data;
+            dispatch(fetchUserMessages(messages)); // 이건 redux action creator
+        } catch (err) {
+            console.error("채팅목록 로딩 실패", err);
+        }
+    };
+    useEffect(() => {
+        if (currentUser?.username) {
+            loadMessages();
+        }
+    }, [currentUser]);
     const getChatWithUser = (allMessages, currentUser, targetUser) => {
         return allMessages
             .filter(m =>
@@ -206,6 +220,9 @@ export default function JoinMe() {
                                         )}
                                         <div className="chat-bubble date-request-message">
                                             <div><strong>{msg.sender}</strong>가 <strong>{msg.receiver}</strong>님에게 데이트를 신청했습니다!</div>
+                                            <div className="date-img-container">
+                                            <img className="date-img" src={matchedCourse.imgpath}></img>
+                                            </div>
                                             <div>데이트 장소: {courseName}</div>
                                             <div>데이트 신청 날짜: {formattedDate}</div>
                                         </div>
