@@ -115,6 +115,12 @@ header .userinfo .username {
 }
 
 /*button*/
+.btn-wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .btn {
   padding: 0.6rem 1.2rem;
   background-color: var(--color-1rd);
@@ -123,6 +129,10 @@ header .userinfo .username {
 }
 
 .btn.gray {
+  background-color: #bbb;
+}
+
+.btn.gray:hover {
   background-color: #aaa;
 }
 
@@ -279,28 +289,28 @@ input {
   max-width: 90%;
 }
 
-#userinfo-post .profile-form h2 {
+.profile-form h2 {
   text-align: center;
   margin-bottom: 4rem;
   color: var(--color-1rd);
 }
 
-#userinfo-post .profile-form label {
+.profile-form label {
   display: block;
   margin-top: 1.5rem;
   font-weight: 500;
   color: #333;
 }
 
-#userinfo-post .profile-form .required {
+.profile-form .required {
   color: red;
   font-size: 0.9em;
   margin-left: 0.4rem;
 }
 
-#userinfo-post .profile-form input,
-#userinfo-post .profile-form select,
-#userinfo-post .profile-form textarea {
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
   width: 100%;
   padding: 1rem;
   margin-top: 0.5rem;
@@ -310,19 +320,19 @@ input {
   box-sizing: border-box;
 }
 
-#userinfo-post .profile-form input:focus,
-#userinfo-post .profile-form select:focus,
-#userinfo-post .profile-form textarea:focus {
+.profile-form input:focus,
+.profile-form select:focus,
+.profile-form textarea:focus {
   outline: none;
   border-color: var(--color-2rd);
 }
 
-#userinfo-post .profile-form textarea {
+.profile-form textarea {
   resize: vertical;
   min-height: 8rem;
 }
 
-#userinfo-post .profile-form button {
+.profile-form button {
   margin-top: 2.5rem;
   width: 100%;
   padding: 1.2rem;
@@ -335,14 +345,11 @@ input {
   transition: background 0.3s ease;
 }
 
-#userinfo-post .profile-form button:hover {
+.profile-form button.submit-btn:hover {
   background-color: #ec4e51;
 }
 
-
-
 /****유저 페이지****/
-
 /*main*/
 #user-main {
   padding: 4rem;
@@ -515,7 +522,7 @@ input {
 
 #users .user-image {
   width: 100%;
-  height: 26rem;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 1.2rem;
 }
@@ -549,9 +556,10 @@ input {
 
 #users .user-nickname {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #222;
   margin-bottom: 0.8rem;
+  text-align: center;
 }
 
 #users .user-intro {
@@ -850,8 +858,7 @@ input {
 
 
 /*매칭 Matched*/
-
-#matched.matched-wrapper {
+#matched {
   position: relative;
   padding: 4rem 2rem;
   background-color: #fff;

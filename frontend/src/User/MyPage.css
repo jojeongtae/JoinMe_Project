@@ -1,87 +1,106 @@
-.mypage-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+#mypage {
+    padding: 3rem;
+    background-color: #f8f8f8;
+    min-height: 100vh;
+}
+
+#mypage .user-card {
+    display: block;
+    max-width: 50rem;
+    margin: 5rem auto;
+    padding: 3rem;
+    box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.12);
+}
+
+#mypage .user-card:hover {
+    transform: none;
+}
+
+#mypage .user-image {
+    display: block;
+    width: 30rem;
+    height: 30rem;
+    object-fit: cover;
+    border-radius: 1rem;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+}
+
+#mypage .mypage-info-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background: #fbf4f4;
+    border-radius: 1.2rem;
+    box-shadow: 0 0.4rem 1rem rgba(255, 160, 175, 0.1);
+}
+
+#mypage .user-nickname {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 0.8rem;
     text-align: center;
-    font-family: "Noto Sans KR", sans-serif;
 }
 
-.mypage-banner-img {
-    width: 100%;
-    height: 300px;
-    object-fit: contain;
-
-    object-position: top;
-
-    border-radius: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+#mypage .user-info-row {
+    display: flex;
+    color: #444;
+    font-size: 1.6rem;
 }
 
-.mypage-info-vertical {
-    text-align: left;
-    margin: 0 auto 30px;
-    font-size: 18px;
+#mypage .user-info-label {
+    width: 12rem;
+    font-weight: 600;
+    color: #ba4a84;
+}
+
+#mypage .user-info-value {
+    font-weight: 500;
+    color: #555;
+}
+
+#mypage .user-intro {
+    margin-top: 1.6rem;
     line-height: 1.6;
+    color: #444;
+    font-size: 1.6rem;
 }
 
-.mypage-intro {
-    font-style: italic;
-    color: #aa4a4a;
-    margin-top: 10px;
-}
-
-.mypage-buttons-centered {
+#mypage .mypage-buttons-centered {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-.mypage-btn {
-    padding: 10px 20px;
-    font-size: 16px;
+#mypage .mypage-btn {
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
-    background-color: #ff5c5c;
+    background: linear-gradient(120deg, #fb5356, #fd9a9a);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.mypage-btn:hover {
-    background-color: #e34e4e;
+#mypage .mypage-btn:hover {
+    background: linear-gradient(45deg, #fb5356, #ff6f6f);
 }
 
-.mypage-btn.cancel {
-    background-color: #777;
-}
 
-.edit-form {
+
+#edit-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
     text-align: left;
 }
 
-.edit-form input,
-.edit-form textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-}
 
-.edit-form-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -124,6 +143,7 @@
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
 }
+
 .partner-img{
     width: 40px;
     height: 40px;

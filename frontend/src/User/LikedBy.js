@@ -77,7 +77,7 @@ export default function LikedBy() {
     };
 
     return (
-        <div id="likedby" className="likedby-wrapper">
+        <section id="likedby">
             <h2 className="likedby-title">💌 나를 좋아요한 사람들</h2>
             {filteredLikedMeUsers.length === 0 ? (
                 <p className="likedby-empty">아직 나를 좋아요한 사람이 없어요.</p>
@@ -118,7 +118,7 @@ export default function LikedBy() {
                     </div>
                 ))
             )}
-        </div>
+        </section>
 
     );
 }

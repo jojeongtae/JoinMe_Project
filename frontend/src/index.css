@@ -70,10 +70,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 ul {
   list-style: none;
@@ -97,5 +93,6 @@ div {
 }
 
 input, select, textarea{
+  font-family: "Pretendard";
   outline: none;
 }

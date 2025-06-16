@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../api/apiClient";
-import "./Matched.css";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
@@ -60,7 +59,7 @@ export default function Matched({ currentUsername }) {
 
     return (
         <>
-            <div id={"matched"} className="matched-wrapper">
+            <section id={"matched"}>
                 <div className="background-hearts">
                     {Array.from({ length: 30 }, (_, i) => (
                         <img
@@ -124,7 +123,7 @@ export default function Matched({ currentUsername }) {
                         </div>
                     )}
                 </div>
-            </div>
+            </section>
             </>
     );
 }
