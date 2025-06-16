@@ -52,14 +52,38 @@ public class SecurityConfig {
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-
-                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/like", "/userinfo", "/**").permitAll();
-
-                    auth.requestMatchers("/user/**").hasRole("USER");
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/user/add-info/**", "/user/userinfo/*").permitAll(); // 예외 허용
+                    auth.requestMatchers("/date/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/like", "/like/*").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/message/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/match/*").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/hate-list/*", "/hate-user").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/hide", "/hide-delete", "/hide-list").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/course-by-address", "/course/*", "/course-by-coursename", "/course-list", "/delete-course", "/update-course")
+                            .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+                    auth.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+                    auth.anyRequest().authenticated();
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+//                    auth.requestMatchers("/user/add-info/**","/user/userinfo/*").permitAll(); // 먼저 허용
+//
+//                    auth.requestMatchers("/date/**").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/like","/like/*").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/message/**").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/match/*").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/hate-list/*","/hate-user").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/hide","/hide-delete","/hide-list").hasAnyRole("ADMIN", "USER");
+//                    auth.requestMatchers("/course-by-address","/course/*","/course-by-coursename","/course-list","/delete-course","/update-course").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"); // 그 외는 인증 필요
+//                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+//                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/like", "/userinfo", "/**").permitAll();
+//                    auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN");
+//                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
-                    auth.anyRequest().authenticated();
+//                    auth.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();

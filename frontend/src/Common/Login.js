@@ -15,9 +15,10 @@ function Login() {
 
         try {
             const response = await axios.get(`http://localhost:8080/user/userinfo/${username}`, {
-                headers: { Authorization: `Bearer ${accessToken}` },
+                headers: { Authorization: accessToken },
                 withCredentials: true,
             });
+            console.log(accessToken)
             return response.data;
         } catch (error) {
             console.error("회원정보 불러오기 실패", error);
@@ -49,14 +50,13 @@ function Login() {
                 setLoginResult("로그인 실패 - 토큰이 없습니다.");
                 return;
             }
-
-            const accessToken = accessTokenRaw.replace("Bearer ", "");
-            dispatch(setToken(accessToken));
+            // const accessToken = accessTokenRaw.replace("Bearer ", "");
+            dispatch(setToken(accessTokenRaw));
             dispatch(loginUser(response.data))
-            console.log("access token:", accessToken);
+            console.log("access token:", accessTokenRaw);
 
             if (response.data.role === "ROLE_USER") {
-                const userInfo = await fetchUserInfo(username, accessToken);
+                const userInfo = await fetchUserInfo(username, accessTokenRaw);
                 if (userInfo) {
                     dispatch(loginUser(userInfo));
                     navigate("/main");

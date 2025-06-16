@@ -17,7 +17,7 @@ apiClient.interceptors.request.use(
         }
 
         // 토큰이 있다면 Authorization 헤더에 추가
-        const jwtToken = store.getState().token?.token; // 정확한 위치 확인
+        const jwtToken = store.getState().main?.token; // 정확한 위치 확인
         if (jwtToken) {
             config.headers["authorization"] = jwtToken;
         }

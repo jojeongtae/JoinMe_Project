@@ -50,6 +50,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("username",username);
         responseData.put("role", role);
+
         responseData.put("result", "로그인 성공");
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(responseData);

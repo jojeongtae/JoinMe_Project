@@ -6,6 +6,7 @@ import com.example.project_joinme.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,8 +41,10 @@ public class UserController {
     //모든 유저 정보 가져오기
     @GetMapping(value = "/list")
     public ResponseEntity<List<UserInfoDTO>> getAllUsers() {
+        System.out.println("SecurityContext 인증: " + SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.status(HttpStatus.OK).body(this.userService.findAllUserInfo());
     }
+
 
 
 
