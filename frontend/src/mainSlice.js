@@ -11,7 +11,8 @@ const mainSlice = createSlice({
         hates: [],
         likes:[],
         users:[],
-        userMessages:[]
+        userMessages:[],
+        dates:[]
     },
     reducers: {
         setToken: (state, action) => {
@@ -173,12 +174,15 @@ const mainSlice = createSlice({
         },
         addUserMessage:(state, action)=>{
           state.userMessages.push(action.payload)
+        },
+        setDates:(state,action)=>{
+            state.dates = action.payload
         }
     }
 })
 export const {
 
-    addUserMessage,fetchUserMessages,logoutUser,fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
+    setDates,addUserMessage,fetchUserMessages,logoutUser,fetchLikes,setUsers,giveLike, loginUser, unlike, togglePostHidden,
     matchingInfo, addCourse, setToken, clearToken,
     addHate, removeHate, fetchHates, removeCourse
 
