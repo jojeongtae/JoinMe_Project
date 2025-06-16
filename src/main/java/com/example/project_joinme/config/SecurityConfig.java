@@ -64,10 +64,6 @@ public class SecurityConfig {
                     auth.requestMatchers("/course-by-address","/course/*","/course-by-coursename","/course-list","/delete-course","/update-course").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"); // 그 외는 인증 필요
-                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
-                    auth.requestMatchers("/user/update-info" ,"/user/add-info","/user-delete/*","/like", "/userinfo", "/**").permitAll();
-                    auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN");
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
 
                     auth.anyRequest().authenticated();
