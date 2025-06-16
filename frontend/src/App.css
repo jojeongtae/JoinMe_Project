@@ -645,8 +645,8 @@ input {
 }
 
 #ilike .user-image {
-  width: 14rem;
-  height: 14rem;
+  width: 25rem;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 1.2rem;
   flex-shrink: 0;
@@ -731,15 +731,7 @@ input {
   transform: scale(1.05);
 }
 
-
-
-
-
-
-
-
-
-
+/*받은 좋아요 LikedBy*/
 #likedby {
   padding: 30px;
   background-color: #f8f8f8;
@@ -772,8 +764,8 @@ input {
 }
 
 #likedby .user-image {
-  width: 14rem;
-  height: 14rem;
+  width: 25rem;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 1.2rem;
   flex-shrink: 0;
