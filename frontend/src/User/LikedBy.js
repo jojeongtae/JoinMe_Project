@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import "./LikedBy.css";
 import apiClient from "../api/apiClient";
 
 export default function LikedBy() {
@@ -78,30 +77,41 @@ export default function LikedBy() {
     };
 
     return (
-        <div className="likedby-wrapper">
+        <div id="likedby" className="likedby-wrapper">
             <h2 className="likedby-title">💌 나를 좋아요한 사람들</h2>
             {filteredLikedMeUsers.length === 0 ? (
                 <p className="likedby-empty">아직 나를 좋아요한 사람이 없어요.</p>
             ) : (
                 filteredLikedMeUsers.map((user) => (
                     <div className="likedby-card" key={user.username}>
-                        <img className="likedby-img" src={user.profileimg} alt={user.usernickname} />
-                        <div className="likedby-info">
-                            <h3>{user.usernickname}</h3>
-                            <p>
-                                <strong>MBTI:</strong> {user.mbti} / <strong>관심사:</strong> {user.interest}
-                            </p>
-                            <p>
-                                <strong>지역:</strong> {user.address} / <strong>키:</strong> {user.height}cm /{" "}
-                                <strong>몸무게:</strong> {user.weight}kg
-                            </p>
-                            <p>{user.introduction}</p>
-                            <div className="likedby-buttons">
+                        <img className="user-image" src={user.profileimg} alt={user.usernickname} />
+                        <div className="user-info-container">
+                            <div className="user-info">
+                                <div className="user-nickname">{user.usernickname}</div>
+                                <div className="user-info-row">
+                                    <span className="user-info-label">MBTI</span>
+                                    <span className="user-info-value">{user.mbti}</span>
+                                </div>
+                                <div className="user-info-row">
+                                    <span className="user-info-label">관심사</span>
+                                    <span className="user-info-value">{user.interest}</span>
+                                </div>
+                                <div className="user-info-row">
+                                    <span className="user-info-label">지역</span>
+                                    <span className="user-info-value">{user.address}</span>
+                                </div>
+                                <div className="user-info-row">
+                                    <span className="user-info-label">키 / 몸무게</span>
+                                    <span className="user-info-value">{user.height}cm / {user.weight}kg</span>
+                                </div>
+                                <p className="user-intro">{user.introduction}</p>
+                            </div>
+                            <div className="user-side-buttons">
                                 <button className="likedby-button" onClick={() => handleReturnLike(user)}>
-                                    좋아요 돌려주기
+                                    💖 돌려주기
                                 </button>
                                 <button className="likedby-button report" onClick={() => handleReport(user)}>
-                                    차단하기
+                                    🚫 차단하기
                                 </button>
                             </div>
                         </div>
@@ -109,5 +119,6 @@ export default function LikedBy() {
                 ))
             )}
         </div>
+
     );
 }
