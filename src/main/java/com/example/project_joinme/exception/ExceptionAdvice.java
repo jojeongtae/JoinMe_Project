@@ -42,5 +42,9 @@ public class ExceptionAdvice {
     public ResponseEntity<String> handleDuplicateIdException(DuplicateIdException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디 중복 : "+ex.getMessage());
     }
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
     
 }

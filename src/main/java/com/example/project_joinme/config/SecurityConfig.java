@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .httpBasic(httpBasicAuth -> httpBasicAuth.disable())
 
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie").permitAll();
+                    auth.requestMatchers("/", "/login", "/logout", "/signup", "/reissue", "/refresh-cookie","/images/**").permitAll();
                     auth.requestMatchers("/user/add-info/**","/user/userinfo/*").permitAll(); // 먼저 허용
 
                     auth.requestMatchers("/date/**").hasAnyRole("USER", "ADMIN");
@@ -65,7 +65,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"); // 그 외는 인증 필요
 //                    auth.requestMatchers("/**").hasAnyRole("ADMIN", "USER");
-
+//                    auth.requestMatchers("/upload").authenticated(); // 업로드는 인증 필요
                     auth.anyRequest().authenticated();
                 })
                 .cors(cors -> cors.configurationSource(request -> {
