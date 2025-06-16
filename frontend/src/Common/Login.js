@@ -18,7 +18,6 @@ function Login() {
                 headers: { Authorization: accessToken },
                 withCredentials: true,
             });
-            console.log(accessToken)
             return response.data;
         } catch (error) {
             console.error("회원정보 불러오기 실패", error);

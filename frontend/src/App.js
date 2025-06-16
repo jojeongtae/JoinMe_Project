@@ -34,20 +34,20 @@ function App() {
     return (
 
         <Routes>
-            <Route path={"/"} element={<Logo/>}></Route>
-            <Route path={"/login"} element={<Login/>}></Route>
-            <Route path={"/register"} element={<Register/>}></Route>
-            <Route path={"/userinfo-post"} element={<UserInfoPost/>}></Route>
+            <Route path={"/"} element={<Logo/>}/>
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/register"} element={<Register/>}/>
+            <Route path={"/userinfo-post"} element={<UserInfoPost/>}/>
             <Route path={"/main"} element={<MainLayout/>}>
                 <Route index element={<Intro/>}></Route>
-                <Route path={"users"} element={<Users/>}></Route>
-                <Route path={"i-liked"} element={<ILike/>}></Route>
-                <Route path={"liked-by"} element={<LikedBy/>}></Route>
-                <Route path={"mypage"} element={<MyPage/>}></Route>
+                <Route path={"users"} element={<Users/>}/>
+                <Route path={"i-liked"} element={<ILike/>}/>>
+                <Route path={"liked-by"} element={<LikedBy/>}/>
+                <Route path={"mypage"} element={<MyPage/>}/>
                 <Route path={"course"} element={<Course/>} />
                 <Route path={"mbti"} element={<MBTI/>} />
-                <Route path={"matched"} element={<Matched/>} ></Route>
-                <Route path={"joinme/:username"} element={<JoinMe/>} ></Route>
+                <Route path={"matched"} element={<Matched/>}/>
+                <Route path={"joinme/:username"} element={<JoinMe/>}/>
             </Route>
             <Route path="/admin-main" element={<Admin_Main />}>
                 <Route index element={<Admin_Intro/>} />

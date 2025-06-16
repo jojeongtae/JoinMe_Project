@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import apiClient from "../api/apiClient";
-import "./ILike.css";
 
 export default function ILike() {
     const currentUser = useSelector((state) => state.main.currentUser);
@@ -85,40 +84,58 @@ export default function ILike() {
     }
 
     return (
-        <div className="ilike-wrapper">
-            <h2 className="ilike-title">❤️ 내가 좋아요 누른 사람들</h2>
+        <div id="ilike" className="ilike-wrapper">
+            <h2 className="ilike-title">❤️ 내가 좋아요한 사람들</h2>
             {filteredLikedUsers.length === 0 ? (
                 <p className="ilike-empty">아직 매칭되지 않은 좋아요 유저가 없어요.</p>
             ) : (
                 filteredLikedUsers.map((user) => (
-                    <div className="ilike-card" key={user.username}>
+                    <div className="user-card" key={user.username}>
                         <img
-                            className="ilike-img"
+                            className="user-image"
                             src={user.profileimg || user.imgPath}
                             alt={user.name || user.usernickname}
                         />
-                        <div className="ilike-info">
-                            <h3>{user.name || user.usernickname}</h3>
-                            <p>
-                                <strong>MBTI:</strong> {user.mbti} / <strong>관심사:</strong>{" "}
-                                {user.interest}
-                            </p>
-                            <p>
-                                <strong>지역:</strong> {user.address || user.addr} /{" "}
-                                <strong>키:</strong> {user.height}cm /{" "}
-                                <strong>몸무게:</strong> {user.weight}kg
-                            </p>
-                            <p>{user.introduction || user.intro}</p>
-                            <button
-                                className="ilike-button"
-                                onClick={() => handleUnlike(user.username)}
-                            >
-                                좋아요 취소
-                            </button>
+                        <div className="user-info-container">
+                            <div className="user-info">
+                                <div className="user-nickname">{user.name || user.usernickname}</div>
+
+                                <div className="user-info-row">
+                                    <span className="user-info-label">키 / 몸무게</span>
+                                    <span className="user-info-value">{user.height}cm / {user.weight}kg</span>
+                                </div>
+
+                                <div className="user-info-row">
+                                    <span className="user-info-label">MBTI</span>
+                                    <span className="user-info-value">{user.mbti}</span>
+                                </div>
+
+                                <div className="user-info-row">
+                                    <span className="user-info-label">관심사</span>
+                                    <span className="user-info-value">{user.interest}</span>
+                                </div>
+
+                                <div className="user-info-row">
+                                    <span className="user-info-label">지역</span>
+                                    <span className="user-info-value">{user.address || user.addr}</span>
+                                </div>
+
+                                <p className="user-intro">{user.introduction || user.intro}</p>
+                            </div>
+
+                            <div className="user-side-buttons">
+                                <button
+                                    className="ilike-button"
+                                    onClick={() => handleUnlike(user.username)}
+                                    title="좋아요 취소"
+                                />
+                            </div>
                         </div>
                     </div>
                 ))
             )}
         </div>
+
+
     );
 }

@@ -34,7 +34,7 @@ export default function Admin_Main() {
                     {/* 유저 정보 */}
                     {currentUser && (
                         <div className={"userinfo"}>
-                            <span className={"username"}>{currentUser.name} 님</span>
+                            <span className={"username"}>관리자 님</span>
                             <button className={"btn light-pink"} onClick={() => {
                                 navigate("/")
                             }}>로그아웃

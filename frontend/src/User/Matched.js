@@ -60,48 +60,71 @@ export default function Matched({ currentUsername }) {
 
     return (
         <>
-            {/* 화면 전체 배경 하트 */}
-            <div className="background-hearts">
-                {Array.from({ length: 30 }, (_, i) => (
-                    <img
-                        key={i}
-                        src="/heart.png"
-                        alt="background heart"
-                        className={`bg-heart bg-heart${i + 1}`}
-                    />
-                ))}
-            </div>
-        <div className="matched-container">
-            <h2 className="matched-title">매칭된 사용자 목록</h2>
-            <div className="matched-list">
-                {matchedUsers.map((user, index) => (
-                    <div className="matched-card" key={index}>
-                        {/* 프로필 이미지 */}
+            <div id={"matched"} className="matched-wrapper">
+                <div className="background-hearts">
+                    {Array.from({ length: 30 }, (_, i) => (
                         <img
-                            src={user.profileimg || "/default-profile.png"}
-                            alt="프로필"
-                            className="profile-img"
+                            key={i}
+                            src="/heart.png"
+                            alt="background heart"
+                            className={`bg-heart bg-heart${i + 1}`}
                         />
+                    ))}
+                </div>
 
-                        {/* 유저 정보 */}
-                        <div className="user-info">
-                            <p><strong>{user.usernickname}</strong> ({user.age}세, {user.mbti})</p>
-                            <p>{user.address}</p>
-                            <p>키: {user.height}cm, 몸무게: {user.weight}kg</p>
-                            <p>관심사: {user.interest}</p>
-                            <p className="match-date">
-                                매칭 날짜: {new Date(user.matchtime).toLocaleDateString()}
-                            </p>
-                            <button className="unnamed-button" onClick={() => navigate(`/main/joinme/${user.username}`)}>💕Join Me💕</button>
-                            <button className="leave-button">💔Leave Me💔</button>
-
+                <div className="matched-container">
+                    <h2 className="matched-title">💑 매칭된 사용자 목록</h2>
+                    {matchedUsers.length === 0 ? (
+                        <p className="matched-empty">아직 매칭된 사용자가 없어요.</p>
+                    ) : (
+                        <div className="card-list">
+                            {matchedUsers.map((user, index) => (
+                                <div className="user-card" key={index}>
+                                    <img
+                                        className="user-img"
+                                        src={user.profileimg || "/default-profile.png"}
+                                        alt={user.usernickname}
+                                    />
+                                    <div className="user-details">
+                                        <div className="nickname">{user.usernickname} ({user.age}세)</div>
+                                        <div className="info">
+                                            <span className="label">MBTI</span>
+                                            <span className="value">{user.mbti}</span>
+                                        </div>
+                                        <div className="info">
+                                            <span className="label">지역</span>
+                                            <span className="value">{user.address}</span>
+                                        </div>
+                                        <div className="info">
+                                            <span className="label">키 / 몸무게</span>
+                                            <span className="value">{user.height}cm / {user.weight}kg</span>
+                                        </div>
+                                        <div className="info">
+                                            <span className="label">관심사</span>
+                                            <span className="value">{user.interest}</span>
+                                        </div>
+                                        <div className="info">
+                                            <span className="label">매칭일</span>
+                                            <span className="value">{new Date(user.matchtime).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
+                                    <div className="user-side-buttons">
+                                        <button
+                                            className="matched-button join"
+                                            onClick={() => navigate(`/main/joinme/${user.username}`)}
+                                        >
+                                            💕 Join Me
+                                        </button>
+                                        <button className="matched-button leave">
+                                            💔 Leave Me
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-
-                    </div>
-
-                ))}
+                    )}
+                </div>
             </div>
-        </div>
             </>
     );
 }

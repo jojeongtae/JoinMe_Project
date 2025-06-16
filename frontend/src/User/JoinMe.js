@@ -31,8 +31,15 @@ export default function JoinMe() {
     const loadMessages = async () => {
         try {
             const res = await apiClient.get(`/message/chat-list?username=${currentUser.username}`);
+            const res2 = await apiClient.get(`/date/by-sender?sender=${currentUser.username}`)
+            const res3 = await apiClient.get(`/date/by-receiver?receiver=${currentUser.username}`)
             const messages = res.data;
+            const dates = res2.data;
+
+            messages.push(...dates);
+            messages.push(...res3.data)
             dispatch(fetchUserMessages(messages)); // 이건 redux action creator
+
         } catch (err) {
             console.error("채팅목록 로딩 실패", err);
         }
@@ -99,6 +106,7 @@ export default function JoinMe() {
             setOpenFormId(null); // 폼 닫기
             setSelectedDateTime('');
             dispatch(addUserMessage(dateDTO))
+            setChatMessages(prev => [...prev, dateDTO]);
         } catch (error) {
             console.error('데이트 신청 실패:', error);
             alert("신청 실패. 다시 시도해주세요.");
