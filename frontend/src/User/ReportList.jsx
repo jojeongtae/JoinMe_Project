@@ -23,25 +23,31 @@ export default function ReportList({ hater, onClose }) {
 
     return (
         <div className="reportlist-wrapper">
-            <h3>📋 내가 차단한 유저 목록</h3>
-            <button className="reportlist-close" onClick={onClose}>닫기</button>
+            <div className="reportlist-header">
+                <h3>📋 내가 차단한 유저 목록</h3>
+                <button className="btn gray small" onClick={onClose}>닫기</button>
+            </div>
+
             {loading ? (
-                <p>불러오는 중...</p>
+                <p className="text-center">불러오는 중...</p>
             ) : reportList.length === 0 ? (
-                <p>차단한 유저가 없습니다.</p>
+                <p className="text-center">차단한 유저가 없습니다.</p>
             ) : (
-                reportList.map((item, i) => (
-                    <div key={i} className="reportlist-card">
-                        <p><strong>차단 대상:</strong> {item.hated}</p>
-                        <p>
-                            <strong>차단 일시:</strong>{" "}
-                            {item.hate_time
-                                ? new Date(item.hate_time).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
-                                : "날짜 정보 없음"}
-                        </p>
-                    </div>
-                ))
+                <div className="reportlist-container">
+                    {reportList.map((item, i) => (
+                        <div key={i} className="reportlist-card">
+                            <div><strong>차단 대상:</strong> {item.hated}</div>
+                            <div>
+                                <strong>차단 일시:</strong>{" "}
+                                {item.hate_time
+                                    ? new Date(item.hate_time).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
+                                    : "날짜 정보 없음"}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
+
     );
 }
