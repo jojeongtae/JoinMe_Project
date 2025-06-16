@@ -1,7 +1,9 @@
 package com.example.project_joinme.data.dao;
 
 import com.example.project_joinme.data.entity.MatchTbl;
+import com.example.project_joinme.data.entity.UserTbl;
 import com.example.project_joinme.data.repository.MatchRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,11 @@ public class MatchDAO {
     // 나의 매치기록 보기
     public List<MatchTbl> getMatchesByUsername(String username) {
         return this.matchRepository.findMatchesByUsername(username);
+    }
+    //삭제
+    @Transactional
+    public void deleteMatch(UserTbl matchmale, UserTbl matchfemale) {
+        this.matchRepository.deleteByMatchmaleAndMatchfemale(matchmale, matchfemale);
     }
     
 }

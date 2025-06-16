@@ -37,5 +37,18 @@ public class MatchService {
         }
         return matchDTOList;
     }
+    public void deleteMatch(String male, String female) {
+        UserTbl matchmale = this.userDAO.findByUsername(male);
+        UserTbl matchfemale = this.userDAO.findByUsername(female);
+
+        if (matchmale == null || matchfemale == null) {
+            System.out.println("사용자 조회 실패: male=" + matchmale + ", female=" + matchfemale);
+            return;
+        }
+
+        System.out.println("삭제 시도: " + matchmale.getUsername() + ", " + matchfemale.getUsername());
+        this.matchDAO.deleteMatch(matchmale, matchfemale);
+    }
+
 
 }

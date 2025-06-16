@@ -18,5 +18,9 @@ public interface MatchRepository extends CrudRepository<MatchTbl, Integer> {
 //    List<MatchTbl> findMatchesByUsername(@Param("username") String username);
     @Query("SELECT m FROM MatchTbl m WHERE m.matchmale.username = :username OR m.matchfemale.username = :username")
     List<MatchTbl> findMatchesByUsername(@Param("username") String username);
+    // matchmale, matchfemale 기준으로 삭제
+    void deleteByMatchmaleAndMatchfemale(UserTbl matchmale, UserTbl matchfemale);
 
+    // 또는 순서 바꿔서도 가능
+    void deleteByMatchfemaleAndMatchmale(UserTbl matchfemale, UserTbl matchmale);
 }

@@ -5,21 +5,28 @@ import com.example.project_joinme.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/match")
 public class MatchController {
     private final MatchService matchService;
 
-    @GetMapping(value = "/match/{username}")
+    @GetMapping(value = "/{username}")
     public ResponseEntity<List<MatchDTO>> getMatchesByUsername(@PathVariable("username") String username) {
         List<MatchDTO> matchDTOS = this.matchService.getMatchesByUsername(username);
         return ResponseEntity.status(HttpStatus.OK).body(matchDTOS);
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteMatch(
+            @RequestParam(name = "male") String male,
+            @RequestParam(name = "female") String female
+    ) {
+        matchService.deleteMatch(male, female);
+        return ResponseEntity.ok("삭제 완료");
     }
 
 }
