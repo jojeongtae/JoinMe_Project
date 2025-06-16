@@ -36,8 +36,9 @@ export default function Admin_PostHiding() {
         fetchData();
     }, []);
 
-    const handleShowPopup = (post) => {
-        setSelectedPost(post);
+    const handleShowPopup = async (post) => {
+        const usrResponse = await apiClient.get(`/user/userinfo/${post.username}`);
+        setSelectedPost(usrResponse.data);
         setShowPopup(true);
     };
 

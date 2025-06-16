@@ -36,6 +36,7 @@ export default function Admin_UserList() {
     }, [dispatch]);
 
     const handleShowPopup = (user) => {
+        console.log("Admin_UserList에서 넘기는 user:", user);
         setSelectedPost(user);
         setShowPopup(true);
     };

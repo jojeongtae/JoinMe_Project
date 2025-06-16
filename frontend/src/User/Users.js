@@ -1,9 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {fetchHates, fetchLikes, giveLike, setUsers} from "../mainSlice";
 import {useEffect} from "react";
 import apiClient from "../api/apiClient";
 import "./Users.css";
-import { useState } from "react";
+import {useState} from "react";
+
 export default function Users() {
     // 추가
 
@@ -95,7 +96,7 @@ export default function Users() {
     // 좋아요 보내기
     const handleLike = async (likedUser) => {
         try {
-            const payload = { liker: currentUser.username, liked: likedUser.username };
+            const payload = {liker: currentUser.username, liked: likedUser.username};
             await apiClient.post("/like", payload);
             alert("좋아요가 등록되었습니다.");
             fetchLikeList(); // 좋아요 누른 뒤 목록 재로딩
@@ -131,97 +132,112 @@ export default function Users() {
     };
     return (
         <>
-        <div className="user-filter">
-            <div>
-                나이:
-                <input type="number" placeholder="최소" value={minAge} onChange={(e) => setMinAge(e.target.value)} />
-                ~
-                <input type="number" placeholder="최대" value={maxAge} onChange={(e) => setMaxAge(e.target.value)} />
-            </div>
-
-            <div>
-                지역:
-                <select value={selectedAddress} onChange={(e) => setSelectedAddress(e.target.value)}>
-                    <option value="">전체</option>
-                    <option value="서울">서울</option>
-                    <option value="경기">경기</option>
-                    <option value="부산">부산</option>
-                    <option value="충청">충청</option>
-                    <option value="강원">강원</option>
-                    <option value="대전">대전</option>
-                    <option value="대구">대구</option>
-
-                </select>
-            </div>
-
-            <div>
-                키:
-                <input type="number" placeholder="최소 키" value={minHeight} onChange={(e) => setMinHeight(e.target.value)} /> cm 이상
-            </div>
-
-            <div>
-                선호 MBTI:
-                {[
-                    "INTJ", "INTP", "ENTJ", "ENTP",
-                    "INFJ", "INFP", "ENFJ", "ENFP",
-                    "ISTJ", "ISFJ", "ESTJ", "ESFJ",
-                    "ISTP", "ISFP", "ESTP", "ESFP",
-                ].map((type) => (
-                    <label key={type} style={{ marginRight: "10px" }}>
-                        <input
-                            type="checkbox"
-                            value={type}
-                            checked={selectedMbtiList.includes(type)}
-                            onChange={(e) => {
-                                if (e.target.checked) {
-                                    setSelectedMbtiList([...selectedMbtiList, type]);
-                                } else {
-                                    setSelectedMbtiList(selectedMbtiList.filter((mbti) => mbti !== type));
-                                }
-                            }}
-                        />
-                        {type}
-                    </label>
-                ))}
-            </div>
-            <div>
-                관심사:
-                <input
-                    type="text"
-                    placeholder="예: 영화"
-                    value={interestKeyword}
-                    onChange={(e) => setInterestKeyword(e.target.value)}
-                />
-            </div>
-        </div>
-            <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                <button onClick={resetFilters}  className="reset-button">
-                    초기화
-                </button>
-            </div>
-        <div className="users-container">
-            {users.map((e) => (
-                <div key={e.username} className="user-card">
-                    <img src={e.profileimg} alt="img" className="user-image" />
-                    <div className="user-info">
-                        <h3>{e.usernickname}</h3>
-                        <p>키: {e.height}cm / 몸무게: {e.weight}kg</p>
-                        <p>MBTI: {e.mbti}</p>
-                        <p>관심사: {e.interest}</p>
-                        <p>주소: {e.address}</p>
-                        <p className="user-intro">{e.introduction}</p>
-                        <div className="user-buttons">
-                            <button className="like-button" onClick={() => handleLike(e)}>
-                                좋아요
-                            </button>
-                            <button className="block-button" onClick={() => handleReport(e)}>
-                                신고하기
-                            </button>
+            <div className="user-filter">
+                <div className="user-filter-row">
+                    <div className="user-filter-block">
+                        <label>나이</label>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <input type="number" placeholder="최소" value={minAge} onChange={(e) => setMinAge(e.target.value)} />
+                            <input type="number" placeholder="최대" value={maxAge} onChange={(e) => setMaxAge(e.target.value)} />
                         </div>
                     </div>
+
+                    <div className="user-filter-block">
+                        <label>지역</label>
+                        <select value={selectedAddress} onChange={(e) => setSelectedAddress(e.target.value)}>
+                            <option value="">전체</option>
+                            <option value="서울">서울</option>
+                            <option value="경기">경기</option>
+                            <option value="부산">부산</option>
+                            <option value="충청">충청</option>
+                            <option value="강원">강원</option>
+                            <option value="대전">대전</option>
+                            <option value="대구">대구</option>
+                        </select>
+                    </div>
+
+                    <div className="user-filter-block">
+                        <label>키</label>
+                        <input
+                            type="number"
+                            placeholder="최소 키"
+                            value={minHeight}
+                            onChange={(e) => setMinHeight(e.target.value)}
+                        />
+                    </div>
                 </div>
-            ))}
-        </div>
+
+                <div className="user-filter-row">
+                    <div className="user-filter-block" style={{ flex: 1 }}>
+                        <label>관심사</label>
+                        <input
+                            type="text"
+                            placeholder="예: 영화"
+                            value={interestKeyword}
+                            onChange={(e) => setInterestKeyword(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="user-filter-block">
+                    <label>선호 MBTI</label>
+                    <div className="mbti-options">
+                        {[
+                            "INTJ", "INTP", "ENTJ", "ENTP",
+                            "INFJ", "INFP", "ENFJ", "ENFP",
+                            "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+                            "ISTP", "ISFP", "ESTP", "ESFP",
+                        ].map((type) => (
+                            <label
+                                key={type}
+                                className={`mbti-tag-label ${selectedMbtiList.includes(type) ? "selected" : ""}`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    value={type}
+                                    checked={selectedMbtiList.includes(type)}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setSelectedMbtiList([...selectedMbtiList, type]);
+                                        } else {
+                                            setSelectedMbtiList(selectedMbtiList.filter((mbti) => mbti !== type));
+                                        }
+                                    }}
+                                    hidden
+                                />
+                                {type}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                <button onClick={resetFilters} className="reset-button">초기화</button>
+            </div>
+
+
+            <div className="users-container">
+                {users.map((e) => (
+                    <div key={e.username} className="user-card">
+                        <img src={e.profileimg} alt="img" className="user-image"/>
+                        <div className="user-info">
+                            <h3>{e.usernickname}</h3>
+                            <p>키: {e.height}cm / 몸무게: {e.weight}kg</p>
+                            <p>MBTI: {e.mbti}</p>
+                            <p>관심사: {e.interest}</p>
+                            <p>주소: {e.address}</p>
+                            <p className="user-intro">{e.introduction}</p>
+                            <div className="user-buttons">
+                                <button className="like-button" onClick={() => handleLike(e)}>
+                                    좋아요
+                                </button>
+                                <button className="block-button" onClick={() => handleReport(e)}>
+                                    신고하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </>
     );
 }
