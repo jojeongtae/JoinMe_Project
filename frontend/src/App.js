@@ -15,10 +15,8 @@ import Admin_Main from "./Admin/Admin_Main";
 import Admin_PostHiding from "./Admin/Admin_PostHiding";
 import Admin_MatchingList from "./Admin/Admin_MatchingList";
 import Admin_AddCourse from "./Admin/Admin_AddCourse";
-import Course from "./User/Course";
 import Admin_BlackList from "./Admin/Admin_BlackList";
 import Register from "./Common/Register";
-import MBTI from "./User/MBTI";
 import Admin_Intro from "./Admin/Admin_Intro";
 import UserInfoPost from "./User/UserInfoPost";
 import Admin_UserList from "./Admin/Admin_UserList";
@@ -44,8 +42,6 @@ function App() {
                 <Route path={"i-liked"} element={<ILike/>}/>>
                 <Route path={"liked-by"} element={<LikedBy/>}/>
                 <Route path={"mypage"} element={<MyPage/>}/>
-                <Route path={"course"} element={<Course/>} />
-                <Route path={"mbti"} element={<MBTI/>} />
                 <Route path={"matched"} element={<Matched/>}/>
                 <Route path={"joinme/:username"} element={<JoinMe/>}/>
             </Route>

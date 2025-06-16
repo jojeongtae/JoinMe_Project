@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./ReportList.css";
 import apiClient from "../api/apiClient";
 
 export default function ReportList({ hater, onClose }) {

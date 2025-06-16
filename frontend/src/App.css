@@ -993,7 +993,6 @@ input {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  font-family: 'Poppins', 'Segoe UI', sans-serif;
   background: #fbf4f4;
   padding: 1.4rem 1.2rem;
   border-radius: 1.2rem;
@@ -1061,4 +1060,144 @@ input {
 
 #matched .matched-button.leave:hover {
   background-color: #aaa;
+}
+
+/* 마이페이지 MyPage */
+#mypage {
+  padding: 3rem;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+#mypage .user-card {
+  display: block;
+  max-width: 50rem;
+  margin: 5rem auto;
+  padding: 3rem;
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.12);
+}
+
+#mypage .user-card:hover {
+  transform: none;
+}
+
+#mypage .user-image {
+  display: block;
+  width: 30rem;
+  height: 30rem;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+#mypage .mypage-info-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background: #fbf4f4;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.4rem 1rem rgba(255, 160, 175, 0.1);
+}
+
+#mypage .user-nickname {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+#mypage .user-info-row {
+  display: flex;
+  color: #444;
+  font-size: 1.6rem;
+}
+
+#mypage .user-info-label {
+  width: 12rem;
+  font-weight: 600;
+  color: #ba4a84;
+}
+
+#mypage .user-info-value {
+  font-weight: 500;
+  color: #555;
+}
+
+#mypage .user-intro {
+  margin-top: 1.6rem;
+  line-height: 1.6;
+  color: #444;
+  font-size: 1.6rem;
+}
+
+#mypage .mypage-buttons-centered {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+#mypage .mypage-btn {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  background: linear-gradient(120deg, #fb5356, #fd9a9a);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#mypage .mypage-btn:hover {
+  background: linear-gradient(45deg, #fb5356, #ff6f6f);
+}
+
+.reportlist-wrapper {
+  width: 100%;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reportlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.reportlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reportlist-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background-color: #f9f9f9;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.reportlist-wrapper .text-center {
+  text-align: center;
+  color: #666;
+  padding: 20px 0;
+}
+
+.reportlist-wrapper .btn.gray.small {
+  background-color: #888;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
 }
