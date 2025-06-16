@@ -2,7 +2,6 @@ import {useSelector, useDispatch} from "react-redux";
 import {fetchHates, fetchLikes, giveLike, setUsers} from "../mainSlice";
 import {useEffect} from "react";
 import apiClient from "../api/apiClient";
-import "./Users.css";
 import {useState} from "react";
 
 export default function Users() {

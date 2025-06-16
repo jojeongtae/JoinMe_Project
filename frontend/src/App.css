@@ -137,6 +137,20 @@ input {
   border-radius: 0.5rem;
 }
 
+/*유저 정보 카드*/
+.user-card {
+  display: flex;
+  border-radius: 1.6rem;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.12);
+}
 
 /*-----------------------------------------------------------*/
 /*logo page*/
@@ -484,19 +498,8 @@ input {
 }
 
 #users .user-card {
-  display: flex;
   flex-direction: column;
   width: calc((100% - 4.8rem) / 3);
-  border-radius: 1.6rem;
-  padding: 2rem;
-  background: #fff;
-  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-#users .user-card:hover {
-  transform: translateY(-0.5rem);
-  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.12);
 }
 
 #users .user-card > .flex-box {
@@ -522,7 +525,6 @@ input {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  font-size: 1.45rem;
   color: #333;
   margin-left: 0;
   box-shadow: none;
@@ -608,4 +610,251 @@ input {
 #users .block-button:hover {
   background-color: #eee;
   transform: scale(1.05);
+}
+
+/*보낸 좋아요 ilike*/
+#ilike {
+  padding: 30px;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+#ilike .ilike-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+#ilike .ilike-empty {
+  text-align: center;
+  color: #888;
+}
+
+#ilike .user-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 900px;
+  margin-inline: auto;
+  gap: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#ilike .user-image {
+  width: 14rem;
+  height: 14rem;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  flex-shrink: 0;
+}
+
+#ilike .user-info-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+#ilike .user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fbf4f4;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: 0.6rem;
+  color: #333;
+}
+
+#ilike .user-side-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 6rem;
+}
+
+#ilike .user-nickname {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+#ilike .user-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+
+#ilike .user-info-label {
+  font-weight: 500;
+  color: #777;
+}
+
+#ilike .user-info-value {
+  color: #222;
+  font-weight: 500;
+}
+
+#ilike .user-intro {
+  margin-top: 1.2rem;
+  color: #555;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+#ilike .ilike-button {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-image:
+          url('../public/ico_close.png'),
+          linear-gradient(45deg, #fb5356, #ffb6b6);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 3rem 3rem, cover;
+  color: #fff;
+  transition: 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+#ilike .ilike-button:hover {
+  background-image:
+          url('../public/ico_close.png'),
+          linear-gradient(45deg, #fb5356, #ff6f6f);
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+
+
+
+
+#likedby {
+  padding: 30px;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+#likedby .likedby-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+#likedby .likedby-empty {
+  text-align: center;
+  color: #888;
+}
+
+#likedby .likedby-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 900px;
+  margin-inline: auto;
+  gap: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#likedby .user-image {
+  width: 14rem;
+  height: 14rem;
+  object-fit: cover;
+  border-radius: 1.2rem;
+  flex-shrink: 0;
+}
+
+#likedby .user-info-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+#likedby .user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fbf4f4;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: 0.6rem;
+  color: #333;
+}
+
+#likedby .user-side-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 6rem;
+  gap: 1rem;
+}
+
+#likedby .user-nickname {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+#likedby .user-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+
+#likedby .user-info-label {
+  font-weight: 500;
+  color: #777;
+}
+
+#likedby .user-info-value {
+  color: #222;
+  font-weight: 500;
+}
+
+#likedby .user-intro {
+  margin-top: 1.2rem;
+  color: #555;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+#likedby .likedby-button {
+  padding: 0.8rem 1.2rem;
+  background-color: #fb5356;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1.6rem;
+}
+
+#likedby .likedby-button:hover {
+  background-color: #e13b3f;
+}
+
+#likedby .likedby-button.report {
+  background-color: #999;
+}
+
+#likedby .likedby-button.report:hover {
+  background-color: #666;
 }
