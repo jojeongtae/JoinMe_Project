@@ -1,60 +1,60 @@
-.users-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
-}
+/*.users-container {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 20px;*/
+/*    padding: 20px;*/
+/*    justify-content: center;*/
+/*}*/
 
-.user-card {
-    width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
+/*.user-card {*/
+/*    width: 300px;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 10px;*/
+/*    padding: 15px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*    background-color: #fff;*/
+/*}*/
 
-.user-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-}
+/*.user-image {*/
+/*    width: 100%;*/
+/*    height: 300px;*/
+/*    object-fit: cover;*/
+/*    border-radius: 10px;*/
+/*}*/
 
-.user-info {
-    margin-top: 10px;
-}
+/*.user-info {*/
+/*    margin-top: 10px;*/
+/*}*/
 
-.user-intro {
-    font-style: italic;
-    margin-top: 10px;
-    color: #444;
-}
+/*.user-intro {*/
+/*    font-style: italic;*/
+/*    margin-top: 10px;*/
+/*    color: #444;*/
+/*}*/
 
-.user-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
+/*.user-buttons {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    margin-top: 15px;*/
+/*}*/
 
-.like-button {
-    padding: 6px 12px;
-    background-color: #ff5b5b;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+/*.like-button {*/
+/*    padding: 6px 12px;*/
+/*    background-color: #ff5b5b;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.block-button {
-    padding: 6px 12px;
-    background-color: #aaa;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
+/*.block-button {*/
+/*    padding: 6px 12px;*/
+/*    background-color: #aaa;*/
+/*    color: #fff;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*}*/
 /*.user-filter {*/
 /*    display: flex;*/
 /*    flex-wrap: wrap;*/
@@ -90,93 +90,3 @@
 
 
 
-
-
-
-.user-filter {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 24px;
-    margin: 30px auto;
-    background-color: #fff0f0;
-    border-radius: 16px;
-    max-width: 1000px;
-    box-shadow: 0 4px 16px rgba(251, 83, 86, 0.1);
-}
-
-.user-filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.user-filter-block {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-    min-width: 200px;
-}
-
-.user-filter-block label {
-    font-weight: bold;
-    color: #333;
-}
-
-.user-filter-block input,
-.user-filter-block select {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    outline: none;
-    font-size: 14px;
-    background-color: #fff;
-}
-
-/* MBTI */
-.mbti-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 5px;
-}
-
-.mbti-tag-label {
-    padding: 6px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    background-color: white;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-.mbti-tag-label.selected {
-    background-color: var(--color-1rd);
-    color: #fff;
-    border-color: var(--color-1rd);
-}
-
-.mbti-tag-label input {
-    display: none;
-}
-
-/* Reset Button */
-.reset-button {
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    align-self: center;
-    transition: background-color 0.2s ease;
-}
-
-.reset-button:hover {
-    background-color: #ccc;
-}

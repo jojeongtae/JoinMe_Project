@@ -375,3 +375,237 @@ input {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/*소개팅 users*/
+#users .user-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.4rem;
+  margin: 3rem auto;
+  background-color: #f4f4f4;
+  border-radius: 1.6rem;
+  max-width: 100rem;
+  box-shadow: 0 0.4rem 1.6rem rgba(251, 83, 86, 0.1);
+}
+
+#users .user-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+#users .user-filter-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 20rem;
+}
+
+#users .user-filter-block label {
+  font-weight: bold;
+  color: #333;
+}
+
+#users .user-filter-block input,
+#users .user-filter-block select {
+  padding: 0.8rem 1.2rem;
+  border: 0.1rem solid #ddd;
+  border-radius: 1rem;
+  outline: none;
+  font-size: 1.4rem;
+  background-color: #fff;
+}
+
+#users .user-filter-row > .user-filter-block > div {
+  display: flex;
+  gap: 2rem;
+  min-width: 22rem;
+}
+
+#users .user-filter-row > .user-filter-block > div > input {
+  flex: 1;
+  min-width: 8rem;
+}
+
+#users .mbti-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+#users .mbti-tag-label {
+  padding: 0.6rem 1.2rem;
+  border: 0.1rem solid #ddd;
+  border-radius: 2rem;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+#users .mbti-tag-label.selected {
+  background-color: var(--color-1rd);
+  color: #fff;
+  border-color: var(--color-1rd);
+}
+
+#users .mbti-tag-label input {
+  display: none;
+}
+
+#users .reset-button {
+  padding: 1rem 2rem;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  align-self: center;
+  transition: background-color 0.2s ease;
+}
+
+#users .reset-button:hover {
+  background-color: #666;
+}
+
+#users .users-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  padding: 3rem 2.5rem;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+#users .user-card {
+  display: flex;
+  flex-direction: column;
+  width: calc((100% - 4.8rem) / 3);
+  border-radius: 1.6rem;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#users .user-card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.12);
+}
+
+#users .user-card > .flex-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fbf4f4;
+  height: 100%;
+  margin-top: 1.4rem;
+  padding: 1.3rem 1.6rem;
+  border-radius: 1.2rem;
+}
+
+#users .user-image {
+  width: 100%;
+  height: 26rem;
+  object-fit: cover;
+  border-radius: 1.2rem;
+}
+
+#users .user-info {
+  background-color: #fbf4f4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1.45rem;
+  color: #333;
+  margin-left: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+#users .user-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+
+#users .user-info-label {
+  font-weight: 500;
+  color: #777;
+}
+
+#users .user-info-value {
+  color: #222;
+  font-weight: 500;
+}
+
+#users .user-nickname {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+#users .user-intro {
+  margin-top: 1.2rem;
+  color: #555;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+#users .user-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 1.8rem;
+}
+
+#users .like-button {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-image:
+          url('../public/heart_t2.png'),
+          linear-gradient(45deg, #fb5356, #ffb6b6);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 3rem 3rem, cover;
+  color: #fff;
+  transition: 0.2s;
+}
+
+#users .like-button:hover {
+  background-image:
+          url('../public/heart_t2.png'),
+          linear-gradient(45deg, #fb5356, #ff6f6f);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 3rem 3rem, cover;
+  transform: scale(1.05);
+}
+
+#users .block-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-image:
+          url('../public/ico_alarm.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 2rem 2rem, cover;
+  color: #fff;
+  transition: 0.2s;
+  margin-left: -1rem;
+  margin-bottom: -0.5rem;
+}
+
+#users .block-button:hover {
+  background-color: #eee;
+  transform: scale(1.05);
+}
