@@ -3,7 +3,6 @@
     flex-direction: column;
     gap: 30px;
     padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #1a2935;
 }
 
@@ -24,28 +23,33 @@
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    border: 3px solid #3399ff;
-    box-shadow: 0 0 8px #66b3ffaa;
+    border: 2px solid #aaa;
     object-fit: cover;
     margin-bottom: 15px;
 }
 .image-container{
-    box-shadow: 0 0 8px #4da3ff;
-    border-radius: 10%;
+    width: 27rem;
+    height: 18rem;
+    border-radius: 1rem;
+    overflow: hidden;
 }
 .course-image{
-    border-radius: 10%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .compatibility-section {
     flex: 2;
-    background-color: #e9f1fc;
+    /*background-color: #e9f1fc;*/
+    background: linear-gradient(140deg, #FFEDED, #FFDEDF);
     border-radius: 10px;
-    padding: 15px;
+    padding: 2.5rem 4rem;
     color: #333;
+    box-sizing: border-box;
 }
 
 .course-list-container {
-    background-color: #f0f8ff;
+    background-color: #f5f5f5;
     border-radius: 10px;
     padding: 20px;
     color: #333;
@@ -54,11 +58,11 @@
 .course-item {
     display: flex;
     gap: 15px;
-    background: #ffffffcc;
+    background: #fff;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 12px;
-    box-shadow: 0 2px 4px #b0c4deaa;
+    border: 1px solid #ddd;
 }
 
 .course-info {
@@ -66,35 +70,34 @@
 }
 
 .course-map {
-    flex: 1;
-    min-width: 300px;
-    height: 200px;
-    border-radius: 8px;
+    width: 27rem;
+    height: 18rem;
+    border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 1px 3px #aaa;
-    background-color: #eee;
+    border: 1px solid #ddd
 }
 .ask-date {
-    background-color: #a4dbf8;     /* 파스텔 핑크 */
-    color: #1e308b;                /* 다크 핑크 텍스트 */
+    background-color: var(--color-1rd);
+    color: #fff;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 10px 20px;
-    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, background-color 0.3s ease;
+    font-size: 1.5rem;
 }
 
 .ask-date:hover {
-    background-color: #42bfed;     /* hover 시 조금 더 진한 핑크 */
-    transform: scale(1.05);        /* 살짝 확대 */
+    background-color: #ec4e51;
+    transform: scale(1.05);
 }
 
 .ask-date:active {
-    transform: scale(0.98);        /* 눌렀을 때 살짝 줄어듦 */
+    transform: scale(0.98);
 }
+
 .chat-modal {
     position: fixed;
     top: 120px;

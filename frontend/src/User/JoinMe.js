@@ -174,7 +174,7 @@ export default function JoinMe() {
     const behaviorTip = mbtiBehaviorTips[currentUser.mbti] || { good: "정보가 없습니다.", caution: "" };
 
     return (
-        <div className="joinme-wrapper">
+        <section className="joinme-wrapper inner">
             <div className="top-sections">
                 <div className="profile-section">
                     <img
@@ -265,7 +265,7 @@ export default function JoinMe() {
             )}
 
             <div className="course-list-container">
-                <h2>추천 코스</h2>
+                <h2>📍 데이트 추천 코스</h2>
                 {courses.length === 0 ? (
                     <p>추천할 코스가 없습니다.</p>
                 ) : (
@@ -301,15 +301,13 @@ export default function JoinMe() {
                                 <img className="course-image" src={course.imgpath} alt={course.coursename} />
                             </div>
                             <div
-                                className="course-map"
-                                style={{ width: 250, height: 150, borderRadius: 8, overflow: "hidden" }}
-                            >
+                                className="course-map">
                                 <CourseMap placeName={course.address} />
                             </div>
                         </div>
                     ))
                 )}
             </div>
-        </div>
+        </section>
     );
 }
