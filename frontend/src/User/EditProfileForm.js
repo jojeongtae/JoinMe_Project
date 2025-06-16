@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./MyPage.css";
 import apiClient from "../api/apiClient";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../mainSlice";
 
-export default function EditProfileForm({ user, onCancel, onSubmit }) {
+export default function EditProfileForm({user, onCancel, onSubmit}) {
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
@@ -26,8 +26,8 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
     const [uploading, setUploading] = useState(false); // 이미지 업로드 중 여부
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const {name, value} = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
     };
 
     const handleImageChange = async (e) => {
@@ -40,11 +40,11 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
         try {
             setUploading(true);
             const response = await apiClient.post("/upload", form, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: {'Content-Type': 'multipart/form-data'}
             });
 
             const path = response.data.filePathName;
-            setFormData(prev => ({ ...prev, profileimg: path }));
+            setFormData(prev => ({...prev, profileimg: path}));
         } catch (err) {
             console.error("❌ 이미지 업로드 실패:", err);
             setError("이미지 업로드 실패");
@@ -80,63 +80,101 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
     };
 
     return (
-        <form className="edit-form" onSubmit={handleSubmit}>
-            <h2>프로필 수정</h2>
+        <section id="edit-form">
+            <form className="profile-form" onSubmit={handleSubmit}>
+                <h2>프로필 수정</h2>
 
-            <label>아이디 (수정불가)
-                <input name="username" value={formData.username} disabled />
-            </label>
+                <label>아이디
+                    <input name="username" value={formData.username} disabled readOnly/>
+                </label>
 
-            <label>닉네임
-                <input name="usernickname" value={formData.usernickname} onChange={handleChange} />
-            </label>
+                <label>닉네임
+                    <input name="usernickname" value={formData.usernickname} onChange={handleChange} required/>
+                </label>
 
-            <label>성별
-                <input name="sexuality" value={formData.sexuality} onChange={handleChange} />
-            </label>
-            <label>나이
-                <input name="age" type="number" value={formData.age} onChange={handleChange} />
-            </label>
-            <label>키
-                <input name="height" type="number" value={formData.height} onChange={handleChange} />
-            </label>
-            <label>몸무게
-                <input name="weight" type="number" value={formData.weight} onChange={handleChange} />
-            </label>
-            <label>관심사
-                <input name="interest" value={formData.interest} onChange={handleChange} />
-            </label>
-            <label>주소
-                <input name="address" value={formData.address} onChange={handleChange} />
-            </label>
-            <label>MBTI
-                <input name="mbti" value={formData.mbti} onChange={handleChange} />
-            </label>
-            <label>자기소개
-                <textarea name="introduction" value={formData.introduction} onChange={handleChange} />
-            </label>
+                <label>성별
+                    <select name="sexuality" value={formData.sexuality} onChange={handleChange} required>
+                        <option value="">선택</option>
+                        <option value="남성">남성</option>
+                        <option value="여성">여성</option>
+                    </select>
+                </label>
 
-            <label>프로필 사진 업로드
-                <input type="file" accept="image/*" onChange={handleImageChange} disabled={uploading} />
-                {formData.profileimg && (
-                    <img
-                        src={formData.profileimg}
-                        alt="프로필 미리보기"
-                        style={{ width: 100, height: 100, borderRadius: "50%", objectFit: "cover", marginTop: 10 }}
-                    />
-                )}
-            </label>
+                <label>나이
+                    <input type="number" name="age" value={formData.age} onChange={handleChange} required/>
+                </label>
 
-            {error && <p className="form-error">{error}</p>}
+                <label>키 (cm)
+                    <input type="number" name="height" value={formData.height} onChange={handleChange} required/>
+                </label>
 
-            <div className="edit-form-buttons">
-                <button type="submit" className="save-btn" disabled={loading || uploading}>
-                    {loading ? "저장 중..." : "저장"}
-                </button>
-                <button type="button" className="cancel-btn" onClick={onCancel} disabled={loading || uploading}>
-                    취소
-                </button>
-            </div>
-        </form>
+                <label>몸무게 (kg)
+                    <input type="number" name="weight" value={formData.weight} onChange={handleChange} required/>
+                </label>
+
+                <label>관심사
+                    <input name="interest" value={formData.interest} onChange={handleChange}/>
+                </label>
+
+                <label>주소
+                    <input name="address" value={formData.address} onChange={handleChange} required/>
+                </label>
+
+                <label>자기소개
+                    <textarea name="introduction" value={formData.introduction} onChange={handleChange}/>
+                </label>
+
+                <label>MBTI
+                    <select name="mbti" value={formData.mbti} onChange={handleChange}>
+                        <option value="">선택</option>
+                        <option value="INTJ">INTJ</option>
+                        <option value="INTP">INTP</option>
+                        <option value="ENTJ">ENTJ</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INFP">INFP</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="ISFJ">ISFJ</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ISTP">ISTP</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="ESFP">ESFP</option>
+                    </select>
+                </label>
+
+                <label>프로필 사진 업로드
+                    <input type="file" accept="image/*" onChange={handleImageChange} disabled={uploading}/>
+                    {formData.profileimg && (
+                        <img
+                            src={formData.profileimg}
+                            alt="프로필 미리보기"
+                            style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                                marginTop: 10,
+                            }}
+                        />
+                    )}
+                </label>
+
+                {error && <p className="form-error">{error}</p>}
+
+                <div className="btn-wrap">
+                    <button className="submit-btn" type="submit" disabled={loading || uploading}>
+                        {loading ? "저장 중..." : "저장"}
+                    </button>
+                    <button className="btn gray" type="button" onClick={onCancel} disabled={loading || uploading}>
+                        취소
+                    </button>
+                </div>
+            </form>
+        </section>
+
     );
 }

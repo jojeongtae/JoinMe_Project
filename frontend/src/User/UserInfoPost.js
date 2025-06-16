@@ -136,7 +136,7 @@ export default function UserInfoPost() {
                 {uploadError && <p className="form-error">{uploadError}</p>}
                 {formData.profileimg && <img src={formData.profileimg} alt="프로필 미리보기" style={{ maxWidth: "200px" }} />}
 
-                <button type="submit" disabled={uploading}>제출</button>
+                <button className={"submit-btn"} type="submit" disabled={uploading}>제출</button>
             </form>
         </section>
     );
