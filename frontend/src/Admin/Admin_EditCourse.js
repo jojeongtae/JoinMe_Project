@@ -11,6 +11,8 @@ export default function Admin_EditCourse() {
     const [coursename, setCoursename] = useState("");
     const [address, setAddress] = useState("");
     const [body, setBody] = useState("");
+    const [imageFile, setImageFile] = useState(null); // 실제 파일
+    const [imagePreview, setImagePreview] = useState(""); // 미리보기
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,11 +35,14 @@ export default function Admin_EditCourse() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const uploadedImagePath = await uploadImage(); // ← 먼저 업로드
+
         const updatedCourse = {
             id: parseInt(id),
             coursename,
             address,
             body,
+            imgpath: uploadedImagePath, // ← 업로드된 이미지 URL 포함
             updateDate: new Date().toISOString(),
         };
 
@@ -55,7 +60,32 @@ export default function Admin_EditCourse() {
             alert("코스 수정 실패: " + err.response?.status);
         }
     };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setImagePreview(URL.createObjectURL(file));
+        }
+    };
+    const uploadImage = async () => {
+        if (!imageFile) return null;
 
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        try {
+            const response = await apiClient.post("/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return response.data.filePathName; // 서버에서 받은 이미지 경로
+        } catch (err) {
+            console.error("이미지 업로드 실패", err);
+            alert("이미지 업로드 실패");
+            return null;
+        }
+    };
     return (
         <>
             <section id={"edit-course"} style={styles.container}>
@@ -73,7 +103,19 @@ export default function Admin_EditCourse() {
                             style={styles.input}
                         />
                     </div>
-
+                    <div style={styles.formGroup}>
+                        <label style={styles.label} htmlFor="image">대표 이미지</label>
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={styles.input}
+                        />
+                        {imagePreview && (
+                            <img src={imagePreview} alt="미리보기" style={{ marginTop: 10, width: "200px", borderRadius: 8 }} />
+                        )}
+                    </div>
                     <div style={styles.formGroup}>
                         <label style={styles.label} htmlFor="address">지역</label>
                         <select

@@ -1,8 +1,9 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {addCourse} from "../mainSlice";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../api/apiClient";
-import {useNavigate} from "react-router-dom";
+import {addCourse} from "../mainSlice"; // 실제 경로에 맞게 수정
+
 
 export default function Admin_AddCourse() {
     const dispatch = useDispatch();
@@ -12,32 +13,62 @@ export default function Admin_AddCourse() {
     const [coursename, setCoursename] = useState("");
     const [address, setAddress] = useState("");
     const [body, setBody] = useState("");
+    const [imageFile, setImageFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState("");
+    const [uploadedImagePath, setUploadedImagePath] = useState("");
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setPreviewUrl(URL.createObjectURL(file));
+        }
+    };
+
+    const handleImageUpload = async () => {
+        if (!imageFile) return "";
+
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        try {
+            const response = await apiClient.post("/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+
+                },
+            });
+
+            const imagePath = response.data.filePathName // 서버 반환 값에 따라 조정
+            setUploadedImagePath(imagePath);
+            return imagePath;
+        } catch (err) {
+            console.error("이미지 업로드 실패:", err);
+            alert("이미지 업로드 실패");
+            return "";
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("추가 요청할 코스:", coursename, address, body);
-        console.log("토큰 확인:", token);
+        const imagePath = await handleImageUpload();
 
         const courseData = {
             coursename,
             address,
             body,
-            image: "",
+            image: imagePath,
             updateDate: new Date().toISOString(),
         };
 
         try {
-            const response = await apiClient.post("/admin/add-course",
-                courseData,
-                {
-                    withCredentials: true,
-                    headers: {
-                        // "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            await apiClient.post("/admin/add-course", courseData, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
             dispatch(addCourse({ coursename, address, body }));
             alert("코스가 추가되었습니다.");
@@ -46,60 +77,74 @@ export default function Admin_AddCourse() {
             console.error("코스 추가 실패:", err);
             alert("코스 추가 실패: " + err.response?.status);
         }
-    }
+    };
 
     return (
-        <>
-            <section id={"add-course"} style={styles.container}>
-                <h2 style={styles.title}>데이트 코스 추가</h2>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="coursename">코스명</label>
-                        <input
-                            id="coursename"
-                            type="text"
-                            value={coursename}
-                            placeholder="코스명을 작성해주세요."
-                            onChange={(e) => setCoursename(e.target.value)}
-                            required
-                            style={styles.input}
+        <section id={"add-course"} style={styles.container}>
+            <h2 style={styles.title}>데이트 코스 추가</h2>
+            <form onSubmit={handleSubmit} style={styles.form}>
+                <div style={styles.formGroup}>
+                    <label style={styles.label} htmlFor="coursename">코스명</label>
+                    <input
+                        id="coursename"
+                        type="text"
+                        value={coursename}
+                        onChange={(e) => setCoursename(e.target.value)}
+                        placeholder="코스명을 작성해주세요."
+                        required
+                        style={styles.input}
+                    />
+                </div>
+
+                <div style={styles.formGroup}>
+                    <label style={styles.label} htmlFor="address">지역</label>
+                    <select
+                        id="address"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        required
+                        style={styles.select}
+                    >
+                        <option value="" disabled>지역을 선택해주세요</option>
+                        <option value="서울">서울</option>
+                        <option value="경기">경기</option>
+                        <option value="부산">부산</option>
+                    </select>
+                </div>
+
+                <div style={styles.formGroup}>
+                    <label style={styles.label} htmlFor="body">코스 설명</label>
+                    <textarea
+                        id="body"
+                        value={body}
+                        onChange={(e) => setBody(e.target.value)}
+                        placeholder="코스 설명을 입력해주세요."
+                        style={styles.textarea}
+                    />
+                </div>
+
+                <div style={styles.formGroup}>
+                    <label style={styles.label}>이미지 업로드</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        style={styles.input}
+                    />
+                    {previewUrl && (
+                        <img
+                            src={previewUrl}
+                            alt="미리보기"
+                            style={{ width: "200px", marginTop: "10px", borderRadius: "8px" }}
                         />
-                    </div>
+                    )}
+                </div>
 
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="address">지역</label>
-                        <select
-                            id="address"
-                            name="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            required
-                            style={styles.select}
-                        >
-                            <option value="" disabled>지역을 선택해주세요</option>
-                            <option value="서울">서울</option>
-                            <option value="경기">경기</option>
-                            <option value="부산">부산</option>
-                        </select>
-                    </div>
-
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="body">코스 설명</label>
-                        <textarea
-                            id="body"
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                            placeholder="코스 설명을 입력해주세요."
-                            style={styles.textarea}
-                        />
-                    </div>
-
-                    <div style={styles.buttons}>
-                        <button type="submit" style={styles.btn}>추가하기</button>
-                    </div>
-                </form>
-            </section>
-        </>
+                <div style={styles.buttons}>
+                    <button type="submit" style={styles.btn}>추가하기</button>
+                </div>
+            </form>
+        </section>
     );
 }
 
