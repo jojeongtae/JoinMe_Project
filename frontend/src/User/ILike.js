@@ -85,7 +85,7 @@ export default function ILike() {
 
     return (
         <div id="ilike" className="ilike-wrapper">
-            <h2 className="ilike-title">❤️ 내가 좋아요 누른 사람들</h2>
+            <h2 className="ilike-title">❤️ 내가 좋아요한 사람들</h2>
             {filteredLikedUsers.length === 0 ? (
                 <p className="ilike-empty">아직 매칭되지 않은 좋아요 유저가 없어요.</p>
             ) : (
