@@ -90,6 +90,7 @@ public class CourseServiec {
         CourseTbl course = optionalCourse.get();
 
 // 기존 객체 수정
+        course.setImgpath(dto.getImgpath());
         course.setCoursename(dto.getCoursename());
         course.setAddress(dto.getAddress());
         course.setBody(dto.getBody());
