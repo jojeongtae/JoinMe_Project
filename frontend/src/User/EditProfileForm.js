@@ -9,7 +9,7 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
 
     const [formData, setFormData] = useState({
         username: user.username || "",
-        usernickname: user.usernickname || "",  // 닉네임 추가
+        usernickname: user.usernickname || "",
         sexuality: user.sexuality || "",
         age: user.age || "",
         height: user.height || "",
@@ -18,14 +18,39 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
         address: user.address || "",
         mbti: user.mbti || "",
         introduction: user.introduction || "",
+        profileimg: user.profileimg || "", // 추가
     });
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false); // 이미지 업로드 중 여부
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const form = new FormData();
+        form.append("image", file);
+
+        try {
+            setUploading(true);
+            const response = await apiClient.post("/upload", form, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+
+            const path = response.data.filePathName;
+            setFormData(prev => ({ ...prev, profileimg: path }));
+        } catch (err) {
+            console.error("❌ 이미지 업로드 실패:", err);
+            setError("이미지 업로드 실패");
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -42,13 +67,10 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
         try {
             setLoading(true);
 
-            // profileimg는 수정 없이 기존 값 유지
-            const submitData = { ...formData, profileimg: user.profileimg };
-
-            const res = await apiClient.put("/user/update-info", submitData);
+            const res = await apiClient.put("/user/update-info", formData);
 
             dispatch(loginUser(res.data));
-            onCancel();
+            onCancel(); // 또는 onSubmit(res.data)
         } catch (err) {
             console.error("❌ 수정 실패:", err);
             setError("수정 중 오류가 발생했습니다.");
@@ -94,13 +116,24 @@ export default function EditProfileForm({ user, onCancel, onSubmit }) {
                 <textarea name="introduction" value={formData.introduction} onChange={handleChange} />
             </label>
 
+            <label>프로필 사진 업로드
+                <input type="file" accept="image/*" onChange={handleImageChange} disabled={uploading} />
+                {formData.profileimg && (
+                    <img
+                        src={formData.profileimg}
+                        alt="프로필 미리보기"
+                        style={{ width: 100, height: 100, borderRadius: "50%", objectFit: "cover", marginTop: 10 }}
+                    />
+                )}
+            </label>
+
             {error && <p className="form-error">{error}</p>}
 
             <div className="edit-form-buttons">
-                <button type="submit" className="save-btn" disabled={loading}>
+                <button type="submit" className="save-btn" disabled={loading || uploading}>
                     {loading ? "저장 중..." : "저장"}
                 </button>
-                <button type="button" className="cancel-btn" onClick={onCancel} disabled={loading}>
+                <button type="button" className="cancel-btn" onClick={onCancel} disabled={loading || uploading}>
                     취소
                 </button>
             </div>

@@ -45,7 +45,8 @@ public class UserTbl {
     @Column(name = "mbti", length = 10)
     private String mbti;
 
-    @Column(name = "profileimg", length = 200)
+    @Lob
+    @Column(name = "profileimg")
     private String profileimg;
 
     @ColumnDefault("0")
