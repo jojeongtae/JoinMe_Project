@@ -3,8 +3,10 @@ import {useSelector} from "react-redux";
 import EditProfileForm from "./EditProfileForm";
 import ReportList from "./ReportList";
 import apiClient from "../api/apiClient";
+import {useNavigate} from "react-router-dom";
 
 export default function MyPage() {
+    const navigate = useNavigate();
     const currentUser = useSelector((state) => state.main.currentUser);
     const [isEditing, setIsEditing] = useState(false);
     const [showReports, setShowReports] = useState(false);
@@ -44,6 +46,22 @@ export default function MyPage() {
 
     const getUserByUsername = (username) => allUsers.find((u) => u.username === username);
     const getCourseById = (id) => allCourses.find((c) => c.id === id);
+
+    const deleteUser = async (user) => {
+        const yn = window.confirm("정말 삭제하시겠습니까?"); // ✅ true 또는 false 반환됨
+
+        if (!yn) return; // 취소하면 함수 중단
+
+        try {
+            const res = await apiClient.delete(`/user-delete/${currentUser.username}`);
+            console.log("삭제 완료", res.data);
+            alert("삭제되었습니다.");
+            navigate("/");
+        } catch (err) {
+            console.log("삭제 실패", err);
+            alert("삭제 중 오류가 발생했습니다.");
+        }
+    };
 
     return (
         <section id={"mypage"} className="mypage-container">
@@ -92,6 +110,7 @@ export default function MyPage() {
                             <button className="mypage-btn" onClick={() => setIsEditing(true)}>정보수정</button>
                             <button className="mypage-btn" onClick={() => setShowReports(true)}>차단목록</button>
                             <button className="mypage-btn" onClick={() => setShowDatesModal(true)}>내 데이트 일정</button>
+                            <button className="mypage-btn" onClick={()=> deleteUser(currentUser.username)}>회원탈퇴</button>
                         </div>
 
                         {showDatesModal && (
