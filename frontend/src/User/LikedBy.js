@@ -4,13 +4,14 @@ import apiClient from "../api/apiClient";
 
 export default function LikedBy() {
     const currentUser = useSelector((state) => state.main.currentUser);
-    const [likedMeUsers, setLikedMeUsers] = useState([]);
-    const [matchedUsers, setMatchedUsers] = useState([]);
+    const [likedMeUsers, setLikedMeUsers] = useState([]);      // 나를 좋아요한 유저 목록
+    const [matchedUsers, setMatchedUsers] = useState([]);      // 매칭된 유저 목록
+    const [hatedUsers, setHatedUsers] = useState([]);          // 내가 차단한 유저 username 목록
 
     useEffect(() => {
         if (!currentUser) return;
 
-        // 나를 좋아한 사람들 가져오기
+        // 나를 좋아요한 유저 가져오기
         const fetchLikedMeUsers = async () => {
             try {
                 const res = await apiClient.get("/like/liker-users", {
@@ -22,39 +23,56 @@ export default function LikedBy() {
             }
         };
 
-        // 매칭된 사람들 가져오기
+        // 매칭된 유저 가져오기
         const fetchMatchedUsers = async () => {
             try {
                 const res = await apiClient.get(`/match/${currentUser.username}`);
-                setMatchedUsers(res.data); // 매칭된 유저 리스트
-
-
+                setMatchedUsers(res.data);
             } catch (error) {
                 console.error(error);
             }
         };
 
+        // 내가 차단한 유저 가져오기
+        const fetchHatedUsers = async () => {
+            try {
+                const res = await apiClient.get(`/hate-list/${currentUser.username}`);
+                const hatedList = res.data.map(item => item.hated); // HateDTO에 hated 필드 기준
+                setHatedUsers(hatedList);
+            } catch (error) {
+                console.error("차단 목록 불러오기 실패:", error);
+            }
+        };
+
         fetchLikedMeUsers();
         fetchMatchedUsers();
+        fetchHatedUsers();
     }, [currentUser]);
 
+    // 매칭된 유저들의 username 추출
     const matchedUsernames = matchedUsers.map(match => match.matchername);
+
+    // 나를 좋아요한 유저 중에서,
+    // 매칭된 유저 ❌ + 내가 차단한 유저 ❌ 제외
     const filteredLikedMeUsers = likedMeUsers.filter(
-        user => !matchedUsernames.includes(user.username)
-    );   // 좋아요 돌려주기
+        user =>
+            !matchedUsernames.includes(user.username) &&
+            !hatedUsers.includes(user.username)
+    );
+
+    // 좋아요 돌려주기
     const handleReturnLike = async (likedUser) => {
         try {
             const res = await apiClient.post("/like", {
                 liker: currentUser.username,
                 liked: likedUser.username,
             });
-            alert(res.data); // 매칭 메시지 또는 좋아요 등록 메시지
-            setLikedMeUsers(prev => prev.filter(u => u.username !== likedUser.username));
-
+            alert(res.data); // 매칭 또는 좋아요 메시지
+            setLikedMeUsers(prev => prev.filter(u => u.username !== likedUser.username)); // UI에서 제거
         } catch (error) {
             console.error("좋아요 돌려주기 실패:", error);
             if (error.response?.data) {
-                alert(error.response.data); // 서버에서 온 메시지 보여주기
+                alert(error.response.data);
             } else {
                 alert("좋아요 돌려주기에 실패했습니다.");
             }
@@ -68,8 +86,9 @@ export default function LikedBy() {
                 hater: currentUser.username,
                 hated: hatedUser.username,
             });
-            const res = await apiClient.post(`/hate-user?${params.toString()}`);
+            await apiClient.post(`/hate-user?${params.toString()}`);
             alert(`${hatedUser.usernickname}님을 차단했습니다.`);
+            setLikedMeUsers(prev => prev.filter(u => u.username !== hatedUser.username)); // UI에서 제거
         } catch (error) {
             console.error("차단 요청 실패:", error);
             alert("차단 처리에 실패했습니다.");
@@ -119,6 +138,5 @@ export default function LikedBy() {
                 ))
             )}
         </section>
-
     );
 }
