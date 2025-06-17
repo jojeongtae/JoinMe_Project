@@ -80,11 +80,12 @@ export default function Admin_AddCourse() {
     };
 
     return (
-        <section id={"add-course"} style={styles.container}>
-            <h2 style={styles.title}>데이트 코스 추가</h2>
-            <form onSubmit={handleSubmit} style={styles.form}>
-                <div style={styles.formGroup}>
-                    <label style={styles.label} htmlFor="coursename">코스명</label>
+        <section id="add-course" className="add-course-container">
+            <h2 className="add-course-title">데이트 코스 추가</h2>
+
+            <form onSubmit={handleSubmit} className="add-course-form">
+                <div className="form-group">
+                    <label htmlFor="coursename">코스명</label>
                     <input
                         id="coursename"
                         type="text"
@@ -92,18 +93,16 @@ export default function Admin_AddCourse() {
                         onChange={(e) => setCoursename(e.target.value)}
                         placeholder="코스명을 작성해주세요."
                         required
-                        style={styles.input}
                     />
                 </div>
 
-                <div style={styles.formGroup}>
-                    <label style={styles.label} htmlFor="address">지역</label>
+                <div className="form-group">
+                    <label htmlFor="address">지역</label>
                     <select
                         id="address"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         required
-                        style={styles.select}
                     >
                         <option value="" disabled>지역을 선택해주세요</option>
                         <option value="서울">서울</option>
@@ -112,19 +111,18 @@ export default function Admin_AddCourse() {
                     </select>
                 </div>
 
-                <div style={styles.formGroup}>
-                    <label style={styles.label} htmlFor="body">코스 설명</label>
+                <div className="form-group">
+                    <label htmlFor="body">코스 설명</label>
                     <textarea
                         id="body"
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
                         placeholder="코스 설명을 입력해주세요."
-                        style={styles.textarea}
                     />
                 </div>
 
                 <div className="profile-upload-wrapper">
-                    <label style={styles.label}>이미지 업로드</label>
+                    <label>이미지 업로드</label>
 
                     <label className="custom-file-upload">
                         파일선택
@@ -145,12 +143,12 @@ export default function Admin_AddCourse() {
                     )}
                 </div>
 
-
-                <div style={styles.buttons}>
-                    <button type="submit" style={styles.btn}>추가하기</button>
+                <div className="btn-wrap">
+                    <button className={"btn"} type="submit">추가하기</button>
                 </div>
             </form>
         </section>
+
     );
 }
 
