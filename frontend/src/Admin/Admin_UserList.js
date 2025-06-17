@@ -58,36 +58,36 @@ export default function Admin_UserList() {
 
     return (
         <>
-            <section style={styles.container}>
-                <h2 style={styles.title}>현재 유저 리스트</h2>
-                <table style={styles.table}>
+            <section id={"admin"} className="inner admin-userlist-container">
+                <h2 className="admin-userlist-title">현재 유저 리스트</h2>
+                <table className="admin-userlist-table">
                     <thead>
                     <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>닉네임</th>
-                        <th style={styles.th}>성별</th>
-                        <th style={styles.th}>나이</th>
-                        <th style={styles.th}>게시물 관리</th>
-                        <th style={styles.th}>상세</th>
+                        <th>ID</th>
+                        <th>닉네임</th>
+                        <th>성별</th>
+                        <th>나이</th>
+                        <th>게시물 관리</th>
+                        <th>상세</th>
                     </tr>
                     </thead>
                     <tbody>
                     {users.map(user => (
                         <tr key={user.username}>
-                            <td style={styles.td}>{user.username}</td>
-                            <td style={styles.td}>{user.usernickname}</td>
-                            <td style={styles.td}>{user.sexuality}</td>
-                            <td style={styles.td}>{user.age}</td>
-                            <td style={styles.td}>
+                            <td>{user.username}</td>
+                            <td>{user.usernickname}</td>
+                            <td>{user.sexuality}</td>
+                            <td>{user.age}</td>
+                            <td>
                                 <button
-                                    style={user.hidden ? styles.unhideBtn : styles.hideBtn}
+                                    className={user.hidden ? 'unhide-btn' : 'hide-btn'}
                                     onClick={() => handleToggleHidden(user.username, user.hidden)}
                                 >
                                     {user.hidden ? '공개' : '숨김'}
                                 </button>
                             </td>
-                            <td style={styles.td}>
-                                <button className={"btn"} onClick={() => handleShowPopup(user)}>상세보기</button>
+                            <td>
+                                <button className="detail-btn" onClick={() => handleShowPopup(user)}>상세보기</button>
                             </td>
                         </tr>
                     ))}
@@ -97,66 +97,3 @@ export default function Admin_UserList() {
         </>
     );
 }
-
-const styles = {
-    container: {
-        padding: '32px',
-        maxWidth: '1000px',
-        margin: '0 auto',
-    },
-    title: {
-        fontSize: '2rem',
-        marginBottom: '24px',
-        fontWeight: '600',
-        textAlign: 'center',
-        color: '#222',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        border: '1px solid #e0e0e0',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-    },
-    th: {
-        backgroundColor: '#f5f5f5',
-        padding: '12px',
-        fontWeight: '600',
-        fontSize: '0.95rem',
-        borderBottom: '1px solid #ddd',
-    },
-    td: {
-        padding: '12px',
-        fontSize: '0.9rem',
-        borderBottom: '1px solid #eee',
-        textAlign: 'center',
-    },
-    detailBtn: {
-        padding: '6px 12px',
-        backgroundColor: '#ff7eb9',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-    },
-    hideBtn: {
-        padding: '6px 10px',
-        backgroundColor: '#aaa',
-        color: 'white',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-    },
-    unhideBtn: {
-        padding: '6px 10px',
-        backgroundColor: '#7dc87d',
-        color: 'white',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-    },
-};

@@ -26,26 +26,28 @@ export default function Admin_MatchingList() {
 
     return (
         <>
-            <section style={styles.container}>
-                <h2 style={styles.title}>유저 매칭 현황</h2>
-                <table style={styles.table}>
+            <section id="admin" className="inner">
+                <h2 className="admin-userlist-title">유저 매칭 현황</h2>
+                <table className="admin-userlist-table">
                     <thead>
                     <tr>
-                        <th style={styles.th}>매칭ID</th>
-                        <th style={styles.th}>유저A</th>
-                        <th style={styles.th}>유저B</th>
-                        <th style={styles.th}>매칭 시각</th>
+                        <th>매칭ID</th>
+                        <th>유저A</th>
+                        <th>유저B</th>
+                        <th>매칭 시각</th>
                     </tr>
                     </thead>
                     <tbody>
                     {matching.map(m => (
                         <tr key={m.num}>
-                            <td style={styles.td}>{m.num}</td>
-                            <td style={styles.td}>{m.userA}</td>
-                            <td style={styles.td}>{m.userB}</td>
-                            <td style={styles.td}>{new Date(m.matchingTime).toLocaleString("ko-KR", {
-                                timeZone: "Asia/Seoul"
-                            })}</td>
+                            <td>{m.num}</td>
+                            <td>{m.userA}</td>
+                            <td>{m.userB}</td>
+                            <td>
+                                {new Date(m.matchingTime).toLocaleString("ko-KR", {
+                                    timeZone: "Asia/Seoul"
+                                })}
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -54,40 +56,3 @@ export default function Admin_MatchingList() {
         </>
     );
 }
-
-const styles = {
-    container: {
-        padding: '32px',
-        maxWidth: '1000px',
-        margin: '0 auto',
-    },
-    title: {
-        fontSize: '2rem',
-        marginBottom: '24px',
-        fontWeight: '600',
-        textAlign: 'center',
-        color: '#222',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        border: '1px solid #e0e0e0',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-    },
-    th: {
-        backgroundColor: '#f5f5f5',
-        padding: '12px',
-        fontWeight: '600',
-        fontSize: '0.95rem',
-        borderBottom: '1px solid #ddd',
-    },
-    td: {
-        padding: '12px',
-        fontSize: '0.9rem',
-        borderBottom: '1px solid #eee',
-        textAlign: 'center',
-    },
-};
