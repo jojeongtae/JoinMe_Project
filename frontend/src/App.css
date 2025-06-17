@@ -398,7 +398,7 @@ label.custom-file-upload{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../public/background.jpg');
+  /*background-image: url('../public/background.jpg');*/
   background-size: cover;
   background-position: center;
   padding: 0 4rem;
@@ -973,7 +973,7 @@ label.custom-file-upload{
 #matched .matched-container {
   position: relative;
   z-index: 2;
-  max-width: 100rem;
+  width: 100rem;
   margin: 0 auto;
 }
 
@@ -1933,4 +1933,57 @@ label.custom-file-upload{
 
 .popup-overlay .btn-wrap button {
   font-size: 1.5rem;
+}
+/*광고 배너  main content까지*/
+.layout-3col {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.side-banner-left{
+  position: fixed;
+  top: 150px;
+  left: 0;
+  width: 259px;
+  flex-shrink: 0;
+}
+
+.side-banner-right{
+  position: fixed;
+  top: 150px;
+  right: 0;
+  width: 259px;
+  flex-shrink: 0;
+}
+.side-banner img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.main-content {
+  flex-grow: 1;
+  min-width: 0;
+  /*background-image: url("../public/background.jpg"); !* public/images/bg.jpg 경로 *!*/
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* 화면 높이 채우기 */
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.main-background-img{
+  background-image: url("../public/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }

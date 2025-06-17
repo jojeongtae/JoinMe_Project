@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 
 export default function Intro() {
     return (
+        <div className="main-background-img">
         <section id={"user-main"}>
             <div className={"user-main-wrap"}>
                 <div className={"bg-overlay"}>
@@ -19,5 +20,6 @@ export default function Intro() {
                 </div>
             </div>
         </section>
+        </div>
     );
 }

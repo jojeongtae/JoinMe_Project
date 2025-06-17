@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {hover} from "@testing-library/user-event/dist/hover";
 import apiClient from "../api/apiClient";
 import {fetchUserMessages, logoutUser} from "../mainSlice";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay, EffectFade, Pagination} from "swiper/modules";
 
 export default function MainLayout() {
     const currentUser = useSelector((state) => state.main.currentUser);
@@ -20,7 +22,21 @@ export default function MainLayout() {
             alert("로그아웃에 실패했습니다.");
         }
     };
-console.log(currentUser)
+    console.log(currentUser)
+    const banners = [
+        {
+            src: "/banners/banner1.png",
+            link: "http://localhost:3000"
+        },
+        {
+            src: "/banners/banner2.png",
+            link: "http://localhost:3000"
+        },
+        {
+            src: "/banners/banner3.png",
+            link: "http://localhost:3000"
+        }
+    ];
     return (
         <>
             <header>
@@ -50,9 +66,56 @@ console.log(currentUser)
                 </div>
             </header>
 
-            <main className={"main-wrap"}>
-                <Outlet/>
-            </main>
+                <main className={"main-wrap"}>
+
+
+                    <div className="main-content">
+                        <Outlet/>
+                    </div>
+
+                    {/* 메인 콘텐츠 */}
+                    <div className={"layout-3col"}>
+                        {/* 좌측 사이드 배너 */}
+                        <div className="side-banner-left">
+                            <Swiper
+                                modules={[Autoplay, EffectFade]}
+                                autoplay={{delay: 3000, disableOnInteraction: false}}
+                                effect="fade"
+                                loop={true}
+                                slidesPerView={1}
+                            >
+                                {banners.map((banner, idx) => (
+                                    <SwiperSlide key={idx}>
+                                        <a href={banner.link} target="_blank" rel="noopener noreferrer">
+                                            <img src={banner.src} alt={`banner-${idx}`}/>
+                                        </a>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
+                        {/* 우측 사이드 배너 */}
+                        <div className="side-banner-right">
+                            <Swiper
+                                modules={[Autoplay, EffectFade]}
+                                autoplay={{delay: 3000, disableOnInteraction: false}}
+                                effect="fade"
+                                loop={true}
+                                slidesPerView={1}
+                            >
+                                {banners.map((banner, idx) => (
+                                    <SwiperSlide key={idx}>
+                                        <a href={banner.link} target="_blank" rel="noopener noreferrer">
+                                            <img src={banner.src} alt={`banner-${idx}`}/>
+                                        </a>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+
+                        </div>
+                    </div>
+
+                </main>
         </>
-    );
+    )
+        ;
 }
