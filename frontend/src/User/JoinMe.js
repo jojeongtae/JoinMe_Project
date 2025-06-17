@@ -4,7 +4,6 @@ import apiClient from "../api/apiClient";
 import {mbtiCompatibility} from "./mbtiCompatibility";
 import {useDispatch, useSelector} from "react-redux";
 import {mbtiBehaviorTips} from "./mbtiBehaviorTips";
-import "./JoinMe.css";
 
 import { useLayoutEffect, useRef } from "react";
 import {loadKakaoScript} from "../App";
@@ -174,7 +173,7 @@ export default function JoinMe() {
     const behaviorTip = mbtiBehaviorTips[currentUser.mbti] || { good: "정보가 없습니다.", caution: "" };
 
     return (
-        <section className="joinme-wrapper inner">
+        <section id={"joinme"} className="inner">
             <div className="top-sections">
                 <div className="profile-section">
                     <img

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import EditProfileForm from "./EditProfileForm";
-import "./MyPage.css";
 import ReportList from "./ReportList";
 import apiClient from "../api/apiClient";
 
@@ -107,20 +106,18 @@ export default function MyPage() {
                                             const course = getCourseById(d.course_id);
                                             return (
                                                 <li key={idx} className="date-item">
-                                                    <p>
-                                                        <strong>{isSender ? "내가 신청한 데이트" : "상대가 신청한 데이트"}</strong>
-                                                    </p>
+                                                    <p className={"tit"}>{isSender ? "내가 신청한 데이트" : "상대가 신청한 데이트"}</p>
                                                     <p style={{display: "flex", alignItems: "center"}}>
-                                                        상대: {partner?.usernickname}
+                                                        <span>상대</span>{partner?.usernickname}
                                                         <img className="partner-img"
                                                              src={partner?.profileimg || "/default-profile.png"}
                                                              alt={partner?.usernickname || "상대방"}
 
                                                         />
                                                     </p>
-                                                    <p>시간: {new Date(d.dateTime).toLocaleString()}</p>
-                                                    <p>장소: {course?.coursename} - {course?.address}</p>
-                                                    <p>코스 설명: {course?.body}</p>
+                                                    <p><span>시간</span>{new Date(d.dateTime).toLocaleString()}</p>
+                                                    <p><span>장소</span>{course?.coursename} - {course?.address}</p>
+                                                    <p><span>코스</span>{course?.body}</p>
                                                     <img src={course?.imgpath} alt="course" className="course-img"/>
                                                 </li>
                                             );

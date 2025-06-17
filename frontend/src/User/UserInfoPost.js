@@ -130,11 +130,32 @@ export default function UserInfoPost() {
                     <option value="ESFP">ESFP</option>
                 </select>
 
-                <label>프로필 이미지 업로드<span className="required">*</span></label>
-                <input type="file" accept="image/*" onChange={handleFileChange} />
-                {uploading && <p>업로드 중...</p>}
-                {uploadError && <p className="form-error">{uploadError}</p>}
-                {formData.profileimg && <img src={formData.profileimg} alt="프로필 미리보기" style={{ maxWidth: "200px" }} />}
+
+                <div className="profile-upload-wrapper">
+                    <label>프로필 사진 업로드</label>
+
+                    <label className="custom-file-upload">
+                        파일선택
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="custom-file-input"
+                            onChange={handleFileChange}
+                            disabled={uploading}
+                        />
+                    </label>
+
+                    {uploading && <p>업로드 중...</p>}
+                    {uploadError && <p className="form-error">{uploadError}</p>}
+
+                    {formData.profileimg && (
+                        <img
+                            src={formData.profileimg}
+                            alt="프로필 미리보기"
+                            className="profile-preview"
+                        />
+                    )}
+                </div>
 
                 <button className={"submit-btn"} type="submit" disabled={uploading}>제출</button>
             </form>

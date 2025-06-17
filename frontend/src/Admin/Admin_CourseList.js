@@ -70,18 +70,18 @@ export default function Admin_CourseList() {
 
     return (
         <>
-            <section style={styles.container}>
-                <h2 style={styles.title}>데이트 코스 목록</h2>
+            <section id="admin" className="inner">
+                <h2 className="admin-userlist-title">데이트 코스 목록</h2>
 
-                <div style={{marginBottom: '40px', textAlign: 'right'}}>
-                    <Link to="/admin-main/add-course" style={styles.detailBtn}>코스 추가</Link>
+                <div className="admin-course-topbar">
+                    <Link to="/admin-main/add-course" className="admin-course-btn">코스 추가</Link>
                 </div>
 
-                <form onSubmit={handleSearch} style={{display: 'flex', gap: '12px', marginBottom: '24px'}}>
+                <form onSubmit={handleSearch} className="admin-course-search">
                     <select
                         value={searchType}
                         onChange={(e) => setSearchType(e.target.value)}
-                        style={styles.select}
+                        className="admin-course-select"
                     >
                         <option value="all">전체보기</option>
                         <option value="coursename">코스명</option>
@@ -93,50 +93,46 @@ export default function Admin_CourseList() {
                         value={searchKeyword}
                         onChange={(e) => setSearchKeyword(e.target.value)}
                         disabled={searchType === "all"}
-                        style={styles.input}
+                        className="admin-course-input"
                     />
-                    <button type="submit" style={styles.detailBtn}>검색</button>
+                    <button type="submit" className="admin-course-btn">검색</button>
                 </form>
 
-                <table style={styles.table}>
+                <table className="admin-userlist-table">
                     <thead>
                     <tr>
-                        <th style={styles.th}>코스명</th>
-                        <th style={styles.th}>지역</th>
-                        <th style={styles.th}>설명</th>
-                        <th style={styles.th}>업데이트 시각</th>
-                        <th style={styles.th}>수정</th>
-                        <th style={styles.th}>삭제</th>
+                        <th>코스명</th>
+                        <th>지역</th>
+                        <th>설명</th>
+                        <th>업데이트 시각</th>
+                        <th>수정</th>
+                        <th>삭제</th>
                     </tr>
                     </thead>
                     <tbody>
                     {courses.length === 0 ? (
                         <tr>
-                            <td colSpan={4} style={styles.td}>조회된 코스가 없습니다.</td>
+                            <td colSpan={6}>조회된 코스가 없습니다.</td>
                         </tr>
                     ) : (
-                        courses.map((course) => {
-                            return (
-                                <tr key={course.id}>
-                                    <td style={styles.td}>{course.coursename}</td>
-                                    <td style={styles.td}>{course.address}</td>
-                                    <td style={styles.td}>{course.body}</td>
-                                    <td style={styles.td}>
-                                        {new Date(course.updateDate).toLocaleString("ko-KR", {
-                                            timeZone: "Asia/Seoul",
-                                        })}
-                                    </td>
-                                    <td style={styles.td}>
-                                        <Link to={`/admin-main/edit-course/${course.id}`} style={styles.grayBtn}>수정</Link>
-                                    </td>
-                                    <td style={styles.td}>
-                                        <button style={styles.grayBtn} onClick={() => handleDelete(course.id)}>삭제
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-
+                        courses.map(course => (
+                            <tr key={course.id}>
+                                <td>{course.coursename}</td>
+                                <td>{course.address}</td>
+                                <td>{course.body}</td>
+                                <td>
+                                    {new Date(course.updateDate).toLocaleString("ko-KR", {
+                                        timeZone: "Asia/Seoul",
+                                    })}
+                                </td>
+                                <td>
+                                    <Link to={`/admin-main/edit-course/${course.id}`} className="admin-course-gray-btn">수정</Link>
+                                </td>
+                                <td>
+                                    <button className="admin-course-gray-btn" onClick={() => handleDelete(course.id)}>삭제</button>
+                                </td>
+                            </tr>
+                        ))
                     )}
                     </tbody>
                 </table>

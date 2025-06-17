@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import "./MyPage.css";
 import apiClient from "../api/apiClient";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../mainSlice";
@@ -146,22 +145,27 @@ export default function EditProfileForm({user, onCancel, onSubmit}) {
                     </select>
                 </label>
 
-                <label>프로필 사진 업로드
-                    <input type="file" accept="image/*" onChange={handleImageChange} disabled={uploading}/>
+                <div className="profile-upload-wrapper">
+                    <label>프로필 사진 업로드</label>
+                    <label className="custom-file-upload">
+                        파일선택
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="custom-file-input"
+                            onChange={handleImageChange}
+                            disabled={uploading}
+                        />
+                    </label>
+
                     {formData.profileimg && (
                         <img
                             src={formData.profileimg}
                             alt="프로필 미리보기"
-                            style={{
-                                width: 100,
-                                height: 100,
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                                marginTop: 10,
-                            }}
+                            className="profile-preview"
                         />
                     )}
-                </label>
+                </div>
 
                 {error && <p className="form-error">{error}</p>}
 
