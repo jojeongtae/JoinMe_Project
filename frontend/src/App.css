@@ -1588,7 +1588,6 @@ label.custom-file-upload{
 }
 
 /****어드민 페이지****/
-
 #admin {
   padding: 3rem 0;
 }
@@ -1604,7 +1603,7 @@ label.custom-file-upload{
 #admin .admin-userlist-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e0e0e0;
+  border: 0.1rem solid #e0e0e0;
   border-radius: 1.2rem;
   overflow: hidden;
   background-color: #fff;
@@ -1615,13 +1614,13 @@ label.custom-file-upload{
   background-color: #f5f5f5;
   padding: 1.2rem;
   font-weight: 600;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0.1rem solid #ddd;
   text-align: center;
 }
 
 #admin .admin-userlist-table td {
   padding: 1.2rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0.1rem solid #eee;
   text-align: center;
 }
 
@@ -1653,7 +1652,6 @@ label.custom-file-upload{
   cursor: pointer;
 }
 
-/* 기존 admin-userlist 스타일 그대로 재사용 */
 #admin .admin-userlist-container {
   padding: 3.2rem;
   max-width: 100rem;
@@ -1661,38 +1659,13 @@ label.custom-file-upload{
 }
 
 #admin .admin-userlist-title {
-  font-size: 2rem;
+  font-size: 2.4rem;
   margin-bottom: 2.4rem;
   font-weight: 600;
   text-align: center;
   color: #222;
 }
 
-#admin .admin-userlist-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #e0e0e0;
-  border-radius: 1.2rem;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.05);
-}
-
-#admin .admin-userlist-table th,
-#admin .admin-userlist-table td {
-  padding: 1.2rem;
-  font-size: 0.9rem;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-}
-
-#admin .admin-userlist-table th {
-  background-color: #f5f5f5;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-/* ✅ 추가된 상단 버튼 및 검색 스타일 */
 #admin .admin-course-topbar {
   margin-bottom: 4rem;
   text-align: right;
@@ -1703,13 +1676,15 @@ label.custom-file-upload{
   background-color: #ff7eb9;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.6rem;
   cursor: pointer;
   text-decoration: none;
+  font-size: 1.5rem;
 }
 
 #admin .admin-course-search {
   display: flex;
+  justify-content: flex-end;
   gap: 1.2rem;
   margin-bottom: 2.4rem;
 }
@@ -1717,17 +1692,211 @@ label.custom-file-upload{
 #admin .admin-course-select,
 #admin .admin-course-input {
   padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #ccc;
+  font-size: 1.5rem;
 }
 
-/* 회색 버튼 (수정, 삭제용) */
 #admin .admin-course-gray-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
   padding: 0.6rem 1rem;
   background-color: #bbb;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.6rem;
   cursor: pointer;
   text-decoration: none;
+  font-size: 1.5rem;
+  box-sizing: border-box;
+}
+
+/*코스리스트*/
+#admin.courseList .admin-userlist-table td {
+  text-align: left;
+  line-height: 1.4;
+}
+
+/*데이트 코스 추가*/
+#add-course {
+  max-width: 60rem;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#add-course h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: #333;
+}
+
+#add-course form {
+  display: flex;
+  flex-direction: column;
+}
+
+#add-course .form-group {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+#add-course label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  color: #555;
+}
+
+#add-course input[type="text"],
+#add-course select,
+#add-course textarea {
+  padding: 1rem 1.4rem;
+  border-radius: 0.6rem;
+  border: 0.15rem solid #ddd;
+  transition: border-color 0.3s ease;
+  font-size: 1.5rem;
+}
+
+#add-course select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+#add-course textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+#add-course .profile-upload-wrapper {
+  margin-bottom: 2.4rem;
+}
+
+#add-course .custom-file-upload {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  background-color: #eee;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#add-course .custom-file-upload input[type="file"] {
+  display: none;
+}
+
+#add-course .profile-preview {
+  display: block;
+  margin-top: 1.2rem;
+  max-width: 100%;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.1);
+}
+
+#add-course .btn-wrap {
+  justify-content: center;
+}
+
+#add-course .btn-wrap > * {
+  font-size: 1.5rem;
+  padding: 1.2rem 2.8rem;
+}
+
+/*프로필 상세보기 팝업*/
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-overlay .popup-content {
+  width: 40rem;
+  max-height: 85vh;
+  background-color: #fff;
+  padding: 2.4rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.6rem 1.8rem rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.popup-overlay .popup-content::-webkit-scrollbar {
+  display: none;
+}
+
+.popup-overlay .popup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.popup-overlay .popup-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  border: 0.1rem solid #ddd;
+  aspect-ratio: 1 / 1;
+}
+
+.popup-overlay .popup-info {
+  background-color: #fbf4f4;
+  height: 100%;
+  padding: 1.3rem 1.6rem;
+  border-radius: 1.2rem;
+  margin-top: 0;
+}
+
+.popup-overlay .popup-info li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  margin-top: 0.6rem;
+}
+
+.popup-overlay .popup-info li .user-info-label {
+  font-weight: 500;
+  color: #777;
+}
+
+.popup-overlay .popup-info li .user-info-value {
+  color: #222;
+  font-weight: 500;
+}
+
+.popup-overlay .popup-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.popup-overlay .popup-intro {
+  margin-top: 2rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.popup-overlay .btn-wrap {
+  justify-content: center;
+  margin-top: 0;
+}
+
+.popup-overlay .btn-wrap button {
+  font-size: 1.5rem;
 }

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import apiClient from "../api/apiClient";
@@ -88,11 +88,12 @@ export default function Admin_EditCourse() {
     };
     return (
         <>
-            <section id={"edit-course"} style={styles.container}>
-                <h2 style={styles.title}>데이트 코스 수정</h2>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="coursename">코스명</label>
+            <section id="add-course" className="add-course-container">
+                <h2 className="add-course-title">데이트 코스 수정</h2>
+
+                <form onSubmit={handleSubmit} className="add-course-form">
+                    <div className="form-group">
+                        <label htmlFor="coursename">코스명</label>
                         <input
                             id="coursename"
                             type="text"
@@ -100,31 +101,17 @@ export default function Admin_EditCourse() {
                             onChange={(e) => setCoursename(e.target.value)}
                             placeholder="코스명을 입력해주세요."
                             required
-                            style={styles.input}
                         />
                     </div>
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="image">대표 이미지</label>
-                        <input
-                            type="file"
-                            id="image"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            style={styles.input}
-                        />
-                        {imagePreview && (
-                            <img src={imagePreview} alt="미리보기" style={{ marginTop: 10, width: "200px", borderRadius: 8 }} />
-                        )}
-                    </div>
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="address">지역</label>
+
+                    <div className="form-group">
+                        <label htmlFor="address">지역</label>
                         <select
                             id="address"
                             name="address"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                             required
-                            style={styles.select}
                         >
                             <option value="" disabled>지역을 선택해주세요</option>
                             <option value="서울">서울</option>
@@ -133,23 +120,48 @@ export default function Admin_EditCourse() {
                         </select>
                     </div>
 
-                    <div style={styles.formGroup}>
-                        <label style={styles.label} htmlFor="body">코스 설명</label>
+                    <div className="form-group">
+                        <label htmlFor="body">코스 설명</label>
                         <textarea
                             id="body"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}
                             placeholder="코스 설명을 입력해주세요."
-                            style={styles.textarea}
                         />
                     </div>
 
-                    <div style={styles.buttons}>
-                        <button type="button" onClick={() => navigate("/admin-main/course-list")} style={styles.grayBtn}>취소하기</button>
-                        <button type="submit" style={styles.btn}>수정하기</button>
+                    <div className="form-group profile-upload-wrapper">
+                        <label htmlFor="image">대표 이미지</label>
+
+                        <label className="custom-file-upload">
+                            파일선택
+                            <input
+                                type="file"
+                                id="image"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                        </label>
+
+                        {imagePreview && (
+                            <img
+                                src={imagePreview}
+                                alt="미리보기"
+                                className="profile-preview"
+                                style={{ marginTop: 10, width: "200px", borderRadius: 8 }}
+                            />
+                        )}
+                    </div>
+
+                    <div className="btn-wrap">
+                        <button className={"btn gray"} type="button" onClick={() => navigate("/admin-main/course-list")}>
+                            취소하기
+                        </button>
+                        <button className={"btn"} type="submit">수정하기</button>
                     </div>
                 </form>
             </section>
+
         </>
     );
 }

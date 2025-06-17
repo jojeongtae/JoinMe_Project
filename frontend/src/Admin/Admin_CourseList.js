@@ -70,7 +70,7 @@ export default function Admin_CourseList() {
 
     return (
         <>
-            <section id="admin" className="inner">
+            <section id="admin" className="courseList inner">
                 <h2 className="admin-userlist-title">데이트 코스 목록</h2>
 
                 <div className="admin-course-topbar">
@@ -140,77 +140,3 @@ export default function Admin_CourseList() {
         </>
     );
 }
-
-
-const styles = {
-    container: {
-        padding: '32px',
-        maxWidth: '1000px',
-        margin: '0 auto',
-    },
-    title: {
-        fontSize: '2rem',
-        marginBottom: '24px',
-        fontWeight: '600',
-        textAlign: 'center',
-        color: '#222',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        border: '1px solid #e0e0e0',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-    },
-    th: {
-        backgroundColor: '#f5f5f5',
-        padding: '12px',
-        fontWeight: '600',
-        fontSize: '0.95rem',
-        borderBottom: '1px solid #ddd',
-    },
-    td: {
-        padding: '12px',
-        fontSize: '0.9rem',
-        borderBottom: '1px solid #eee',
-        textAlign: 'center',
-    },
-    detailBtn: {
-        padding: '6px 12px',
-        backgroundColor: '#ff7eb9',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-        textDecoration: 'none',
-    },
-    grayBtn: {
-        display: 'inline-block',
-        padding: '6px 12px',
-        backgroundColor: '#999',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-        textDecoration: 'none',
-    },
-    select: {
-        padding: '8px',
-        fontSize: '0.9rem',
-        borderRadius: '6px',
-        border: '1px solid #ccc',
-    },
-    input: {
-        flex: 1,
-        padding: '8px',
-        fontSize: '0.9rem',
-        borderRadius: '6px',
-        border: '1px solid #ccc',
-    }
-};

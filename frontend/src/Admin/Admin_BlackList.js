@@ -33,13 +33,14 @@ export default function Admin_BlackList() {
 
     return (
         <>
-            <section style={styles.container}>
-                <h2 style={styles.title}>블랙리스트 관리</h2>
-                <table style={styles.table}>
+            <section id="admin" className="inner">
+                <h2 className="admin-userlist-title">블랙리스트 관리</h2>
+
+                <table className="admin-userlist-table">
                     <thead>
                     <tr>
-                        <th style={styles.th}>신고 대상</th>
-                        <th style={styles.th}>차단 시간</th>
+                        <th>신고 대상</th>
+                        <th>차단 시간</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,66 +49,19 @@ export default function Admin_BlackList() {
                         const hated = users.find(u => u.username === hate.hated);
                         return (
                             <tr key={hate.num}>
-                                <td style={styles.td}>{hate.hated}</td>
-                                <td style={styles.td}>{new Date(hate.hate_time).toLocaleString("ko-KR", {
-                                    timeZone: "Asia/Seoul"
-                                })}</td>
+                                <td>{hate.hated}</td>
+                                <td>
+                                    {new Date(hate.hate_time).toLocaleString("ko-KR", {
+                                        timeZone: "Asia/Seoul"
+                                    })}
+                                </td>
                             </tr>
                         );
                     })}
                     </tbody>
                 </table>
             </section>
+
         </>
     );
 }
-
-
-
-const styles = {
-    container: {
-        padding: '32px',
-        maxWidth: '1000px',
-        margin: '0 auto',
-    },
-    title: {
-        fontSize: '2rem',
-        marginBottom: '24px',
-        fontWeight: '600',
-        textAlign: 'center',
-        color: '#222',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        border: '1px solid #e0e0e0',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-    },
-    th: {
-        backgroundColor: '#f5f5f5',
-        padding: '12px',
-        fontWeight: '600',
-        fontSize: '0.95rem',
-        borderBottom: '1px solid #ddd',
-        textAlign: 'center',
-    },
-    td: {
-        padding: '12px',
-        fontSize: '0.9rem',
-        borderBottom: '1px solid #eee',
-        textAlign: 'center',
-    },
-    detailBtn: {
-        padding: '6px 12px',
-        backgroundColor: '#ff7eb9',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        cursor: 'pointer',
-        fontSize: '0.85rem',
-        transition: 'background-color 0.2s ease',
-    },
-};
