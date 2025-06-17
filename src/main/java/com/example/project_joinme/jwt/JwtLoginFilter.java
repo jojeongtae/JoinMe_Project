@@ -54,7 +54,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         responseData.put("result", "로그인 성공");
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(responseData);
-        String access = this.jwtUtil.createToken("access", username, role, 60 * 10 * 1000L);
+        String access = this.jwtUtil.createToken("access", username, role, 60 * 60 * 1000L);
         String refresh = this.jwtUtil.createToken("refresh", username, role, 60 * 60 * 24 * 1000L);
 
         response.addCookie(this.createCookie("refresh", refresh));
