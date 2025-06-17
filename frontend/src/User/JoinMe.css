@@ -17,6 +17,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.profile-section .mbti {
+    font-size: 1.8rem;
+    margin-top: 0;
+    color: var(--color-1rd);
+    font-weight: 600;
 }
 
 .profile-img {
@@ -27,6 +35,13 @@
     object-fit: cover;
     margin-bottom: 15px;
 }
+
+.profile-name {
+    font-size: 2.2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.2rem;
+}
+
 .image-container{
     width: 27rem;
     height: 18rem;
@@ -48,6 +63,10 @@
     box-sizing: border-box;
 }
 
+.compatibility-section h3 {
+    margin-top: 4.5rem;
+}
+
 .course-list-container {
     background-color: #f5f5f5;
     border-radius: 10px;
@@ -67,6 +86,27 @@
 
 .course-info {
     flex: 1;
+}
+
+.course-info p {
+    margin: 0;
+}
+
+.course-info h4 {
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.course-info .address {
+    width: fit-content;
+    margin-top: 1rem;
+    background: #f2f2f2;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d5d5d5;
+    color: #555;
+    margin-bottom: 3.5rem;
 }
 
 .course-map {
@@ -150,6 +190,7 @@
     border-radius: 50%;
     margin-right: 8px;
     object-fit: cover;
+    flex-shrink: 0;
 }
 
 .chat-bubble {
@@ -182,7 +223,7 @@
     padding: 8px 14px;
     border: none;
     border-radius: 20px;
-    background-color: #5cb85c;
+    background-color: #444;
     color: white;
     cursor: pointer;
     font-weight: bold;
@@ -196,6 +237,25 @@
     font-size: 1.25rem;
     line-height: 1.5;
     animation: pulseHighlight 0.5s ease-in-out;
+}
+
+.date-form {
+    background: #fbf4f4;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+.date-form label span {
+    color: #666;
+    font-weight: 500;
+    margin-right: 1rem;
+}
+
+.date-form button {
+    background: #555;
+    font-weight: 600;
+    margin-top: 1rem;
 }
 
 /* 살짝 강조되는 애니메이션 효과 */
