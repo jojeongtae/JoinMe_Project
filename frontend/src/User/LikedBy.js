@@ -112,9 +112,10 @@ export default function LikedBy() {
 
     return (
         <section id="likedby">
-            <h2 className="likedby-title">아직 나를 좋아요 한 사람이 없어요</h2>
+            <h2 className="likedby-title">💑나를 좋아요 한 사람들</h2>
             {filteredLikedMeUsers.length === 0 ? (
                 <div className={"inner"} style={{textAlign:"center"}}>
+                    <h3>아직 나를 좋아요 한 사람들이 없어요</h3>
                     <div className="ad-swiper-wrapper">
                         <Swiper
                             modules={[Autoplay, EffectFade, Pagination]}
