@@ -15,5 +15,6 @@ import java.time.Instant;
 public class HideuserDTO {
     private Integer id;
     private String username;
+    private String usernickname;
     private Instant hide_time;
 }

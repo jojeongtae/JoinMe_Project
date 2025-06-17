@@ -25,4 +25,7 @@ public class HideuserTbl {
     @Column(name = "hide_time", nullable = false)
     private Instant hide_time;
 
+    @Column(name = "usernickname")
+    private String usernickname;
+
 }

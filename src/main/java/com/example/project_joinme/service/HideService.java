@@ -27,6 +27,7 @@ public class HideService {
         for (HideuserTbl hideuserTbl : tbl) {
             HideuserDTO hideuserDTO = HideuserDTO.builder()
                     .id(hideuserTbl.getId())
+                    .usernickname(hideuserTbl.getUsernickname())
                     .hide_time(hideuserTbl.getHide_time())
                     .username(hideuserTbl.getUsername().getUsername())
                     .build();
@@ -42,6 +43,7 @@ public class HideService {
         }
         HideuserTbl hideuserTbl = HideuserTbl.builder()
                 .id(dto.getId())
+                .usernickname(userTbl.getUsernickname())
                 .username(userTbl)
                 .hide_time(Instant.now())
                 .build();
