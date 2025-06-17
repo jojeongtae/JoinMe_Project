@@ -182,12 +182,12 @@ export default function JoinMe() {
                         src={userInfo.profileimg || userInfo.imgPath}
                         alt={`${userInfo.usernickname} 프로필`}
                     />
-                    <h3>{userInfo.usernickname}</h3>
-                    <p><strong>MBTI:</strong> {userInfo.mbti}</p>
+                    <h3 className={"profile-name"}>{userInfo.usernickname}</h3>
+                    <p className={"mbti"}>{userInfo.mbti}</p>
                 </div>
 
                 <div className="compatibility-section">
-                    <h2>상대 {userInfo.mbti} ❤ 내 {currentUser.mbti} 의 조합은?</h2>
+                    <h2>상대 {userInfo.mbti} 💗 내 {currentUser.mbti} 의 조합은?</h2>
                     <p>{compatibilityText}</p>
 
                     <h3>당신이 취하면 좋을 행동</h3>
@@ -274,7 +274,7 @@ export default function JoinMe() {
                             <div className="course-info">
                                 <h4>{course.coursename}</h4>
                                 <p>{course.body}</p>
-                                <p><strong>주소:</strong> {course.address}</p>
+                                <p className={"address"}>{course.address}</p>
                                 <button
                                     className="ask-date"
                                     onClick={() => setOpenFormId(openFormId === course.id ? null : course.id)}
@@ -285,7 +285,8 @@ export default function JoinMe() {
                                 {openFormId === course.id && (
                                     <form onSubmit={(e) => handleSubmitDate(e, course.id)} className="date-form">
                                         <label>
-                                            날짜/시간 선택:
+                                            <span>날짜/시간 선택</span>
+
                                             <input
                                                 type="datetime-local"
                                                 value={selectedDateTime}
@@ -293,7 +294,7 @@ export default function JoinMe() {
                                                 required
                                             />
                                         </label>
-                                        <button type="submit">신청 보내기</button>
+                                        <button className={"btn"} type="submit">신청 보내기</button>
                                     </form>
                                 )}
                             </div>

@@ -499,7 +499,6 @@ input {
   flex-wrap: wrap;
   gap: 2.4rem;
   padding: 3rem 2.5rem;
-  justify-content: center;
   background-color: #fafafa;
 }
 
@@ -959,11 +958,10 @@ input {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: center;
 }
 
 #matched .user-card {
-  width: 30rem;
+  width: calc((100% - 4rem) / 3);
   background: #fff;
   border-radius: 1.6rem;
   box-shadow: 0 0.4rem 1.2rem rgba(255, 77, 109, 0.2);
