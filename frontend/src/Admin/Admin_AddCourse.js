@@ -123,22 +123,28 @@ export default function Admin_AddCourse() {
                     />
                 </div>
 
-                <div style={styles.formGroup}>
+                <div className="profile-upload-wrapper">
                     <label style={styles.label}>이미지 업로드</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={styles.input}
-                    />
+
+                    <label className="custom-file-upload">
+                        파일선택
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="custom-file-input"
+                            onChange={handleImageChange}
+                        />
+                    </label>
+
                     {previewUrl && (
                         <img
                             src={previewUrl}
                             alt="미리보기"
-                            style={{ width: "200px", marginTop: "10px", borderRadius: "8px" }}
+                            className="profile-preview"
                         />
                     )}
                 </div>
+
 
                 <div style={styles.buttons}>
                     <button type="submit" style={styles.btn}>추가하기</button>
@@ -175,6 +181,7 @@ const styles = {
         flexDirection: "column",
     },
     label: {
+        display: "block",
         marginBottom: "8px",
         fontWeight: "600",
         color: "#555",
