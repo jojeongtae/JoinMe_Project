@@ -2,6 +2,8 @@ package com.example.project_joinme.data.repository;
 
 import com.example.project_joinme.data.entity.MatchTbl;
 import com.example.project_joinme.data.entity.UserTbl;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -19,8 +21,13 @@ public interface MatchRepository extends CrudRepository<MatchTbl, Integer> {
     @Query("SELECT m FROM MatchTbl m WHERE m.matchmale.username = :username OR m.matchfemale.username = :username")
     List<MatchTbl> findMatchesByUsername(@Param("username") String username);
     // matchmale, matchfemale 기준으로 삭제
-    void deleteByMatchmaleAndMatchfemale(UserTbl matchmale, UserTbl matchfemale);
 
-    // 또는 순서 바꿔서도 가능
-    void deleteByMatchfemaleAndMatchmale(UserTbl matchfemale, UserTbl matchmale);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM MatchTbl m WHERE (m.matchmale = :user1 AND m.matchfemale = :user2) OR (m.matchmale = :user2 AND m.matchfemale = :user1)")
+    void deleteBidirectional(@Param("user1") UserTbl user1, @Param("user2") UserTbl user2);
+
+
+
 }

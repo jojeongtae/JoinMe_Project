@@ -5,6 +5,9 @@ import com.example.project_joinme.data.dao.UserDAO;
 import com.example.project_joinme.data.dto.MatchDTO;
 import com.example.project_joinme.data.entity.MatchTbl;
 import com.example.project_joinme.data.entity.UserTbl;
+import com.example.project_joinme.data.repository.MatchRepository;
+import com.example.project_joinme.data.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class MatchService {
     private final MatchDAO matchDAO;
     private final UserDAO userDAO;
+    private final UserRepository userRepository;
+    private final MatchRepository matchRepository;
 
     public List<MatchDTO> getMatchesByUsername(String username) {
         UserTbl user = this.userDAO.findByUsername(username);
@@ -37,17 +42,17 @@ public class MatchService {
         }
         return matchDTOList;
     }
-    public void deleteMatch(String male, String female) {
-        UserTbl matchmale = this.userDAO.findByUsername(male);
-        UserTbl matchfemale = this.userDAO.findByUsername(female);
+    @Transactional
+    public void deleteMatch(String username1, String username2) {
+        UserTbl user1 = userRepository.findByUsernameWithLogin(username1);
+        UserTbl user2 = userRepository.findByUsernameWithLogin(username2);
 
-        if (matchmale == null || matchfemale == null) {
-            System.out.println("사용자 조회 실패: male=" + matchmale + ", female=" + matchfemale);
-            return;
+        if (user1 == null || user2 == null) {
+            throw new IllegalArgumentException("해당 유저를 찾을 수 없습니다.");
         }
 
-        System.out.println("삭제 시도: " + matchmale.getUsername() + ", " + matchfemale.getUsername());
-        this.matchDAO.deleteMatch(matchmale, matchfemale);
+        matchRepository.deleteBidirectional(user1, user2);
+        matchRepository.deleteBidirectional(user1, user2);
     }
 
 

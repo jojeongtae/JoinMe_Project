@@ -29,10 +29,6 @@ public class MatchDAO {
     public List<MatchTbl> getMatchesByUsername(String username) {
         return this.matchRepository.findMatchesByUsername(username);
     }
-    //삭제
-    @Transactional
-    public void deleteMatch(UserTbl matchmale, UserTbl matchfemale) {
-        this.matchRepository.deleteByMatchmaleAndMatchfemale(matchmale, matchfemale);
-    }
+
     
 }

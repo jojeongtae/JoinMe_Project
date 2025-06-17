@@ -55,7 +55,40 @@ export default function Matched({ currentUsername }) {
 
         fetchMatches();
     }, [currentUser]);
+    //leaveMe
+    const handleLeaveMe = async (leave) => {
+        try {
+            const payload = {
+                user1: currentUser.username,
+                user2: leave.username,
+            };
 
+            // 매칭 삭제
+            const res = await apiClient.delete("/match/delete", { data: payload });
+            console.log("매칭 삭제", res.data);
+
+            if (res.data !== null) {
+                // 좋아요 삭제 (방향 1)
+                const leavelike1 = {
+                    liker: leave.username,
+                    liked: currentUser.username
+                };
+                await apiClient.delete("/like", { data: leavelike1 });
+
+                // 좋아요 삭제 (방향 2)
+                const leavelike2 = {
+                    liker: currentUser.username,
+                    liked: leave.username
+                };
+                await apiClient.delete("/like", { data: leavelike2 });
+
+                console.log("좋아요 삭제 완료");
+            }
+        } catch (err) {
+            console.log("삭제 중 오류 발생", err);
+        }
+        setMatchedUsers(prev => prev.filter(user => user.username !== leave.username));
+    };
 
     return (
         <>
@@ -114,7 +147,7 @@ export default function Matched({ currentUsername }) {
                                         >
                                             💕 Join Me
                                         </button>
-                                        <button className="matched-button leave">
+                                        <button className="matched-button leave" onClick={()=>handleLeaveMe(user)}>
                                             💔 Leave Me
                                         </button>
                                     </div>

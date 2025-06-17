@@ -1,6 +1,7 @@
 package com.example.project_joinme.controller;
 
 import com.example.project_joinme.data.dto.MatchDTO;
+import com.example.project_joinme.data.dto.MatchDeleteDTO;
 import com.example.project_joinme.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,9 @@ public class MatchController {
         return ResponseEntity.status(HttpStatus.OK).body(matchDTOS);
     }
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteMatch(
-            @RequestParam(name = "male") String male,
-            @RequestParam(name = "female") String female
-    ) {
-        matchService.deleteMatch(male, female);
-        return ResponseEntity.ok("삭제 완료");
+    public ResponseEntity<String> deleteMatch(@RequestBody MatchDeleteDTO dto) {
+        matchService.deleteMatch(dto.getUser1(), dto.getUser2());
+        return ResponseEntity.ok("매칭 삭제 완료");
     }
 
 }
