@@ -110,7 +110,7 @@ export default function MyPage() {
                             <button className="mypage-btn" onClick={() => setIsEditing(true)}>정보수정</button>
                             <button className="mypage-btn" onClick={() => setShowReports(true)}>차단목록</button>
                             <button className="mypage-btn" onClick={() => setShowDatesModal(true)}>내 데이트 일정</button>
-                            <button className="mypage-btn" onClick={()=> deleteUser(currentUser.username)}>회원탈퇴</button>
+                            <button className="mypage-btn gray" onClick={()=> deleteUser(currentUser.username)}>회원탈퇴</button>
                         </div>
 
                         {showDatesModal && (

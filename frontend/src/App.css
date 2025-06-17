@@ -351,6 +351,7 @@ label.custom-file-upload{
   border: 0.1rem solid #ddd;
   border-radius: 0.8rem;
   box-sizing: border-box;
+  font-size: 1.5rem;
 }
 
 .profile-form input:focus,
@@ -1168,7 +1169,7 @@ label.custom-file-upload{
 #mypage .mypage-buttons-centered {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 0.5rem;
   margin-top: 2rem;
 }
 
@@ -1186,6 +1187,39 @@ label.custom-file-upload{
 
 #mypage .mypage-btn:hover {
   background: linear-gradient(45deg, #fb5356, #ff6f6f);
+}
+
+#mypage .mypage-btn.gray {
+  background: #bbb;
+}
+
+#mypage .mypage-btn.gray:hover {
+  background: #aaa;
+}
+
+#mypage .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#mypage .modal-content {
+  background: #fff;
+  border-radius: 1.2rem;
+  width: 50rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.2);
+  position: relative;
+  color: #1a2935;
 }
 
 #mypage .modal-content h3 {
